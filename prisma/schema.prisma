@@ -1,0 +1,301 @@
+// WorkLang AI — Prisma schema (Phase 0.3).
+//
+// Database-first: PostgreSQL is the single source of truth for all core
+// learning data. See docs/database.md. This schema defines the initial data
+// foundation only — no application logic, repositories, or services.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Language {
+  GERMAN
+  ENGLISH
+}
+
+enum CareerTrack {
+  AI_CONSULTANT
+  CUSTOMER_SUCCESS_HOSPITALITY
+}
+
+enum CefrLevel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum SkillArea {
+  GRAMMAR
+  VOCABULARY
+  WRITING
+  READING
+  COMMUNICATION
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+// Where a recorded mistake originated.
+enum MistakeSource {
+  EXERCISE
+  WRITING
+  REVIEW
+}
+
+// What a review-queue entry points at.
+enum ReviewItemType {
+  MISTAKE
+  TOPIC
+}
+
+// Spaced-repetition lifecycle state of a review item.
+enum ReviewState {
+  NEW
+  LEARNING
+  REVIEW
+  LAPSED
+}
+
+// The LLM task that produced a request-log row.
+enum LlmRequestType {
+  WRITING_FEEDBACK
+  MISTAKE_EXPLANATION
+  CEFR_ESTIMATION
+  TEXT_IMPROVEMENT
+  RECOMMENDATION
+}
+
+enum LlmRequestStatus {
+  PENDING
+  SUCCESS
+  ERROR
+}
+
+// ---------------------------------------------------------------------------
+// Models
+// ---------------------------------------------------------------------------
+
+// The learner. Single-user MVP, but modeled explicitly so multi-user is a
+// later, additive change rather than a rewrite.
+model User {
+  id          String   @id @default(cuid())
+  displayName String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  preference       UserPreference?
+  lessonProgress   LessonProgress[]
+  exerciseAttempts ExerciseAttempt[]
+  writingAttempts  WritingAttempt[]
+  mistakes         Mistake[]
+  masteryRecords   MasteryRecord[]
+  reviewQueueItems ReviewQueueItem[]
+  llmRequestLogs   LlmRequestLog[]
+  costRecords      CostRecord[]
+}
+
+// One-to-one learner settings and CEFR targets.
+model UserPreference {
+  id                 String      @id @default(cuid())
+  userId             String      @unique
+  primaryLanguage    Language    @default(GERMAN)
+  careerTrack        CareerTrack @default(AI_CONSULTANT)
+  germanTargetLevel  CefrLevel   @default(C1)
+  englishTargetLevel CefrLevel   @default(B2)
+  dailyGoalMinutes   Int?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Per-lesson progress for a user. `lessonId` references static content.
+model LessonProgress {
+  id           String         @id @default(cuid())
+  userId       String
+  lessonId     String
+  language     Language
+  status       ProgressStatus @default(NOT_STARTED)
+  correctCount Int            @default(0)
+  totalCount   Int            @default(0)
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId, language])
+}
+
+// A single deterministic exercise attempt and its local check result.
+model ExerciseAttempt {
+  id             String    @id @default(cuid())
+  userId         String
+  lessonId       String?
+  exerciseId     String
+  language       Language
+  skillArea      SkillArea
+  promptText     String?
+  expectedAnswer String
+  givenAnswer    String
+  isCorrect      Boolean
+  createdAt      DateTime  @default(now())
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mistakes Mistake[]
+
+  @@index([userId, createdAt])
+  @@index([userId, language, skillArea])
+}
+
+// A free-writing submission. LLM-derived fields (feedback, cefrEstimate,
+// improvedText) are nullable until the LLM layer (Phase 3) fills them.
+model WritingAttempt {
+  id            String       @id @default(cuid())
+  userId        String
+  language      Language
+  careerTrack   CareerTrack?
+  prompt        String?
+  submittedText String
+  cefrEstimate  CefrLevel?
+  feedback      String?
+  improvedText  String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mistakes       Mistake[]
+  llmRequestLogs LlmRequestLog[]
+
+  @@index([userId, createdAt])
+}
+
+// An individual recorded error. `explanation` is nullable LLM enrichment and
+// never affects deterministic scheduling or mastery.
+model Mistake {
+  id          String        @id @default(cuid())
+  userId      String
+  language    Language
+  skillArea   SkillArea
+  topic       String
+  source      MistakeSource
+  expected    String?
+  given       String?
+  context     String?
+  explanation String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  exerciseAttemptId String?
+  writingAttemptId  String?
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exerciseAttempt  ExerciseAttempt?  @relation(fields: [exerciseAttemptId], references: [id], onDelete: SetNull)
+  writingAttempt   WritingAttempt?   @relation(fields: [writingAttemptId], references: [id], onDelete: SetNull)
+  reviewQueueItems ReviewQueueItem[]
+
+  @@index([userId, language, topic])
+  @@index([userId, createdAt])
+}
+
+// Per-topic mastery estimate, computed deterministically.
+model MasteryRecord {
+  id              String     @id @default(cuid())
+  userId          String
+  language        Language
+  topic           String
+  skillArea       SkillArea?
+  score           Float      @default(0)
+  sampleSize      Int        @default(0)
+  lastPracticedAt DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, language, topic])
+  @@index([userId, language])
+}
+
+// A spaced-repetition scheduling entry.
+model ReviewQueueItem {
+  id             String         @id @default(cuid())
+  userId         String
+  itemType       ReviewItemType
+  mistakeId      String?
+  topic          String?
+  language       Language
+  state          ReviewState    @default(NEW)
+  dueAt          DateTime
+  intervalDays   Int            @default(0)
+  easeFactor     Float          @default(2.5)
+  streak         Int            @default(0)
+  lapses         Int            @default(0)
+  lastReviewedAt DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mistake Mistake? @relation(fields: [mistakeId], references: [id], onDelete: Cascade)
+
+  @@index([userId, dueAt])
+  @@index([userId, state])
+}
+
+// One row per LLM call: the operational request log.
+model LlmRequestLog {
+  id               String           @id @default(cuid())
+  userId           String
+  writingAttemptId String?
+  requestType      LlmRequestType
+  status           LlmRequestStatus @default(PENDING)
+  model            String
+  promptTokens     Int?
+  completionTokens Int?
+  totalTokens      Int?
+  latencyMs        Int?
+  errorMessage     String?
+  createdAt        DateTime         @default(now())
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  writingAttempt WritingAttempt? @relation(fields: [writingAttemptId], references: [id], onDelete: SetNull)
+  costRecord     CostRecord?
+
+  @@index([userId, createdAt])
+  @@index([userId, requestType])
+}
+
+// Cost accounting for an LLM call, one-to-one with its request log.
+model CostRecord {
+  id            String   @id @default(cuid())
+  userId        String
+  llmRequestId  String   @unique
+  model         String
+  inputTokens   Int
+  outputTokens  Int
+  currency      String   @default("USD")
+  estimatedCost Decimal  @db.Decimal(12, 6)
+  createdAt     DateTime @default(now())
+
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  llmRequestLog LlmRequestLog @relation(fields: [llmRequestId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
