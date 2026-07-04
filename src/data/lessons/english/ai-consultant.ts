@@ -13,13 +13,21 @@ import {
   ExerciseEvaluation,
   ExerciseFormat,
   Language,
+  MistakeSeverity,
   SkillArea,
 } from "@/types";
 import type { Lesson } from "@/types";
 import { activityId, exerciseId, lessonId } from "@/lib/ids";
 
+const conditionalMistake = {
+  topic: "first-and-second-conditionals",
+  category: "conditional-forms",
+  severity: MistakeSeverity.Medium,
+} as const;
+
 export const englishAiConsultantConditionals: Lesson = {
   id: lessonId("en-ai-consultant-conditionals"),
+  topic: "first-and-second-conditionals",
   language: Language.English,
   careerTrack: CareerTrack.AiConsultant,
   title: "Making recommendations: first and second conditionals",
@@ -155,6 +163,8 @@ export const englishAiConsultantConditionals: Lesson = {
         {
           id: exerciseId("en-ai-consultant-conditionals-ex1"),
           evaluation: ExerciseEvaluation.Graded,
+          ...conditionalMistake,
+          subcategory: "first-conditional",
           format: ExerciseFormat.FillBlank,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -168,6 +178,8 @@ export const englishAiConsultantConditionals: Lesson = {
         {
           id: exerciseId("en-ai-consultant-conditionals-ex2"),
           evaluation: ExerciseEvaluation.Graded,
+          ...conditionalMistake,
+          subcategory: "second-conditional",
           format: ExerciseFormat.FillBlank,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -182,6 +194,8 @@ export const englishAiConsultantConditionals: Lesson = {
         {
           id: exerciseId("en-ai-consultant-conditionals-ex3"),
           evaluation: ExerciseEvaluation.Graded,
+          ...conditionalMistake,
+          subcategory: "first-conditional",
           format: ExerciseFormat.ShortAnswer,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -195,6 +209,8 @@ export const englishAiConsultantConditionals: Lesson = {
         {
           id: exerciseId("en-ai-consultant-conditionals-ex4"),
           evaluation: ExerciseEvaluation.Graded,
+          ...conditionalMistake,
+          subcategory: "second-conditional",
           format: ExerciseFormat.ShortAnswer,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -208,6 +224,8 @@ export const englishAiConsultantConditionals: Lesson = {
         {
           id: exerciseId("en-ai-consultant-conditionals-ex5"),
           evaluation: ExerciseEvaluation.Graded,
+          ...conditionalMistake,
+          subcategory: "second-conditional",
           format: ExerciseFormat.FillBlank,
           skillArea: SkillArea.Grammar,
           prompt:

@@ -57,6 +57,12 @@ enum MistakeSource {
   REVIEW
 }
 
+enum MistakeSeverity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
 // What a review-queue entry points at.
 enum ReviewItemType {
   MISTAKE
@@ -150,6 +156,11 @@ model ExerciseAttempt {
   userId         String
   lessonId       String?
   exerciseId     String
+  topic          String?
+  category       String?
+  subcategory    String?
+  severity       MistakeSeverity?
+  exerciseFormat String?
   language       Language
   skillArea      SkillArea
   promptText     String?
@@ -157,6 +168,7 @@ model ExerciseAttempt {
   givenAnswer    String
   isCorrect      Boolean
   createdAt      DateTime  @default(now())
+  processedAt    DateTime?
 
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   mistakes Mistake[]
@@ -192,16 +204,23 @@ model WritingAttempt {
 model Mistake {
   id          String        @id @default(cuid())
   userId      String
+  lessonId    String
   language    Language
   skillArea   SkillArea
   topic       String
+  category    String
+  subcategory String        @default("general")
+  severity    MistakeSeverity
+  exerciseFormat String?
   source      MistakeSource
+  occurrenceCount Int       @default(1)
   expected    String?
   given       String?
   context     String?
   explanation String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  lastOccurredAt DateTime   @default(now())
 
   exerciseAttemptId String?
   writingAttemptId  String?
@@ -213,6 +232,7 @@ model Mistake {
 
   @@index([userId, language, topic])
   @@index([userId, createdAt])
+  @@unique([userId, language, lessonId, skillArea, topic, category, subcategory, severity, source])
 }
 
 // Per-topic mastery estimate, computed deterministically.

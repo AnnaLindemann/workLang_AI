@@ -9,6 +9,7 @@ import type {
   CareerTrack,
   CefrLevel,
   Language,
+  MistakeSeverity,
   ProgressStatus,
   SkillArea,
 } from "./enums";
@@ -57,12 +58,18 @@ export interface ExerciseAttempt {
   userId: UserId;
   lessonId?: LessonId;
   exerciseId: ExerciseId;
+  topic: string;
+  category: string;
+  subcategory?: string;
+  severity: MistakeSeverity;
+  exerciseFormat: string;
   language: Language;
   skillArea: SkillArea;
   promptText?: string;
   expectedAnswer: string;
   givenAnswer: string;
   isCorrect: boolean;
+  processedAt?: ISODateString;
   createdAt: ISODateString;
 }
 

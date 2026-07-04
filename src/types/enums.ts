@@ -101,6 +101,15 @@ export const MistakeSource = {
 } as const;
 export type MistakeSource = (typeof MistakeSource)[keyof typeof MistakeSource];
 
+/** Deterministic instructional impact assigned in static graded content. */
+export const MistakeSeverity = {
+  Low: "LOW",
+  Medium: "MEDIUM",
+  High: "HIGH",
+} as const;
+export type MistakeSeverity =
+  (typeof MistakeSeverity)[keyof typeof MistakeSeverity];
+
 // What a review-queue entry points at.
 export const ReviewItemType = {
   Mistake: "MISTAKE",

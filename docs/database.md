@@ -1,6 +1,6 @@
 # WorkLang AI — Database
 
-> **Status:** implemented in **Phase 0.3** (see [roadmap.md](roadmap.md)). The
+> **Status:** foundation implemented in Phase 0.3 and extended in Phase 5. The
 > authoritative schema lives in [`prisma/schema.prisma`](../prisma/schema.prisma);
 > the first migration is in `prisma/migrations/`. This document explains the
 > intent and naming behind that schema. Only the data foundation exists —
@@ -91,9 +91,14 @@ An individual recorded error, produced by the deterministic error engine (and
 enriched by the LLM layer). See [error-engine.md](error-engine.md).
 
 - `userId`
-- language, skill/grammar topic, error category
+- language, lesson, skill/grammar topic, category/subcategory, severity, source
 - prompt/expected/given
-- `createdAt`
+- `occurrenceCount`, `createdAt`, `lastOccurredAt`
+
+Phase 5 aggregates exercise mistakes by user, language, lesson, skill area,
+topic, semantic category/subcategory, severity, and source.
+`ExerciseAttempt.processedAt` makes downstream mistake/mastery processing
+idempotent; attempts preserve that semantic metadata plus exercise format.
 
 ### Mastery
 

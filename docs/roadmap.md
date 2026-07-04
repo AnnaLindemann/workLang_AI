@@ -46,26 +46,26 @@ The groundwork the rest of the MVP builds on.
   the initial schema (`prisma/schema.prisma`), the generated client, and the
   first migration. No repositories/services, lessons, LLM, or UI.
 
-## Phase 1 — Core Domain Model (next)
+## Phase 1 — Core Domain Model ✅ (done)
 
 The shared, deterministic domain model and TypeScript types for lessons,
 exercises, attempts, mistakes, mastery, and review — the common vocabulary the
 engines and the persistence layer agree on. No UI, no LLM.
 
-## Phase 2 — Lesson Repository & Static Content
+## Phase 2 — Lesson Repository & Static Content ✅ (done)
 
 Static lesson content as **local project data** under `src/data/` (lessons,
 grammar, professional vocabulary, professional reading) plus a repository that
 loads it. Content stays local; only the learner's interaction with it is
 persisted to PostgreSQL.
 
-## Phase 3 — Main Lesson UI
+## Phase 3 — Main Lesson UI ✅ (done)
 
 The lesson-taking flow: language selection → career-track selection → lesson
 selection, and the in-lesson screens. `localStorage` may hold transient UI
 state only.
 
-## Phase 4 — Deterministic Practice Engine
+## Phase 4 — Deterministic Practice Engine ✅ (done)
 
 Grammar theory, professional vocabulary, professional reading, and
 deterministic grammar practice with local answer checking (see
@@ -100,7 +100,7 @@ For Phase 7:
 
 - the LLM evaluates free/semi-free writing using structured JSON validation.
 
-## Phase 5 — Error Engine & Mastery Engine
+## Phase 5 — Error Engine & Mastery Engine ✅ (done)
 
 Mistake storage and categorization, and deterministic mastery calculation (see
 [error-engine.md](error-engine.md)). All state persists to PostgreSQL. No LLM.

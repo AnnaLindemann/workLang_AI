@@ -4,10 +4,16 @@
 // later be enriched with an LLM `explanation` that never affects scheduling or
 // mastery (see docs/error-engine.md).
 
-import type { Language, MistakeSource, SkillArea } from "./enums";
+import type {
+  Language,
+  MistakeSeverity,
+  MistakeSource,
+  SkillArea,
+} from "./enums";
 import type {
   ExerciseAttemptId,
   ISODateString,
+  LessonId,
   MistakeId,
   UserId,
   WritingAttemptId,
@@ -17,10 +23,17 @@ import type {
 export interface Mistake {
   id: MistakeId;
   userId: UserId;
+  lessonId: LessonId;
   language: Language;
   skillArea: SkillArea;
   /** The grammar/vocabulary topic this mistake belongs to. */
   topic: string;
+  /** Semantic grammar category defined by static graded content. */
+  category: string;
+  subcategory: string;
+  severity: MistakeSeverity;
+  exerciseFormat?: string;
+  occurrenceCount: number;
   source: MistakeSource;
   expected?: string;
   given?: string;
@@ -32,6 +45,7 @@ export interface Mistake {
   writingAttemptId?: WritingAttemptId;
   createdAt: ISODateString;
   updatedAt: ISODateString;
+  lastOccurredAt: ISODateString;
 }
 
 /**
@@ -41,9 +55,14 @@ export interface Mistake {
  */
 export interface MistakeDTO {
   userId: UserId;
+  lessonId: LessonId;
   language: Language;
   skillArea: SkillArea;
   topic: string;
+  category: string;
+  subcategory: string;
+  severity: MistakeSeverity;
+  exerciseFormat?: string;
   source: MistakeSource;
   expected?: string;
   given?: string;

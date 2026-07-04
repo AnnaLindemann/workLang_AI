@@ -83,7 +83,7 @@ src/
   domain/      Deterministic business logic
     lessons/
     practice/
-    errors/
+    errors/     Deterministic mistake metadata validation/grouping
     mastery/
     cost/
   lib/         Framework-agnostic utilities
@@ -123,4 +123,7 @@ See [roadmap.md](roadmap.md) for the full Phase 0–11 plan.
 - **Phase 0 — Foundation:** done. Project bootstrap (0.1), documentation (0.2),
   and Prisma + PostgreSQL setup (0.3) — initial schema, generated client, and
   first migration in place. No repositories/services yet.
-- **Phase 1 — Core Domain Model (next).**
+- **Phases 0–5:** foundation, domain/content/UI, deterministic practice, and
+  persisted error/mastery processing are implemented.
+- **Phase 6 — Adaptive Review:** next; review-queue generation is not yet
+  implemented.

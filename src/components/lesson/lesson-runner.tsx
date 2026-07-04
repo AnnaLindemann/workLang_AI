@@ -3,9 +3,9 @@
 // The in-lesson stepper: walks through a lesson's activities one screen at a
 // time with Prev/Next controls and a progress indicator.
 //
-// Phase 3 (Main Lesson UI): navigation and presentation only. Reaching the end
-// shows a completion screen but persists nothing — lesson progress, mistakes,
-// and mastery are written to PostgreSQL by later-phase engines, not here.
+// Reaching the end shows a completion screen. Graded attempts, grouped
+// mistakes, and mastery have already been persisted as answers were checked;
+// lesson-completion progress itself belongs to a separate change.
 
 import { useState } from "react";
 import Link from "next/link";
@@ -64,9 +64,10 @@ export function LessonRunner({
         <div className={styles.complete}>
           <h1 className={styles.completeTitle}>Lesson complete</h1>
           <p className={styles.completeText}>
-            You worked through every screen of “{lesson.title}”. Saving
-            progress, recording mistakes, and updating mastery arrive in later
-            phases — nothing was persisted this time.
+            You worked through every screen of “{lesson.title}”. Saving graded
+            answers also updated your mistake history and topic mastery. Open
+            exercises and writing remain self-check activities and were not
+            graded.
           </p>
           <div className={styles.completeActions}>
             <button

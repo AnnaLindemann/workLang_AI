@@ -17,13 +17,21 @@ import {
   ExerciseEvaluation,
   ExerciseFormat,
   Language,
+  MistakeSeverity,
   SkillArea,
 } from "@/types";
 import type { Lesson } from "@/types";
 import { activityId, exerciseId, lessonId } from "@/lib/ids";
 
+const passiveMistake = {
+  topic: "vorgangspassiv",
+  category: "passive-voice",
+  severity: MistakeSeverity.Medium,
+} as const;
+
 export const germanAiConsultantPassive: Lesson = {
   id: lessonId("de-ai-consultant-vorgangspassiv"),
+  topic: "vorgangspassiv",
   language: Language.German,
   careerTrack: CareerTrack.AiConsultant,
   title: "Prozesse beschreiben: das Vorgangspassiv",
@@ -157,6 +165,8 @@ export const germanAiConsultantPassive: Lesson = {
           skillArea: SkillArea.Grammar,
           format: ExerciseFormat.FillBlank,
           evaluation: ExerciseEvaluation.Graded,
+          ...passiveMistake,
+          subcategory: "werden-agreement",
           prompt:
             'Ergänzen Sie die richtige Form von "werden": "Bevor das ' +
             'Modell trainiert ___, werden die Daten bereinigt."',
@@ -170,6 +180,8 @@ export const germanAiConsultantPassive: Lesson = {
           skillArea: SkillArea.Grammar,
           format: ExerciseFormat.FillBlank,
           evaluation: ExerciseEvaluation.Graded,
+          ...passiveMistake,
+          subcategory: "agent-preposition",
           prompt:
             'Ergänzen Sie "von" oder "durch": "Der Bericht wird ___ dem ' +
             'Berater geprüft."',
@@ -183,6 +195,8 @@ export const germanAiConsultantPassive: Lesson = {
           skillArea: SkillArea.Grammar,
           format: ExerciseFormat.FillBlank,
           evaluation: ExerciseEvaluation.Graded,
+          ...passiveMistake,
+          subcategory: "agent-preposition",
           prompt:
             'Ergänzen Sie "von" oder "durch": "Die Auswertung wird ___ ' +
             'ein Skript erstellt."',

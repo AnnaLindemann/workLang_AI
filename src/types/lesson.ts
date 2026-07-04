@@ -18,6 +18,7 @@ import type {
   ExerciseEvaluation,
   ExerciseFormat,
   Language,
+  MistakeSeverity,
   SkillArea,
 } from "./enums";
 import type { ActivityId, ExerciseId, LessonId } from "./ids";
@@ -42,6 +43,13 @@ interface ExerciseBase {
  */
 export interface GradedExercise extends ExerciseBase {
   evaluation: typeof ExerciseEvaluation.Graded;
+  /** Stable grammar concept used for mastery. */
+  topic: string;
+  /** Semantic error category; never the UI exercise format. */
+  category: string;
+  /** Optional narrower grammar concept. */
+  subcategory?: string;
+  severity: MistakeSeverity;
   expectedAnswer: string;
   /** Additional answers accepted as correct (normalized-match alternatives). */
   acceptedAnswers?: string[];
@@ -153,6 +161,8 @@ export type Activity =
 /** A lesson: an ordered set of activities anchored to a language and track. */
 export interface Lesson {
   id: LessonId;
+  /** Stable learning topic used to group mistakes and mastery observations. */
+  topic: string;
   language: Language;
   careerTrack: CareerTrack;
   title: string;

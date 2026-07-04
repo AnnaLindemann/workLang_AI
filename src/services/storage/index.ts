@@ -10,3 +10,4 @@ export {
   recordExerciseAttempt,
   type RecordExerciseAttemptInput,
 } from "./exercise-attempt-repository";
+export { processExerciseAttempt } from "./learning-engine-repository";

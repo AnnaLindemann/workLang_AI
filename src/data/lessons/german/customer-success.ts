@@ -16,13 +16,21 @@ import {
   ExerciseEvaluation,
   ExerciseFormat,
   Language,
+  MistakeSeverity,
   SkillArea,
 } from "@/types";
 import type { Lesson } from "@/types";
 import { activityId, exerciseId, lessonId } from "@/lib/ids";
 
+const subjunctiveMistake = {
+  topic: "konjunktiv-ii",
+  category: "subjunctive-mood",
+  severity: MistakeSeverity.Medium,
+} as const;
+
 export const germanCustomerSuccessKonjunktiv: Lesson = {
   id: lessonId("de-customer-success-konjunktiv-ii"),
+  topic: "konjunktiv-ii",
   language: Language.German,
   careerTrack: CareerTrack.CustomerSuccessHospitality,
   title: "Höflich formulieren: der Konjunktiv II",
@@ -163,6 +171,8 @@ export const germanCustomerSuccessKonjunktiv: Lesson = {
           skillArea: SkillArea.Grammar,
           format: ExerciseFormat.FillBlank,
           evaluation: ExerciseEvaluation.Graded,
+          ...subjunctiveMistake,
+          subcategory: "wuerde-form",
           prompt:
             'Ergänzen Sie die "würde"-Form: "Ich ___ mich über eine ' +
             'Rückmeldung freuen."',
@@ -176,6 +186,8 @@ export const germanCustomerSuccessKonjunktiv: Lesson = {
           skillArea: SkillArea.Grammar,
           format: ExerciseFormat.FillBlank,
           evaluation: ExerciseEvaluation.Graded,
+          ...subjunctiveMistake,
+          subcategory: "irregular-form",
           prompt:
             'Ergänzen Sie die Konjunktiv-II-Form von "sein": "Falls Ihnen ' +
             'ein späterer Termin lieber ___, sagen Sie gern Bescheid."',

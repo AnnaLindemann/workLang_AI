@@ -11,17 +11,24 @@ import type {
   ExerciseId,
   Language,
   LessonId,
+  MistakeSeverity,
   SkillArea,
   UserId,
 } from "@/types";
 
 import { prisma } from "./prisma";
+import { processExerciseAttempt } from "./learning-engine-repository";
 
 /** The data needed to record one deterministic exercise attempt. */
 export interface RecordExerciseAttemptInput {
   userId: UserId;
   lessonId?: LessonId;
   exerciseId: ExerciseId;
+  topic: string;
+  category: string;
+  subcategory?: string;
+  severity: MistakeSeverity;
+  exerciseFormat: string;
   language: Language;
   skillArea: SkillArea;
   promptText?: string;
@@ -34,11 +41,16 @@ export interface RecordExerciseAttemptInput {
 export async function recordExerciseAttempt(
   input: RecordExerciseAttemptInput,
 ): Promise<void> {
-  await prisma.exerciseAttempt.create({
+  const attempt = await prisma.exerciseAttempt.create({
     data: {
       userId: input.userId,
       lessonId: input.lessonId,
       exerciseId: input.exerciseId,
+      topic: input.topic,
+      category: input.category,
+      subcategory: input.subcategory,
+      severity: input.severity,
+      exerciseFormat: input.exerciseFormat,
       language: input.language,
       skillArea: input.skillArea,
       promptText: input.promptText,
@@ -47,4 +59,8 @@ export async function recordExerciseAttempt(
       isCorrect: input.isCorrect,
     },
   });
+
+  // Phase 5 engines consume the persisted row, rather than trusting a second
+  // in-memory result. Processing is idempotent through `processedAt`.
+  await processExerciseAttempt(attempt.id);
 }

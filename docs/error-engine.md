@@ -1,8 +1,9 @@
 # WorkLang AI — Error & Mastery Engine
 
-> **Status:** design only. Implemented across Phases 5–6 (Error Engine &
-> Mastery Engine, then Adaptive Review — see [roadmap.md](roadmap.md)). Lives in
-> `src/domain/errors` and `src/domain/mastery`.
+> **Status:** Phase 5 mistake aggregation and mastery updates are implemented.
+> Phase 6 adaptive review is not. The deterministic logic lives in
+> `src/domain/errors` and `src/domain/mastery`; transactional persistence lives in
+> `src/services/storage`.
 
 The error engine is **deterministic**. It records mistakes, categorizes them,
 schedules reviews, and computes mastery. It does not call the LLM (the LLM may
@@ -16,7 +17,10 @@ later _explain_ a mistake, but it never decides scheduling or mastery).
   [lesson-engine.md](lesson-engine.md)).
 - Categorize each mistake deterministically (language, skill/grammar topic,
   error category).
-- Persist each as a `Mistake` row in PostgreSQL.
+- Persist it in PostgreSQL, grouped by user, language, lesson, skill area,
+  grammar topic, semantic category/subcategory, severity, and source.
+- Increment `occurrenceCount` and retain the latest occurrence details when the
+  same group recurs.
 
 The Error Engine stores **deterministic mistakes first** — the incorrect answers
 from `GradedExercise` content. `OpenExercise` content cannot create a
@@ -26,6 +30,8 @@ those flow in through the same `Mistake` storage, but scheduling and mastery sta
 deterministic regardless of a mistake's origin.
 
 ### Review queue (spaced repetition)
+
+> Planned for Phase 6; not implemented by the Phase 5 engine.
 
 - Maintain a per-user queue of `ReviewQueueItem` rows due for review.
 - Schedule reviews with a deterministic spaced-repetition rule (due date,
@@ -38,6 +44,16 @@ deterministic regardless of a mistake's origin.
   (correct vs. incorrect, recency, sample size).
 - Recompute deterministically whenever new results arrive.
 - Mastery drives what to practice next and informs recommendations.
+
+The Phase 5 score uses a neutral two-observation prior. Each correct attempt
+moves the score upward, each incorrect attempt moves it downward, and
+`sampleSize` records confidence. Processing claims each persisted attempt once,
+so retries cannot increment mistakes or mastery twice.
+
+Graded exercise content declares its topic, category, optional subcategory,
+and severity. Exercise format is stored separately for diagnostics and never
+acts as the main error category. The error domain completes and validates the
+stable grouping key before the repository persists it.
 
 ## Persistence (database-first)
 

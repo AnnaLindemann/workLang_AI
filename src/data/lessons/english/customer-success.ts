@@ -13,13 +13,21 @@ import {
   ExerciseEvaluation,
   ExerciseFormat,
   Language,
+  MistakeSeverity,
   SkillArea,
 } from "@/types";
 import type { Lesson } from "@/types";
 import { activityId, exerciseId, lessonId } from "@/lib/ids";
 
+const tenseMistake = {
+  topic: "present-perfect-vs-past-simple",
+  category: "tense-choice",
+  severity: MistakeSeverity.Medium,
+} as const;
+
 export const englishCustomerSuccessTenses: Lesson = {
   id: lessonId("en-customer-success-present-perfect"),
+  topic: "present-perfect-vs-past-simple",
   language: Language.English,
   careerTrack: CareerTrack.CustomerSuccessHospitality,
   title: "Following up: present perfect vs past simple",
@@ -146,6 +154,8 @@ export const englishCustomerSuccessTenses: Lesson = {
         {
           id: exerciseId("en-customer-success-present-perfect-ex1"),
           evaluation: ExerciseEvaluation.Graded,
+          ...tenseMistake,
+          subcategory: "past-simple",
           format: ExerciseFormat.FillBlank,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -159,6 +169,8 @@ export const englishCustomerSuccessTenses: Lesson = {
         {
           id: exerciseId("en-customer-success-present-perfect-ex2"),
           evaluation: ExerciseEvaluation.Graded,
+          ...tenseMistake,
+          subcategory: "present-perfect",
           format: ExerciseFormat.FillBlank,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -173,6 +185,8 @@ export const englishCustomerSuccessTenses: Lesson = {
         {
           id: exerciseId("en-customer-success-present-perfect-ex3"),
           evaluation: ExerciseEvaluation.Graded,
+          ...tenseMistake,
+          subcategory: "past-simple",
           format: ExerciseFormat.ShortAnswer,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -186,6 +200,8 @@ export const englishCustomerSuccessTenses: Lesson = {
         {
           id: exerciseId("en-customer-success-present-perfect-ex4"),
           evaluation: ExerciseEvaluation.Graded,
+          ...tenseMistake,
+          subcategory: "present-perfect",
           format: ExerciseFormat.FillBlank,
           skillArea: SkillArea.Grammar,
           prompt:
@@ -199,6 +215,8 @@ export const englishCustomerSuccessTenses: Lesson = {
         {
           id: exerciseId("en-customer-success-present-perfect-ex5"),
           evaluation: ExerciseEvaluation.Graded,
+          ...tenseMistake,
+          subcategory: "present-perfect-adverbs",
           format: ExerciseFormat.ShortAnswer,
           skillArea: SkillArea.Grammar,
           prompt:
