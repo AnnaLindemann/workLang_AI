@@ -89,26 +89,31 @@ PostgreSQL.
 
 Broaden lessons, grammar, vocabulary, and reading across both career tracks and
 toward the German C1 / English B2 targets.
+
 ## Content Creation Principles
 
 All lesson content must be original.
 
 Grammar explanations:
+
 - Based on reputable references (Cambridge, Oxford, British Council, Goethe, DW, Duden, etc.).
 - Written in original wording.
 - Never copied from external sources.
 
 Professional reading texts:
+
 - Always original.
 - Written specifically for WorkLang AI.
 - Relevant to the selected career track.
 
 Practice exercises:
+
 - Deterministic.
 - Must include exact answer keys.
 - Must be locally verifiable.
 
 Writing tasks:
+
 - Original business scenarios.
 - Relevant to the lesson grammar and vocabulary.
 
