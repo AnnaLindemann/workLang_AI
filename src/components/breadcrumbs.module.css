@@ -1,0 +1,39 @@
+.nav {
+  margin: 0 0 1.5rem;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.link {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #111827;
+  text-decoration: underline;
+}
+
+.separator {
+  color: #9ca3af;
+}
+
+@media (prefers-color-scheme: dark) {
+  .link:hover {
+    color: #f9fafb;
+  }
+}

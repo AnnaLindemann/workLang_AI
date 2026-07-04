@@ -19,7 +19,6 @@ Together the phases build the complete learning loop described in
 lesson content and practice first, then LLM writing feedback, then the data,
 dashboard, and content that close the loop.
 
-
 ## Short note for docs/roadmap.md
 
 ```md
@@ -148,3 +147,4 @@ Polish, documentation, and release as a portfolio-ready MVP.
 Authentication and multi-user accounts, job interview training, speech /
 pronunciation, full RAG with embeddings, mobile app, and richer gamification.
 See the non-goals in [project-overview.md](project-overview.md).
+```

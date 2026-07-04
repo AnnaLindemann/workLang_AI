@@ -1,0 +1,299 @@
+.lessonHeader {
+  margin-bottom: 1.5rem;
+}
+
+.lessonTitle {
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 700;
+  margin: 0;
+}
+
+.lessonMeta {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0.5rem 0 0;
+}
+
+/* Progress */
+.progress {
+  margin-bottom: 1.5rem;
+}
+
+.progressBar {
+  height: 6px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: #111827;
+  transition: width 0.25s ease;
+}
+
+.progressLabel {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0.5rem 0 0;
+}
+
+/* Activity card */
+.activityCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.activityKind {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.activityTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.prose {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #374151;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.note {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #6b7280;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin: 1rem 0 0;
+}
+
+/* Vocabulary */
+.vocabList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.vocabItem {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+}
+
+.vocabHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.vocabTerm {
+  font-weight: 600;
+}
+
+.vocabTranslation {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.vocabExample {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0.4rem 0 0;
+  font-style: italic;
+}
+
+/* Practice */
+.exerciseList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.exercise {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.exercisePrompt {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #374151;
+  margin: 0;
+}
+
+.exerciseNumber {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.exerciseInput,
+.writingInput {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+}
+
+.exerciseInput:focus,
+.writingInput:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+/* Writing */
+.writing {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.writingInput {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.primaryButton,
+.secondaryButton,
+.primaryLink {
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.6rem 1.4rem;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.primaryButton,
+.primaryLink {
+  border: 1px solid #111827;
+  background: #111827;
+  color: #f9fafb;
+}
+
+.primaryButton:hover,
+.primaryLink:hover {
+  opacity: 0.88;
+}
+
+.secondaryButton {
+  border: 1px solid #d1d5db;
+  background: transparent;
+  color: inherit;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  border-color: #111827;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Completion */
+.complete {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.completeTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.completeText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0 auto 1.5rem;
+  max-width: 46ch;
+}
+
+.completeActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .progressBar {
+    background: #374151;
+  }
+  .progressFill {
+    background: #f9fafb;
+  }
+  .activityCard,
+  .vocabItem,
+  .complete {
+    border-color: #374151;
+  }
+  .prose,
+  .exercisePrompt {
+    color: #d1d5db;
+  }
+  .vocabExample,
+  .completeText {
+    color: #9ca3af;
+  }
+  .note {
+    background: #111827;
+    border-color: #374151;
+    color: #9ca3af;
+  }
+  .exerciseInput,
+  .writingInput {
+    border-color: #4b5563;
+  }
+  .exerciseInput:focus,
+  .writingInput:focus,
+  .secondaryButton:hover:not(:disabled) {
+    border-color: #f9fafb;
+  }
+  .primaryButton,
+  .primaryLink {
+    border-color: #f9fafb;
+    background: #f9fafb;
+    color: #111827;
+  }
+  .secondaryButton {
+    border-color: #4b5563;
+  }
+}

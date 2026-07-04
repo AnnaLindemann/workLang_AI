@@ -39,6 +39,23 @@
   margin: 0.75rem 0 0;
 }
 
+.cta {
+  display: inline-block;
+  margin-top: 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid #111827;
+  border-radius: 8px;
+  padding: 0.7rem 1.6rem;
+  background: #111827;
+  color: #f9fafb;
+  transition: opacity 0.15s ease;
+}
+
+.cta:hover {
+  opacity: 0.88;
+}
+
 .tracksHeading {
   font-size: 1.5rem;
   margin: 0 0 1.5rem;
@@ -93,6 +110,11 @@
     color: #9ca3af;
   }
   .badge {
+    background: #f9fafb;
+    color: #111827;
+  }
+  .cta {
+    border-color: #f9fafb;
     background: #f9fafb;
     color: #111827;
   }

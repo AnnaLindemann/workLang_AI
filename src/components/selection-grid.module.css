@@ -1,0 +1,84 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  background: transparent;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.card:hover {
+  border-color: #111827;
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.badge {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+.cardDescription {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #4b5563;
+  margin: 0;
+}
+
+.cardCta {
+  margin-top: auto;
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+.card:hover .cardCta {
+  color: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    border-color: #374151;
+  }
+  .card:hover {
+    border-color: #f9fafb;
+  }
+  .badge {
+    border-color: #374151;
+    color: #9ca3af;
+  }
+  .cardDescription {
+    color: #9ca3af;
+  }
+  .card:hover .cardCta {
+    color: #f9fafb;
+  }
+}

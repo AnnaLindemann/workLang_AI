@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import styles from "./page.module.css";
 
 const tracks = [
@@ -17,10 +19,13 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <section className={styles.hero}>
-        <p className={styles.status}>Phase 0.1 — Project Bootstrap</p>
+        <p className={styles.status}>Phase 3 — Main Lesson UI</p>
         <h1 className={styles.title}>WorkLang AI</h1>
         <p className={styles.subtitle}>Professional Language Coach</p>
         <p className={styles.levels}>German C1 · English B2</p>
+        <Link href="/learn" className={styles.cta}>
+          Start learning
+        </Link>
       </section>
 
       <section className={styles.tracks}>
@@ -36,9 +41,7 @@ export default function Home() {
       </section>
 
       <footer className={styles.footer}>
-        <span className={styles.badge}>
-          Status: Phase 0.1 Project Bootstrap
-        </span>
+        <span className={styles.badge}>Status: Phase 3 Main Lesson UI</span>
       </footer>
     </main>
   );
