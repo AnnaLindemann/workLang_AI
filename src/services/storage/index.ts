@@ -12,3 +12,16 @@ export {
 } from "./exercise-attempt-repository";
 export { processExerciseAttempt } from "./learning-engine-repository";
 export { loadReviewSourceData } from "./review-repository";
+export {
+  submitWritingAttempt,
+  type SubmitWritingInput,
+  type WritingFeedbackView,
+  type WritingMistakeView,
+} from "./writing-repository";
+export {
+  checkOpenGrammar,
+  type CheckOpenGrammarInput,
+  type OpenGrammarCheckView,
+  type OpenGrammarMistakeView,
+} from "./open-grammar-repository";
+export { loadVocabularyProgress } from "./vocabulary-repository";

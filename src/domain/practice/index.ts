@@ -4,3 +4,4 @@
 // results that later phases (error and mastery engines) consume.
 
 export * from "./answer-check";
+export * from "./vocabulary-match";

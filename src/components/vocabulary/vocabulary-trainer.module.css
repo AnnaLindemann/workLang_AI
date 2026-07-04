@@ -1,0 +1,54 @@
+.session {
+  display: flex;
+  flex-direction: column;
+}
+
+.done {
+  margin-top: 1.75rem;
+  text-align: center;
+}
+
+.doneText {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #166534;
+  margin: 0 0 0.85rem;
+}
+
+.nextButton {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid #0f766e;
+  background: #0f766e;
+  color: #f9fafb;
+  border-radius: 10px;
+  padding: 0.7rem 1.5rem;
+  min-height: 48px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.nextButton:hover {
+  opacity: 0.88;
+}
+
+.empty {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+  .doneText {
+    color: #bbf7d0;
+  }
+  .nextButton {
+    border-color: #2dd4bf;
+    background: #2dd4bf;
+    color: #042f2e;
+  }
+  .empty {
+    color: #9ca3af;
+  }
+}

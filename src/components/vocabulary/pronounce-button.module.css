@@ -1,0 +1,46 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.button:hover {
+  border-color: #0f766e;
+}
+
+.button:active {
+  background: rgba(15, 118, 110, 0.12);
+}
+
+/* Larger touch target for the trainer cards. */
+.large {
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 1.2rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    border-color: #4b5563;
+  }
+  .button:hover {
+    border-color: #2dd4bf;
+  }
+  .button:active {
+    background: rgba(45, 212, 191, 0.15);
+  }
+}

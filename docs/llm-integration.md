@@ -25,6 +25,13 @@ fairly grade because more than one answer can be correct.
   context. Free and semi-free writing is graded here, not by deterministic
   matching, and the model returns a **structured JSON** result that is validated
   against a fixed schema before anything is persisted.
+- **Open grammar checking** — a lightweight, **universal** mini-check for open
+  grammar exercises (one prompt for all of them, never one per topic): decide
+  whether a semi-free answer is a grammatically valid solution to the exercise,
+  accepting alternative correct formulations. It returns short structured JSON,
+  prefers the cheaper fallback model, and is kept strictly separate from
+  free-writing feedback (no business style, tone, CEFR, or long-form judgement).
+  See Phase 7.2 in [roadmap.md](roadmap.md).
 - **Mistake explanation** — produce a clear, human explanation for a recorded
   mistake (without changing scheduling or mastery).
 - **CEFR estimation** — estimate the level of a writing sample (towards German
@@ -38,11 +45,20 @@ The concrete prompt templates live in [prompts.md](prompts.md).
 
 ## Provider and models
 
-The intended provider is **Anthropic Claude**. Model selection is deferred to
-implementation and chosen per task by cost/quality trade-off — for example a
-larger model (e.g. Claude Opus 4.8) for nuanced feedback and a smaller, cheaper
-model (e.g. Claude Haiku 4.5) for lightweight tasks. Exact model IDs and
-API details are finalized in Phase 7, not here.
+The provider is **Groq** (OpenAI-compatible API). Two models are used, both of
+which support Groq's **strict structured outputs** — constrained decoding that
+guarantees the response matches the supplied JSON schema:
+
+- **Primary — `openai/gpt-oss-120b`.** Preferred for grammar correction (English
+  and German), CEFR estimation, business-writing feedback, and JSON reliability.
+- **Fallback — `openai/gpt-oss-20b`.** Cheaper and faster, on the same strict
+  structured-output path, used when the primary is rate-limited or errors.
+
+Model IDs are configured via environment variables (`GROQ_MODEL_PRIMARY`,
+`GROQ_MODEL_FALLBACK`) with the API key in `GROQ_API_KEY` (see
+[LLM Environment Variables](#llm-environment-variables)). Even though strict mode
+guarantees the schema, every response is still validated with **Zod** before it
+is persisted. All calls are **server-side only**.
 
 ## Cost tracking (database-first)
 
@@ -69,10 +85,15 @@ memory or in `localStorage`. This makes LLM spend transparent and auditable.
 
 ## LLM Environment Variables
 
-LLM provider configuration must not be added before Phase 7.
-
-The first phase that may introduce LLM-related environment variables is:
+LLM provider configuration is introduced in **Phase 7** — the first phase where a
+real LLM request is allowed, and not before. The variables are:
 
 ```txt
-Phase 7 — LLM Writing Feedback
+GROQ_API_KEY          # secret, server-side only; real value only in local .env
+GROQ_MODEL_PRIMARY    # openai/gpt-oss-120b
+GROQ_MODEL_FALLBACK   # openai/gpt-oss-20b
 ```
+
+Only blank/placeholder values live in `.env.example`; the real `GROQ_API_KEY` is
+never committed. The key must never be exposed to the client (no `NEXT_PUBLIC_`
+prefix) and is read only in server code.

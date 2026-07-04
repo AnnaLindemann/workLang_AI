@@ -28,8 +28,12 @@ Practice uses a discriminated union with two explicit content models:
   optional `acceptedAnswers` list. It is checked and persisted
   deterministically.
 - `OpenExercise` is semi-free production with multiple valid answers. It has
-  `evaluation: "OPEN"` and a `sampleAnswer`, but no `expectedAnswer`. It is
-  never sent to deterministic checking or persisted as an `ExerciseAttempt`.
+  `evaluation: "OPEN"` and a `sampleAnswer`, but no `expectedAnswer`. It is never
+  string-matched deterministically. Open **grammar** exercises may additionally
+  be checked by the universal LLM mini-checker (Phase 7.2), which accepts
+  alternative correct answers and persists its verdict through the normal
+  `ExerciseAttempt` pipeline; other open exercises remain sample-answer
+  self-checks.
 
 `GradedExercise` is appropriate for:
 
@@ -46,6 +50,22 @@ explanation** instead of a pass/fail grade, and a learner's answer is never
 graded as incorrect only because it differs from `expectedAnswer`. Grading
 free/semi-free writing is the LLM layer's job (Phase 7, structured JSON
 validation — see [llm-integration.md](llm-integration.md)).
+
+## Vocabulary (learning list) and the Vocabulary Trainer (Phase 7.1)
+
+Inside a lesson the vocabulary block is a **learning-only list** — terms,
+translations, optional transcription, and a per-term pronunciation button. It is
+not a test and does not start a matching exercise.
+
+Active vocabulary practice is a **separate mode**: the standalone Vocabulary
+Trainer (`/vocabulary`, `src/domain/vocabulary` + `src/components/vocabulary`).
+It draws from every lesson's vocabulary, runs deterministic 5-pair tap-to-match
+sessions, and persists each match (right or wrong) through the same
+`ExerciseAttempt` pipeline as grammar practice — the **term is its own mastery
+topic** (`SkillArea.Vocabulary`, `ExerciseFormat.Matching`). Wrong matches become
+`Mistake`s (category `Vocabulary`, subcategory `Matching`), so they remain
+eligible for the existing lesson review; vocabulary mastery is independent from
+grammar mastery. No LLM is involved.
 
 ## Content model
 

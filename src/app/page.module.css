@@ -39,6 +39,14 @@
   margin: 0.75rem 0 0;
 }
 
+.heroActions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .cta {
   display: inline-block;
   margin-top: 1.75rem;
@@ -50,6 +58,26 @@
   background: #111827;
   color: #f9fafb;
   transition: opacity 0.15s ease;
+}
+
+.heroActions .cta {
+  margin-top: 0;
+}
+
+.ctaSecondary {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid #111827;
+  border-radius: 8px;
+  padding: 0.7rem 1.6rem;
+  background: transparent;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+
+.ctaSecondary:hover {
+  opacity: 0.7;
 }
 
 .cta:hover {
@@ -117,5 +145,8 @@
     border-color: #f9fafb;
     background: #f9fafb;
     color: #111827;
+  }
+  .ctaSecondary {
+    border-color: #f9fafb;
   }
 }

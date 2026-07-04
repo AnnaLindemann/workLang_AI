@@ -23,9 +23,14 @@ export default function Home() {
         <h1 className={styles.title}>WorkLang AI</h1>
         <p className={styles.subtitle}>Professional Language Coach</p>
         <p className={styles.levels}>German C1 · English B2</p>
-        <Link href="/learn" className={styles.cta}>
-          Start learning
-        </Link>
+        <div className={styles.heroActions}>
+          <Link href="/learn" className={styles.cta}>
+            Start learning
+          </Link>
+          <Link href="/vocabulary" className={styles.ctaSecondary}>
+            Vocabulary Trainer
+          </Link>
+        </div>
       </section>
 
       <section className={styles.tracks}>

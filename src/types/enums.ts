@@ -89,6 +89,8 @@ export const ExerciseFormat = {
   Transformation: "TRANSFORMATION",
   Rewrite: "REWRITE",
   FreeSentence: "FREE_SENTENCE",
+  // Vocabulary term↔meaning matching (Phase 7.1). Deterministic, no LLM.
+  Matching: "MATCHING",
 } as const;
 export type ExerciseFormat =
   (typeof ExerciseFormat)[keyof typeof ExerciseFormat];
@@ -134,6 +136,8 @@ export const LlmRequestType = {
   CefrEstimation: "CEFR_ESTIMATION",
   TextImprovement: "TEXT_IMPROVEMENT",
   Recommendation: "RECOMMENDATION",
+  // Universal mini-check for open grammar exercises (Phase 7 follow-up).
+  GrammarCheck: "GRAMMAR_CHECK",
 } as const;
 export type LlmRequestType =
   (typeof LlmRequestType)[keyof typeof LlmRequestType];

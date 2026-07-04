@@ -130,6 +130,7 @@ export function LessonRunner({
         <ActivityView
           activity={activity}
           lessonId={lesson.id}
+          language={lesson.language}
           reviewTasks={reviewTasks}
         />
       </section>

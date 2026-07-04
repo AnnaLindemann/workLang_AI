@@ -77,6 +77,12 @@ export interface VocabularyItem {
   translation: string;
   /** Example usage in a work context, in the target language. */
   example?: string;
+  /** Optional short definition/gloss. Shown when present; never invented. */
+  definition?: string;
+  /** Optional phonetic transcription (e.g. IPA). Shown when present. */
+  transcription?: string;
+  /** Optional pronunciation hint. Shown when present. */
+  pronunciationHint?: string;
 }
 
 /**

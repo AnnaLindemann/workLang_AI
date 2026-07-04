@@ -6,6 +6,7 @@ import { buildExerciseMistakeGroup } from "@/domain/errors";
 import { calculateNextMastery } from "@/domain/mastery";
 
 import { prisma } from "./prisma";
+import { upsertMistake } from "./mistake-repository";
 
 /**
  * Apply one persisted graded attempt to mistake aggregation and mastery.
@@ -76,30 +77,13 @@ export async function processExerciseAttempt(
     });
 
     if (!attempt.isCorrect) {
-      const group = buildExerciseMistakeGroup(attempt);
-      await tx.mistake.upsert({
-        where: {
-          userId_language_lessonId_skillArea_topic_category_subcategory_severity_source:
-            group,
-        },
-        create: {
-          ...group,
-          exerciseFormat: attempt.exerciseFormat,
-          expected: attempt.expectedAnswer,
-          given: attempt.givenAnswer,
-          context: attempt.promptText,
-          exerciseAttemptId: attempt.id,
-          lastOccurredAt: practicedAt,
-        },
-        update: {
-          occurrenceCount: { increment: 1 },
-          expected: attempt.expectedAnswer,
-          given: attempt.givenAnswer,
-          context: attempt.promptText,
-          exerciseFormat: attempt.exerciseFormat,
-          exerciseAttemptId: attempt.id,
-          lastOccurredAt: practicedAt,
-        },
+      await upsertMistake(tx, buildExerciseMistakeGroup(attempt), {
+        exerciseFormat: attempt.exerciseFormat,
+        expected: attempt.expectedAnswer,
+        given: attempt.givenAnswer,
+        context: attempt.promptText,
+        exerciseAttemptId: attempt.id,
+        lastOccurredAt: practicedAt,
       });
     }
 

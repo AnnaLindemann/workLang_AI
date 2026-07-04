@@ -84,6 +84,7 @@ enum LlmRequestType {
   CEFR_ESTIMATION
   TEXT_IMPROVEMENT
   RECOMMENDATION
+  GRAMMAR_CHECK
 }
 
 enum LlmRequestStatus {

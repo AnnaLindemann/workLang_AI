@@ -1,0 +1,149 @@
+.intro {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #6b7280;
+  margin: 0 0 1rem;
+}
+
+/* Two columns that always fit the viewport — no horizontal scrolling. */
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.meaningWrap {
+  display: flex;
+}
+
+/* Large touch targets for comfortable one-handed use. */
+.termCell {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 56px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 0.3rem 0.4rem 0.3rem 0.6rem;
+}
+
+.select {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+  min-width: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0.3rem 0;
+  cursor: pointer;
+}
+
+.select:disabled {
+  cursor: default;
+}
+
+.termText {
+  font-weight: 600;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.transcription {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.meaningCell {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 56px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.meaningCell:disabled {
+  cursor: default;
+}
+
+.selected {
+  border-color: #0f766e;
+  background: #f0fdfa;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.matched {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.wrong {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.doneNote {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #166534;
+  margin: 1rem 0 0;
+}
+
+.status {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0.75rem 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .intro,
+  .transcription,
+  .status {
+    color: #9ca3af;
+  }
+  .termCell,
+  .meaningCell {
+    border-color: #4b5563;
+  }
+  .selected {
+    border-color: #2dd4bf;
+    background: #042f2e;
+  }
+  .matched {
+    border-color: #166534;
+    background: #052e16;
+    color: #bbf7d0;
+  }
+  .wrong {
+    border-color: #991b1b;
+    background: #450a0a;
+    color: #fecaca;
+  }
+  .doneNote {
+    color: #bbf7d0;
+  }
+}

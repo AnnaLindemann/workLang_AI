@@ -5,8 +5,23 @@
 }
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   border-bottom: 1px solid #e5e7eb;
   padding: 1rem 1.5rem;
+}
+
+.headerLink {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #0f766e;
+  text-decoration: none;
+}
+
+.headerLink:hover {
+  text-decoration: underline;
 }
 
 .brand {
@@ -59,6 +74,9 @@
 @media (prefers-color-scheme: dark) {
   .header {
     border-color: #374151;
+  }
+  .headerLink {
+    color: #2dd4bf;
   }
   .pageSubtitle {
     color: #9ca3af;

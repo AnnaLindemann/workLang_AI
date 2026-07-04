@@ -122,6 +122,99 @@ recommendations. The LLM evaluates free/semi-free writing using structured JSON
 validation — the tasks that deterministic matching cannot fairly grade. LLM
 output is persisted; deterministic data never depends on it.
 
+## Phase 7.1 — Vocabulary Trainer (standalone mode)
+
+### Goal
+
+Vocabulary practice is a **separate learning mode**, not embedded in lessons.
+Lessons stay focused on learning; the in-lesson vocabulary block is a study list
+only (with a pronunciation button per term). Active matching practice lives in a
+standalone **Vocabulary Trainer** opened explicitly from the main navigation
+(`/vocabulary`).
+
+### Source and session
+
+- The trainer draws from **every** vocabulary item across **all** lesson files
+  (deduplicated by language + term), not just one lesson. Lesson files remain the
+  vocabulary source; PostgreSQL stores only progress.
+- Each session is exactly **5** term↔meaning pairs, selected **deterministically**
+  from a mix of: new, previously failed, low-mastery, and not-recently-practiced
+  items. Mastered items normally drop out and only occasionally resurface.
+
+### User Experience
+
+Mobile-first, **tap-to-match** (no drag-and-drop): tap a term on the left, then
+its meaning on the right. Correct → green + locked + success persisted; wrong →
+red + retry allowed + failure persisted. Large touch targets, no horizontal
+scrolling. A speaker button pronounces each term.
+
+### Persistence, Error Engine, Mastery
+
+Reuses the deterministic attempt pipeline (`recordVocabularyMatch` →
+`ExerciseAttempt` → mastery + Error Engine): each term is its own mastery topic
+(`SkillArea.Vocabulary`), wrong matches become `Vocabulary`/`Matching` mistakes,
+and per-term success/failure/last-practiced are derived from the existing rows
+(no schema redesign). An item is **mastered after more than 10 successful
+matches**; wrong answers reduce mastery and raise future priority. Vocabulary
+mastery is independent from grammar mastery.
+
+### Adaptive Review
+
+The Vocabulary Trainer is independent from lesson review. The lesson review
+algorithm is unchanged and still surfaces vocabulary mistakes when appropriate
+(repeated mistakes prioritized, mastered items less often, max 5 tasks, no LLM).
+
+### Pronunciation
+
+A speaker button (browser Web Speech API / `SpeechSynthesis`) pronounces terms in
+the lesson vocabulary list and on trainer term cards. Client-side only — no LLM,
+no paid TTS, no key. It picks a German/English voice when available, degrades
+gracefully when unsupported, and never blocks the lesson or trainer. In the
+trainer the speaker never triggers card selection. Optional `transcription` /
+`pronunciationHint` fields are shown when present and never invented.
+
+### Acceptance Criteria
+
+✓ Vocabulary matching removed from lessons; the list is learning-only.
+✓ Standalone Vocabulary Trainer page, reachable from navigation.
+✓ Exactly 5 deterministic pairs per session, drawn from all lessons.
+✓ Mobile-first tap-to-match with green/red feedback.
+✓ Progress persisted; mastery after >10 successes; weak items repeat.
+✓ Existing review and Error Engine keep working; no LLM calls.
+✓ Pronunciation button in the lesson list and trainer, with graceful fallback.
+
+## Phase 7.2 — LLM Check for Open Grammar Exercises
+
+### Goal
+
+Open grammar exercises (`OpenExercise`, `SkillArea.Grammar`) used to only show a
+sample answer. This phase adds a lightweight, **universal** LLM checker (one
+prompt for all open grammar exercises — never one per grammar topic) that judges
+whether the learner's answer is a grammatically valid solution to the exercise.
+
+### Behaviour
+
+- Accepts alternative correct formulations; does not require an exact match with
+  the sample answer.
+- Judges grammar correctness and whether the instruction was fulfilled — **not**
+  business style, tone, CEFR, or long-form quality (that stays in the WritingTask
+  feedback path, which remains separate).
+- Returns short structured JSON, validated with Zod before persistence; malformed
+  responses degrade gracefully (the answer is not persisted, the call is logged
+  as an error).
+- Prefers the cheaper fallback model (`openai/gpt-oss-20b`), escalating to the
+  primary only on failure.
+- The UI clearly indicates when an AI check is used (no hidden calls). For German
+  article/noun mistakes, the correction always names the correct article.
+
+### Persistence
+
+Reuses the deterministic attempt pipeline: the LLM verdict becomes an
+`ExerciseAttempt` (`isCorrect`), so mastery and the Error Engine behave exactly
+as for graded grammar exercises, and every call is logged (`LlmRequestLog` +
+`CostRecord`, request type `GRAMMAR_CHECK`). Deterministic (graded) exercises
+remain fully deterministic and are never sent to the LLM.
+
 ## Phase 8 — Cost Tracking & Observability
 
 Every LLM request records a request log and a cost record in PostgreSQL, making

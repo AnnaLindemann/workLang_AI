@@ -1,8 +1,12 @@
 # WorkLang AI — Prompts
 
-> **Status:** design only. These are draft templates for the Phase 7 LLM layer
-> (see [roadmap.md](roadmap.md) and [llm-integration.md](llm-integration.md)).
-> They are not wired into code yet.
+> **Status:** partially implemented in Phase 7. The provider is **Groq** with
+> strict structured outputs (see [llm-integration.md](llm-integration.md)). The
+> writing path implements free-writing feedback, CEFR estimation, improved text,
+> and writing-mistake extraction as a **single combined structured-JSON call**
+> (`src/services/llm/writing-feedback.ts`), not one request per template below.
+> The standalone mistake-explanation and recommendation prompts remain design
+> only. The templates here are the authoritative framing for those prompts.
 
 This is the catalog of prompts for the LLM tasks. Prompts are treated as
 versioned assets: when a prompt changes, the change is reviewed like code.
@@ -16,9 +20,9 @@ versioned assets: when a prompt changes, the change is reviewed like code.
   towards B2**.
 - Anchor to the learner's **career track** (AI Consultant, or Customer Success /
   Hospitality with an AI component) when relevant.
-- Ask for **structured output** (clearly labeled sections or JSON) so results
-  can be parsed and persisted to the `WritingAttempt` row (see
-  [database.md](database.md)).
+- Ask for **structured output**. The writing path uses Groq **strict JSON
+  schema** output, re-validated with **Zod** before anything is persisted to the
+  `WritingAttempt` row (see [database.md](database.md)).
 - Keep outputs focused; verbosity costs tokens and money (cost is tracked — see
   [llm-integration.md](llm-integration.md)).
 

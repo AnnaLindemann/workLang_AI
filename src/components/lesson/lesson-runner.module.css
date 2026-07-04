@@ -143,6 +143,12 @@
   gap: 0.5rem;
 }
 
+.vocabTermGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .vocabTerm {
   font-weight: 600;
 }
@@ -150,6 +156,12 @@
 .vocabTranslation {
   font-size: 0.9rem;
   color: #6b7280;
+}
+
+.vocabTranscription {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0.3rem 0 0;
 }
 
 .vocabExample {
@@ -426,6 +438,99 @@
   gap: 0.75rem;
 }
 
+/* Vocabulary matching (Phase 7.1) */
+.matchIntro {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #6b7280;
+  margin: 1rem 0 0.75rem;
+}
+
+.matchBoard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.matchColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.matchCell {
+  font: inherit;
+  font-size: 0.92rem;
+  text-align: left;
+  color: inherit;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.matchCell:hover:not(:disabled) {
+  border-color: #0f766e;
+}
+
+.matchCellSelected {
+  border-color: #0f766e;
+  background: #f0fdfa;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.matchCellMatched {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+  cursor: default;
+}
+
+.matchCellWrong {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.matchDone {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #166534;
+  margin: 0.85rem 0 0;
+}
+
+.matchOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.matchOption {
+  font: inherit;
+  font-size: 0.9rem;
+  color: inherit;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.matchOption:hover:not(:disabled) {
+  border-color: #0f766e;
+}
+
+.matchOption:disabled {
+  cursor: not-allowed;
+}
+
 @media (prefers-color-scheme: dark) {
   .progressBar {
     background: #374151;
@@ -479,6 +584,7 @@
     color: #9ca3af;
   }
   .vocabExample,
+  .vocabTranscription,
   .completeText,
   .wordCount {
     color: #9ca3af;
@@ -506,5 +612,33 @@
   }
   .secondaryButton {
     border-color: #4b5563;
+  }
+  .matchIntro {
+    color: #9ca3af;
+  }
+  .matchCell,
+  .matchOption {
+    border-color: #4b5563;
+  }
+  .matchCell:hover:not(:disabled),
+  .matchOption:hover:not(:disabled) {
+    border-color: #2dd4bf;
+  }
+  .matchCellSelected {
+    border-color: #2dd4bf;
+    background: #042f2e;
+  }
+  .matchCellMatched {
+    border-color: #166534;
+    background: #052e16;
+    color: #bbf7d0;
+  }
+  .matchCellWrong {
+    border-color: #991b1b;
+    background: #450a0a;
+    color: #fecaca;
+  }
+  .matchDone {
+    color: #bbf7d0;
   }
 }
