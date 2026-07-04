@@ -19,6 +19,25 @@ Together the phases build the complete learning loop described in
 lesson content and practice first, then LLM writing feedback, then the data,
 dashboard, and content that close the loop.
 
+
+## Short note for docs/roadmap.md
+
+```md
+### LLM Environment Configuration
+
+LLM API keys and provider-specific environment variables must not be introduced before Phase 7.
+
+Phase 7 is the first phase where a real LLM request is allowed.
+
+Before Phase 7:
+
+- no `OPENAI_API_KEY`;
+- no `GROQ_API_KEY`;
+- no LLM provider client;
+- no hidden test calls to an LLM.
+
+All LLM configuration must remain server-side and must be connected to structured output validation and cost tracking.
+
 ## Phase 0 — Foundation ✅ (done)
 
 The groundwork the rest of the MVP builds on.

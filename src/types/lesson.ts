@@ -100,4 +100,10 @@ export interface Lesson {
   /** The CEFR level this lesson targets (German → C1, English → B2). */
   targetLevel: CefrLevel;
   activities: Activity[];
+  /**
+   * Reputable grammar references consulted when authoring this lesson's theory,
+   * for validation only (see the content principles in docs/roadmap.md). These
+   * are attributions in original wording — no copyrighted text is reproduced.
+   */
+  sources?: string[];
 }

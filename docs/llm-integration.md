@@ -60,3 +60,12 @@ memory or in `localStorage`. This makes LLM spend transparent and auditable.
   is persisted to the `WritingAttempt` row.
 - Failures must degrade gracefully: a missing LLM response never corrupts
   deterministic progress, mistakes, or mastery.
+
+## LLM Environment Variables
+
+LLM provider configuration must not be added before Phase 7.
+
+The first phase that may introduce LLM-related environment variables is:
+
+```txt
+Phase 7 — LLM Writing Feedback
