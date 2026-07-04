@@ -3,7 +3,7 @@
 // Renders a single lesson activity, switching on its `kind`.
 //
 // Presentation of each learning-loop screen:
-//   - Review        → placeholder (the adaptive review queue arrives later)
+//   - Review        → deterministic tasks selected from persisted learning data
 //   - GrammarTheory → titled sections (Russian explanation, target-language
 //                     examples)
 //   - Vocabulary    → term / Russian translation / target-language example
@@ -32,7 +32,8 @@ import type {
   WritingTask,
 } from "@/types";
 import { checkAnswer } from "@/domain/practice";
-import { recordExerciseAnswer } from "@/app/learn/actions";
+import { recordExerciseAnswer, recordReviewAnswer } from "@/app/learn/actions";
+import type { SelectedReviewTask } from "@/domain/review";
 
 import { useTransientState } from "./use-transient-state";
 import styles from "./lesson-runner.module.css";
@@ -40,19 +41,15 @@ import styles from "./lesson-runner.module.css";
 export function ActivityView({
   activity,
   lessonId,
+  reviewTasks,
 }: {
   activity: Activity;
   lessonId: LessonId;
+  reviewTasks: SelectedReviewTask[];
 }) {
   switch (activity.kind) {
     case ActivityKind.Review:
-      return (
-        <div className={styles.note}>
-          The lesson opens with an adaptive review of items due from earlier
-          mistakes and mastery. The review queue is built in a later phase, so
-          there is nothing due yet.
-        </div>
-      );
+      return <ReviewView tasks={reviewTasks} lessonId={lessonId} />;
 
     case ActivityKind.GrammarTheory:
       return (
@@ -140,10 +137,14 @@ function GradedExerciseItem({
   exercise,
   index,
   lessonId,
+  sourceLessonId,
+  isReview = false,
 }: {
   exercise: GradedExercise;
   index: number;
   lessonId: LessonId;
+  sourceLessonId?: string;
+  isReview?: boolean;
 }) {
   const [value, setValue] = useState("");
   const [result, setResult] = useState<AnswerCheck | null>(null);
@@ -159,11 +160,20 @@ function GradedExerciseItem({
     setSaveState("saving");
     startTransition(async () => {
       try {
-        await recordExerciseAnswer({
-          lessonId,
-          exerciseId: exercise.id,
-          given: value,
-        });
+        if (isReview && sourceLessonId) {
+          await recordReviewAnswer({
+            lessonId,
+            sourceLessonId,
+            exerciseId: exercise.id,
+            given: value,
+          });
+        } else {
+          await recordExerciseAnswer({
+            lessonId,
+            exerciseId: exercise.id,
+            given: value,
+          });
+        }
         setSaveState("saved");
       } catch {
         setSaveState("error");
@@ -223,6 +233,41 @@ function GradedExerciseItem({
         </div>
       )}
     </form>
+  );
+}
+
+function ReviewView({
+  tasks,
+  lessonId,
+}: {
+  tasks: SelectedReviewTask[];
+  lessonId: LessonId;
+}) {
+  if (tasks.length === 0) {
+    return (
+      <div className={styles.note}>
+        Nothing to review yet. Continue to the lesson to build your practice
+        history.
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.exerciseList}>
+      <p className={styles.reviewIntro}>
+        Based on your repeated mistakes and lower-mastery topics.
+      </p>
+      {tasks.map((task, index) => (
+        <GradedExerciseItem
+          key={`${task.sourceLessonId}:${task.exercise.id}`}
+          exercise={task.exercise}
+          index={index}
+          lessonId={lessonId}
+          sourceLessonId={task.sourceLessonId}
+          isReview
+        />
+      ))}
+    </div>
   );
 }
 

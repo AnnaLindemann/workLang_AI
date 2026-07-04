@@ -108,7 +108,7 @@ The Error Engine stores deterministic mistakes first (from closed/controlled
 exercises); it later also accepts LLM-derived mistakes from free/semi-free
 writing once Phase 7 lands.
 
-## Phase 6 — Adaptive Review
+## Phase 6 — Adaptive Review ✅ (done)
 
 The spaced-repetition review queue and the review block that opens each lesson,
 adapting to prior mistakes and mastery.

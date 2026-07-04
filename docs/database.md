@@ -1,6 +1,6 @@
 # WorkLang AI — Database
 
-> **Status:** foundation implemented in Phase 0.3 and extended in Phase 5. The
+> **Status:** foundation implemented in Phase 0.3 and extended through Phase 6. The
 > authoritative schema lives in [`prisma/schema.prisma`](../prisma/schema.prisma);
 > the first migration is in `prisma/migrations/`. This document explains the
 > intent and naming behind that schema. Only the data foundation exists —
@@ -99,6 +99,8 @@ Phase 5 aggregates exercise mistakes by user, language, lesson, skill area,
 topic, semantic category/subcategory, severity, and source.
 `ExerciseAttempt.processedAt` makes downstream mistake/mastery processing
 idempotent; attempts preserve that semantic metadata plus exercise format.
+Phase 6 also records whether an attempt came from normal exercise practice or
+adaptive review. Both sources use the same downstream processing pipeline.
 
 ### Mastery
 

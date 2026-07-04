@@ -11,3 +11,4 @@ export {
   type RecordExerciseAttemptInput,
 } from "./exercise-attempt-repository";
 export { processExerciseAttempt } from "./learning-engine-repository";
+export { loadReviewSourceData } from "./review-repository";

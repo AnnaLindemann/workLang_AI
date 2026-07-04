@@ -167,6 +167,13 @@
   gap: 1.1rem;
 }
 
+.reviewIntro {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #6b7280;
+  margin: 0;
+}
+
 .exercise {
   display: flex;
   flex-direction: column;

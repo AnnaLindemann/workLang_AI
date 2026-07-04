@@ -12,6 +12,7 @@ import type {
   Language,
   LessonId,
   MistakeSeverity,
+  MistakeSource,
   SkillArea,
   UserId,
 } from "@/types";
@@ -35,6 +36,7 @@ export interface RecordExerciseAttemptInput {
   expectedAnswer: string;
   givenAnswer: string;
   isCorrect: boolean;
+  source?: MistakeSource;
 }
 
 /** Persist a single exercise attempt and its local check result. */
@@ -57,6 +59,7 @@ export async function recordExerciseAttempt(
       expectedAnswer: input.expectedAnswer,
       givenAnswer: input.givenAnswer,
       isCorrect: input.isCorrect,
+      source: input.source,
     },
   });
 

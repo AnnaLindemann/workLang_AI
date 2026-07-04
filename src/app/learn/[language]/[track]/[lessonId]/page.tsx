@@ -1,17 +1,20 @@
 // The in-lesson experience: loads a lesson by id and hands it to the client
 // runner that steps through its activities.
 //
-// This is Phase 3 (Main Lesson UI): it presents each learning-loop screen. It
-// does not check answers, record mistakes, compute mastery, or persist
-// progress — those deterministic engines arrive in later phases. There is no
-// LLM here.
+// The server loads persisted mistake/mastery signals for the deterministic
+// opening review, while static lesson content remains local. There is no LLM.
 
 import { notFound } from "next/navigation";
 
-import { getLessonById } from "@/domain/lessons";
+import { getAllLessons, getLessonById } from "@/domain/lessons";
+import { selectReviewTasks } from "@/domain/review";
 import { lessonId as brandLessonId } from "@/lib/ids";
 import { languageBySlug, trackBySlug } from "@/lib/selection";
 import { LessonRunner } from "@/components/lesson/lesson-runner";
+import {
+  getOrCreateDefaultUser,
+  loadReviewSourceData,
+} from "@/services/storage";
 
 export default async function LessonPage({
   params,
@@ -36,11 +39,23 @@ export default async function LessonPage({
     notFound();
   }
 
+  const userId = await getOrCreateDefaultUser();
+  const { mistakes, mastery } = await loadReviewSourceData(
+    userId,
+    lesson.language,
+  );
+  const reviewTasks = selectReviewTasks(getAllLessons(), mistakes, mastery, {
+    lessonId: lesson.id,
+    language: lesson.language,
+    careerTrack: lesson.careerTrack,
+  });
+
   return (
     <LessonRunner
       lesson={lesson}
       language={{ label: language.label, slug: language.slug }}
       track={{ label: track.label, slug: track.slug }}
+      reviewTasks={reviewTasks}
     />
   );
 }

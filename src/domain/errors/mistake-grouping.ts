@@ -13,6 +13,7 @@ export interface MistakeGroupingInput {
   category?: string | null;
   subcategory?: string | null;
   severity?: MistakeSeverity | null;
+  source?: MistakeSource;
 }
 
 /** Complete, stable grouping metadata for one persisted graded attempt. */
@@ -32,6 +33,6 @@ export function buildExerciseMistakeGroup(input: MistakeGroupingInput) {
     category: input.category,
     subcategory: input.subcategory ?? DEFAULT_MISTAKE_SUBCATEGORY,
     severity: input.severity,
-    source: MistakeSource.Exercise,
+    source: input.source ?? MistakeSource.Exercise,
   } as const;
 }

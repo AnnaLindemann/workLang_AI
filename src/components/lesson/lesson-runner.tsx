@@ -12,6 +12,7 @@ import Link from "next/link";
 
 import { ActivityKind } from "@/types";
 import type { ActivityKind as ActivityKindType, Lesson } from "@/types";
+import type { SelectedReviewTask } from "@/domain/review";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
 import { ActivityView } from "./activity-view";
@@ -35,10 +36,12 @@ export function LessonRunner({
   lesson,
   language,
   track,
+  reviewTasks,
 }: {
   lesson: Lesson;
   language: CrumbTarget;
   track: CrumbTarget;
+  reviewTasks: SelectedReviewTask[];
 }) {
   const total = lesson.activities.length;
   // `step` runs 0..total-1 over the activities, then `total` for the
@@ -124,7 +127,11 @@ export function LessonRunner({
       <section className={styles.activityCard} aria-live="polite">
         <span className={styles.activityKind}>{kindLabels[activity.kind]}</span>
         <h2 className={styles.activityTitle}>{heading}</h2>
-        <ActivityView activity={activity} lessonId={lesson.id} />
+        <ActivityView
+          activity={activity}
+          lessonId={lesson.id}
+          reviewTasks={reviewTasks}
+        />
       </section>
 
       <div className={styles.controls}>

@@ -8,17 +8,19 @@
 // and correctness are never trusted from the client), and persists the attempt
 // to PostgreSQL. No LLM is involved.
 
-import { getLessonById } from "@/domain/lessons";
+import { getAllLessons, getLessonById } from "@/domain/lessons";
 import { checkAnswer, findExerciseInLesson } from "@/domain/practice";
+import { selectReviewTasks } from "@/domain/review";
 import {
   getOrCreateDefaultUser,
+  loadReviewSourceData,
   recordExerciseAttempt,
 } from "@/services/storage";
 import {
   exerciseId as brandExerciseId,
   lessonId as brandLessonId,
 } from "@/lib/ids";
-import { ExerciseEvaluation } from "@/types";
+import { ExerciseEvaluation, MistakeSource } from "@/types";
 
 /** The client's request to record one practice answer. */
 export interface RecordExerciseAnswerInput {
@@ -80,5 +82,74 @@ export async function recordExerciseAnswer(
     expectedAnswer: check.expected,
     givenAnswer: check.given,
     isCorrect: check.isCorrect,
+  });
+}
+
+export interface RecordReviewAnswerInput {
+  lessonId: string;
+  sourceLessonId: string;
+  exerciseId: string;
+  given: string;
+}
+
+/** Persist a selected review answer through the normal Phase 5 pipeline. */
+export async function recordReviewAnswer(
+  input: RecordReviewAnswerInput,
+): Promise<void> {
+  const currentLesson = getLessonById(brandLessonId(input.lessonId));
+  const lesson = getLessonById(brandLessonId(input.sourceLessonId));
+  if (!currentLesson || !lesson) {
+    throw new Error(`Unknown review source lesson: ${input.sourceLessonId}`);
+  }
+
+  const exercise = findExerciseInLesson(
+    lesson,
+    brandExerciseId(input.exerciseId),
+  );
+  if (!exercise || exercise.evaluation !== ExerciseEvaluation.Graded) {
+    throw new Error(
+      `Unknown or non-graded review exercise: ${input.exerciseId}`,
+    );
+  }
+
+  const userId = await getOrCreateDefaultUser();
+  const sourceData = await loadReviewSourceData(userId, currentLesson.language);
+  const selected = selectReviewTasks(
+    getAllLessons(),
+    sourceData.mistakes,
+    sourceData.mastery,
+    {
+      lessonId: currentLesson.id,
+      language: currentLesson.language,
+      careerTrack: currentLesson.careerTrack,
+    },
+  );
+  const isSelected = selected.some(
+    (task) =>
+      task.sourceLessonId === lesson.id && task.exercise.id === exercise.id,
+  );
+  if (!isSelected) {
+    throw new Error(
+      `Exercise "${input.exerciseId}" is not selected for review`,
+    );
+  }
+
+  const check = checkAnswer(exercise, input.given);
+  await recordExerciseAttempt({
+    userId,
+    lessonId: lesson.id,
+    exerciseId: exercise.id,
+    topic: exercise.topic,
+    category: exercise.category,
+    subcategory: exercise.subcategory,
+    severity: exercise.severity,
+    exerciseFormat: exercise.format,
+    language: lesson.language,
+    skillArea: exercise.skillArea,
+    promptText: exercise.prompt,
+    expectedAnswer: check.expected,
+    givenAnswer: check.given,
+    isCorrect: check.isCorrect,
+    source: MistakeSource.Review,
   });
 }

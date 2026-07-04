@@ -1,9 +1,9 @@
 # WorkLang AI — Error & Mastery Engine
 
-> **Status:** Phase 5 mistake aggregation and mastery updates are implemented.
-> Phase 6 adaptive review is not. The deterministic logic lives in
-> `src/domain/errors` and `src/domain/mastery`; transactional persistence lives in
-> `src/services/storage`.
+> **Status:** Phase 5 mistake aggregation and mastery updates and Phase 6
+> adaptive review are implemented. Deterministic logic lives in
+> `src/domain/errors`, `src/domain/mastery`, and `src/domain/review`;
+> transactional persistence lives in `src/services/storage`.
 
 The error engine is **deterministic**. It records mistakes, categorizes them,
 schedules reviews, and computes mastery. It does not call the LLM (the LLM may
@@ -31,7 +31,11 @@ deterministic regardless of a mistake's origin.
 
 ### Review queue (spaced repetition)
 
-> Planned for Phase 6; not implemented by the Phase 5 engine.
+Phase 6 selects at most five graded exercises from local lesson content using
+persisted mistakes and mastery records. Repeated mistakes rank first, followed
+by low mastery; current-lesson and current-track content resolve otherwise
+equal candidates. Open exercises are excluded. Review answers use the existing
+attempt, mistake, and mastery transaction and are marked with source `REVIEW`.
 
 - Maintain a per-user queue of `ReviewQueueItem` rows due for review.
 - Schedule reviews with a deterministic spaced-repetition rule (due date,
