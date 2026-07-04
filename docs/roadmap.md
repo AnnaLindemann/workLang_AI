@@ -19,23 +19,19 @@ Together the phases build the complete learning loop described in
 lesson content and practice first, then LLM writing feedback, then the data,
 dashboard, and content that close the loop.
 
-## Short note for docs/roadmap.md
+## LLM environment configuration
 
-```md
-### LLM Environment Configuration
-
-LLM API keys and provider-specific environment variables must not be introduced before Phase 7.
-
-Phase 7 is the first phase where a real LLM request is allowed.
+LLM API keys and provider-specific environment variables must not be introduced
+before Phase 7. Phase 7 is the first phase where a real LLM request is allowed.
 
 Before Phase 7:
 
-- no `OPENAI_API_KEY`;
-- no `GROQ_API_KEY`;
+- no LLM provider API key of any kind;
 - no LLM provider client;
 - no hidden test calls to an LLM.
 
-All LLM configuration must remain server-side and must be connected to structured output validation and cost tracking.
+All LLM configuration must remain server-side and must be connected to
+structured output validation and cost tracking.
 
 ## Phase 0 — Foundation ✅ (done)
 
@@ -75,10 +71,42 @@ Grammar theory, professional vocabulary, professional reading, and
 deterministic grammar practice with local answer checking (see
 [lesson-engine.md](lesson-engine.md)). Results persist to PostgreSQL. No LLM.
 
+Deterministic checking is **only for `GradedExercise` content** (closed or
+controlled exercises with `expectedAnswer` and optional `acceptedAnswers`):
+
+- multiple choice,
+- fill-in-the-blank,
+- short controlled answers,
+- tightly defined word-order tasks.
+
+`OpenExercise` content uses `sampleAnswer` instead of `expectedAnswer`.
+Open-ended and semi-free production tasks must **not** be strictly auto-graded
+with deterministic string matching, because multiple correct answers are
+possible, and they do not produce `ExerciseAttempt` rows.
+
+For Phase 4:
+
+- `GradedExercise` tasks are checked locally and persisted;
+- `OpenExercise` tasks show a sample answer and an explanation;
+- `OpenExercise` tasks are neither graded nor persisted as deterministic
+  attempts.
+
+For Phase 5:
+
+- the Error Engine stores deterministic mistakes first;
+- later it also accepts LLM-derived mistakes from free/semi-free writing.
+
+For Phase 7:
+
+- the LLM evaluates free/semi-free writing using structured JSON validation.
+
 ## Phase 5 — Error Engine & Mastery Engine
 
 Mistake storage and categorization, and deterministic mastery calculation (see
 [error-engine.md](error-engine.md)). All state persists to PostgreSQL. No LLM.
+The Error Engine stores deterministic mistakes first (from closed/controlled
+exercises); it later also accepts LLM-derived mistakes from free/semi-free
+writing once Phase 7 lands.
 
 ## Phase 6 — Adaptive Review
 
@@ -90,8 +118,9 @@ adapting to prior mistakes and mastery.
 The writing task → LLM feedback path (see
 [llm-integration.md](llm-integration.md) and [prompts.md](prompts.md)):
 free-writing feedback, CEFR estimation, improved text, mistake explanations, and
-recommendations. LLM output is persisted; deterministic data never depends on
-it.
+recommendations. The LLM evaluates free/semi-free writing using structured JSON
+validation — the tasks that deterministic matching cannot fairly grade. LLM
+output is persisted; deterministic data never depends on it.
 
 ## Phase 8 — Cost Tracking & Observability
 
@@ -147,4 +176,3 @@ Polish, documentation, and release as a portfolio-ready MVP.
 Authentication and multi-user accounts, job interview training, speech /
 pronunciation, full RAG with embeddings, mobile app, and richer gamification.
 See the non-goals in [project-overview.md](project-overview.md).
-```

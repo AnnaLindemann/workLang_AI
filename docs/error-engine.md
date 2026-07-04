@@ -18,6 +18,13 @@ later _explain_ a mistake, but it never decides scheduling or mastery).
   error category).
 - Persist each as a `Mistake` row in PostgreSQL.
 
+The Error Engine stores **deterministic mistakes first** — the incorrect answers
+from `GradedExercise` content. `OpenExercise` content cannot create a
+deterministic mistake. Once the LLM writing layer lands (Phase 7), the engine
+**also** accepts **LLM-derived mistakes** from free/semi-free writing:
+those flow in through the same `Mistake` storage, but scheduling and mastery stay
+deterministic regardless of a mistake's origin.
+
 ### Review queue (spaced repetition)
 
 - Maintain a per-user queue of `ReviewQueueItem` rows due for review.

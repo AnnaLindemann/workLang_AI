@@ -62,6 +62,37 @@ export const ActivityKind = {
 } as const;
 export type ActivityKind = (typeof ActivityKind)[keyof typeof ActivityKind];
 
+// How a practice exercise is evaluated. This is a domain concept only (no
+// Prisma counterpart): it splits practice into deterministically checkable
+// tasks and semi-free production tasks that must not be graded strictly.
+//
+//   Graded → a closed answer (fill-in-the-blank, multiple choice, short
+//            controlled answer). Checked locally with normalization and an
+//            accepted-alternatives list.
+//   Open   → a semi-free production task (sentence transformation, rewriting,
+//            business sentence writing) with many valid answers. Phase 4 shows
+//            a sample answer and explanation but never marks it wrong; graded
+//            evaluation of free production arrives with the LLM layer (Phase 7).
+export const ExerciseEvaluation = {
+  Graded: "GRADED",
+  Open: "OPEN",
+} as const;
+export type ExerciseEvaluation =
+  (typeof ExerciseEvaluation)[keyof typeof ExerciseEvaluation];
+
+// The concrete shape of a practice exercise. Domain-only metadata that records
+// the task type behind an exercise's evaluation mode (see ExerciseEvaluation).
+export const ExerciseFormat = {
+  MultipleChoice: "MULTIPLE_CHOICE",
+  FillBlank: "FILL_BLANK",
+  ShortAnswer: "SHORT_ANSWER",
+  Transformation: "TRANSFORMATION",
+  Rewrite: "REWRITE",
+  FreeSentence: "FREE_SENTENCE",
+} as const;
+export type ExerciseFormat =
+  (typeof ExerciseFormat)[keyof typeof ExerciseFormat];
+
 // Where a recorded mistake originated.
 export const MistakeSource = {
   Exercise: "EXERCISE",

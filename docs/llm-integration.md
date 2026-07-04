@@ -10,15 +10,21 @@ and never replaces them.
 
 ## Guiding rule
 
-**Do not use the LLM where deterministic logic is sufficient.** Answer checking,
-mistake categorization, review scheduling, and mastery are deterministic (see
+**Do not use the LLM where deterministic logic is sufficient.** Answer checking
+for `GradedExercise` content (multiple choice, fill-in-the-blank, short
+controlled answers, tightly defined word order), mistake categorization, review
+scheduling, and mastery are deterministic (see
 [lesson-engine.md](lesson-engine.md) and [error-engine.md](error-engine.md)).
-The LLM is reserved for open-ended language work.
+The LLM is reserved for open-ended language work — including `OpenExercise`
+content and free/semi-free writing that deterministic string matching cannot
+fairly grade because more than one answer can be correct.
 
 ## Responsibilities
 
 - **Free-writing feedback** — evaluate a learner's written text in a work
-  context.
+  context. Free and semi-free writing is graded here, not by deterministic
+  matching, and the model returns a **structured JSON** result that is validated
+  against a fixed schema before anything is persisted.
 - **Mistake explanation** — produce a clear, human explanation for a recorded
   mistake (without changing scheduling or mastery).
 - **CEFR estimation** — estimate the level of a writing sample (towards German

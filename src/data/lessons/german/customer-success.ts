@@ -4,11 +4,17 @@
 // hypothetical goodwill — the register that keeps guest and customer
 // communication courteous. Original content authored for WorkLang AI; see the
 // content principles in docs/roadmap.md. No copyrighted text is reproduced.
+//
+// Explanations are in Russian; example sentences and vocabulary usage stay in
+// German. Fill-in-the-blank exercises are graded deterministically; polite
+// rephrasings are semi-free (Open) and shown against a sample answer.
 
 import {
   ActivityKind,
   CareerTrack,
   CefrLevel,
+  ExerciseEvaluation,
+  ExerciseFormat,
   Language,
   SkillArea,
 } from "@/types";
@@ -36,18 +42,40 @@ export const germanCustomerSuccessKonjunktiv: Lesson = {
       id: activityId("de-customer-success-konjunktiv-ii-theory"),
       kind: ActivityKind.GrammarTheory,
       title: "Der Konjunktiv II",
-      content:
-        "Der Konjunktiv II macht Aussagen vorsichtiger und höflicher — genau " +
-        "das, was im Umgang mit Gästen und Kunden zählt. Bei den meisten " +
-        'Verben verwendet man die Umschreibung mit "würde" + Infinitiv: ' +
-        '"Ich würde Ihnen gern helfen." Häufige Hilfs- und Modalverben haben ' +
-        'eigene, kurze Formen, die man auswendig kennen sollte: "hätte" ' +
-        '(haben), "wäre" (sein), "könnte" (können), "würde" (werden). ' +
-        'Mit ihnen werden aus direkten Bitten freundliche Angebote: "Können ' +
-        'Sie warten?" wird zu "Könnten Sie einen Moment warten?", und ' +
-        '"Ich will ein ruhiges Zimmer" wird zu "Ich hätte gern ein ruhiges ' +
-        'Zimmer." Der Konjunktiv II drückt außerdem Hypothetisches aus: ' +
-        '"An Ihrer Stelle würde ich das Upgrade wählen."',
+      sections: [
+        {
+          heading: "Зачем нужен",
+          body:
+            "Konjunktiv II делает высказывания более осторожными и вежливыми " +
+            "— именно это важно в общении с гостями и клиентами. Прямые " +
+            "просьбы превращаются в дружелюбные предложения.",
+        },
+        {
+          heading: "Как образуется",
+          body:
+            "У большинства глаголов используют описательную форму «würde» + " +
+            "инфинитив. У частых вспомогательных и модальных глаголов есть " +
+            "собственные короткие формы, которые стоит знать наизусть.",
+        },
+        {
+          heading: "Важные формы",
+          items: [
+            "hätte — von «haben»",
+            "wäre — von «sein»",
+            "könnte — von «können»",
+            "würde — von «werden»",
+          ],
+        },
+        {
+          heading: "Примеры",
+          items: [
+            "Ich würde Ihnen gern helfen.",
+            "Könnten Sie einen Moment warten?",
+            "Ich hätte gern ein ruhiges Zimmer.",
+            "An Ihrer Stelle würde ich das Upgrade wählen.",
+          ],
+        },
+      ],
     },
     {
       id: activityId("de-customer-success-konjunktiv-ii-vocabulary"),
@@ -56,32 +84,32 @@ export const germanCustomerSuccessKonjunktiv: Lesson = {
       items: [
         {
           term: "das Anliegen",
-          translation: "request / concern",
+          translation: "просьба / обращение (запрос клиента)",
           example: "Ich kümmere mich gern um Ihr Anliegen.",
         },
         {
           term: "die Beschwerde",
-          translation: "complaint",
+          translation: "жалоба",
           example: "Wir würden Ihre Beschwerde gern umgehend klären.",
         },
         {
           term: "die Kulanz",
-          translation: "goodwill gesture",
+          translation: "жест доброй воли (уступка клиенту)",
           example: "Aus Kulanz könnten wir Ihnen ein Upgrade anbieten.",
         },
         {
           term: "die Rückerstattung",
-          translation: "refund",
+          translation: "возврат средств",
           example: "Die Rückerstattung würde innerhalb einer Woche erfolgen.",
         },
         {
           term: "die Verfügbarkeit",
-          translation: "availability",
+          translation: "доступность / наличие",
           example: "Ich würde gern die Verfügbarkeit für Sie prüfen.",
         },
         {
           term: "die Zufriedenheit",
-          translation: "satisfaction",
+          translation: "удовлетворённость",
           example: "Ihre Zufriedenheit hätte für uns oberste Priorität.",
         },
       ],
@@ -107,58 +135,65 @@ export const germanCustomerSuccessKonjunktiv: Lesson = {
         {
           id: exerciseId("de-customer-success-konjunktiv-ii-ex1"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.Transformation,
+          evaluation: ExerciseEvaluation.Open,
           prompt:
             'Formulieren Sie höflicher (Konjunktiv II von "können"): ' +
             '"Können Sie mir helfen?"',
-          expectedAnswer: "Könnten Sie mir helfen?",
-          acceptedAnswers: ["Könnten Sie mir helfen"],
+          sampleAnswer: "Könnten Sie mir helfen?",
           explanation:
-            'Die Konjunktiv-II-Form von "können" ist "könnten" und wirkt ' +
-            "als Bitte deutlich freundlicher.",
+            'Форма Konjunktiv II от "können" — "könnten"; как просьба она ' +
+            "звучит заметно вежливее.",
         },
         {
           id: exerciseId("de-customer-success-konjunktiv-ii-ex2"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.Transformation,
+          evaluation: ExerciseEvaluation.Open,
           prompt:
             'Formulieren Sie höflicher (Konjunktiv II von "haben"): ' +
             '"Ich habe gern ein Zimmer mit Blick."',
-          expectedAnswer: "Ich hätte gern ein Zimmer mit Blick.",
-          acceptedAnswers: ["Ich hätte gern ein Zimmer mit Blick"],
+          sampleAnswer: "Ich hätte gern ein Zimmer mit Blick.",
           explanation:
-            '"hätte" ist die Konjunktiv-II-Form von "haben" und drückt ' +
-            "einen höflichen Wunsch aus.",
+            '"hätte" — форма Konjunktiv II от "haben"; выражает вежливое ' +
+            "пожелание.",
         },
         {
           id: exerciseId("de-customer-success-konjunktiv-ii-ex3"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.FillBlank,
+          evaluation: ExerciseEvaluation.Graded,
           prompt:
             'Ergänzen Sie die "würde"-Form: "Ich ___ mich über eine ' +
             'Rückmeldung freuen."',
           expectedAnswer: "würde",
           explanation:
-            'Bei Vollverben bildet man den Konjunktiv II meist mit "würde" ' +
-            '+ Infinitiv: "würde ... freuen".',
+            'У смысловых глаголов Konjunktiv II чаще образуют с "würde" + ' +
+            'инфинитив: "würde … freuen".',
         },
         {
           id: exerciseId("de-customer-success-konjunktiv-ii-ex4"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.FillBlank,
+          evaluation: ExerciseEvaluation.Graded,
           prompt:
             'Ergänzen Sie die Konjunktiv-II-Form von "sein": "Falls Ihnen ' +
             'ein späterer Termin lieber ___, sagen Sie gern Bescheid."',
           expectedAnswer: "wäre",
-          explanation: '"wäre" ist die Konjunktiv-II-Form von "sein".',
+          explanation: '"wäre" — форма Konjunktiv II от "sein".',
         },
         {
           id: exerciseId("de-customer-success-konjunktiv-ii-ex5"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.Transformation,
+          evaluation: ExerciseEvaluation.Open,
           prompt:
             'Formulieren Sie höflicher (Konjunktiv II von "werden"): ' +
             '"Wir bieten Ihnen aus Kulanz ein Upgrade an."',
-          expectedAnswer: "Wir würden Ihnen aus Kulanz ein Upgrade anbieten.",
-          acceptedAnswers: ["Wir würden Ihnen aus Kulanz ein Upgrade anbieten"],
+          sampleAnswer: "Wir würden Ihnen aus Kulanz ein Upgrade anbieten.",
           explanation:
-            'Mit "würden ... anbieten" wird aus der festen Zusage ein ' +
-            "höfliches, zurückhaltendes Angebot.",
+            'С "würden … anbieten" твёрдое обещание превращается в вежливое, ' +
+            "сдержанное предложение.",
         },
       ],
     },
@@ -168,9 +203,16 @@ export const germanCustomerSuccessKonjunktiv: Lesson = {
       title: "Schreibaufgabe",
       prompt:
         "Ein Gast beschwert sich, dass sein Zimmer bei der Ankunft noch nicht " +
-        "bereit war. Schreiben Sie eine höfliche Antwort (100–130 Wörter): " +
-        "entschuldigen Sie sich, bieten Sie aus Kulanz eine Lösung an und " +
-        "verwenden Sie mindestens vier Konjunktiv-II-Formen.",
+        "bereit war. Schreiben Sie eine höfliche Antwort: entschuldigen Sie " +
+        "sich, bieten Sie aus Kulanz eine Lösung an und verwenden Sie " +
+        "mindestens vier Konjunktiv-II-Formen.",
+      wordRange: { min: 100, max: 130 },
+      requirements: [
+        "Извинитесь перед гостем",
+        "Предложите решение как жест доброй воли (Kulanz)",
+        "Используйте не менее четырёх форм Konjunktiv II",
+        "Сохраняйте вежливый тон",
+      ],
     },
   ],
 };

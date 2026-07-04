@@ -4,11 +4,18 @@
 // data flows, and system behaviour without foregrounding an actor. Original
 // content authored for WorkLang AI; see the content principles in
 // docs/roadmap.md. No copyrighted text is reproduced.
+//
+// Explanations (theory prose, headings, exercise notes) are in Russian for the
+// learner; example sentences and vocabulary usage stay in the target language
+// (German). Fill-in-the-blank exercises are graded deterministically; sentence
+// transformations are semi-free (Open) and shown against a sample answer.
 
 import {
   ActivityKind,
   CareerTrack,
   CefrLevel,
+  ExerciseEvaluation,
+  ExerciseFormat,
   Language,
   SkillArea,
 } from "@/types";
@@ -36,18 +43,40 @@ export const germanAiConsultantPassive: Lesson = {
       id: activityId("de-ai-consultant-vorgangspassiv-theory"),
       kind: ActivityKind.GrammarTheory,
       title: "Das Vorgangspassiv",
-      content:
-        "Das Vorgangspassiv rückt die Handlung in den Vordergrund und lässt " +
-        "offen oder nebensächlich, wer sie ausführt. Gebildet wird es mit einer " +
-        'Form von "werden" und dem Partizip II des Vollverbs: "Die Daten ' +
-        'werden anonymisiert." In der Beratung ist das nützlich, weil oft der ' +
-        "Prozess wichtiger ist als die handelnde Person — ein Modell, eine " +
-        "Analyse oder ein Systemschritt steht im Zentrum, nicht das Team " +
-        'dahinter. Wird der Urheber doch genannt, geschieht das mit "von" ' +
-        '(+ Dativ) für den Handelnden oder "durch" (+ Akkusativ) für das ' +
-        'Mittel: "Der Bericht wird vom Berater geprüft; die Auswertung wird ' +
-        'durch ein Skript erstellt." Im Nebensatz wandert die konjugierte Form ' +
-        'von "werden" ans Ende: "..., bevor das Modell trainiert wird."',
+      sections: [
+        {
+          heading: "Что это",
+          body:
+            "Vorgangspassiv (пассив действия) выдвигает на первый план само " +
+            "действие и оставляет неважным или неназванным того, кто его " +
+            "выполняет. В консалтинге это удобно: часто важнее процесс, а не " +
+            "исполнитель — в центре стоит модель, анализ или шаг системы, а не " +
+            "команда за ними.",
+        },
+        {
+          heading: "Как образуется",
+          body:
+            "Форма глагола «werden» + партицип II смыслового глагола. В " +
+            "придаточном предложении спрягаемая форма «werden» уходит в конец " +
+            "предложения.",
+        },
+        {
+          heading: "Кто исполнитель",
+          body:
+            "Если исполнителя всё же называют, используют «von» (+ Dativ) для " +
+            "действующего лица и «durch» (+ Akkusativ) для средства или " +
+            "инструмента.",
+        },
+        {
+          heading: "Примеры",
+          items: [
+            "Die Daten werden anonymisiert.",
+            "Der Bericht wird vom Berater geprüft.",
+            "Die Auswertung wird durch ein Skript erstellt.",
+            "…, bevor das Modell trainiert wird.",
+          ],
+        },
+      ],
     },
     {
       id: activityId("de-ai-consultant-vorgangspassiv-vocabulary"),
@@ -56,36 +85,36 @@ export const germanAiConsultantPassive: Lesson = {
       items: [
         {
           term: "die Anforderungsanalyse",
-          translation: "requirements analysis",
+          translation: "анализ требований",
           example:
             "Vor der Umsetzung wird eine gründliche Anforderungsanalyse " +
             "durchgeführt.",
         },
         {
           term: "der Machbarkeitsnachweis",
-          translation: "proof of concept",
+          translation: "подтверждение осуществимости (proof of concept)",
           example:
             "Der Machbarkeitsnachweis wird in zwei Wochen fertiggestellt.",
         },
         {
           term: "die Schnittstelle",
-          translation: "interface / API",
+          translation: "интерфейс / API",
           example:
             "Die Schnittstelle wird an das bestehende System angebunden.",
         },
         {
           term: "der Anwendungsfall",
-          translation: "use case",
+          translation: "сценарий использования",
           example: "Für jeden Anwendungsfall werden klare Kriterien definiert.",
         },
         {
           term: "der Datenschutz",
-          translation: "data protection",
+          translation: "защита данных",
           example: "Der Datenschutz wird bei jedem Schritt berücksichtigt.",
         },
         {
           term: "die Wirtschaftlichkeit",
-          translation: "cost-effectiveness",
+          translation: "экономическая целесообразность",
           example: "Die Wirtschaftlichkeit der Lösung wird laufend geprüft.",
         },
       ],
@@ -112,59 +141,68 @@ export const germanAiConsultantPassive: Lesson = {
         {
           id: exerciseId("de-ai-consultant-vorgangspassiv-ex1"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.Transformation,
+          evaluation: ExerciseEvaluation.Open,
           prompt:
             'Formen Sie ins Vorgangspassiv um: "Wir speichern die ' +
             'Kundendaten verschlüsselt."',
-          expectedAnswer: "Die Kundendaten werden verschlüsselt gespeichert.",
-          acceptedAnswers: ["Die Kundendaten werden verschlüsselt gespeichert"],
+          sampleAnswer: "Die Kundendaten werden verschlüsselt gespeichert.",
           explanation:
-            'Das Objekt "die Kundendaten" wird zum Subjekt; "werden" + ' +
-            'Partizip II "gespeichert" bilden das Passiv.',
+            'Дополнение "die Kundendaten" становится подлежащим; "werden" + ' +
+            'партицип II "gespeichert" образуют пассив. Возможны варианты ' +
+            "порядка слов — сравните свой ответ с образцом.",
         },
         {
           id: exerciseId("de-ai-consultant-vorgangspassiv-ex2"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.FillBlank,
+          evaluation: ExerciseEvaluation.Graded,
           prompt:
             'Ergänzen Sie die richtige Form von "werden": "Bevor das ' +
             'Modell trainiert ___, werden die Daten bereinigt."',
           expectedAnswer: "wird",
           explanation:
-            'Im Nebensatz steht das konjugierte "werden" am Satzende; ' +
-            'Subjekt "das Modell" ist Singular: "wird".',
+            'В придаточном предложении спрягаемое "werden" стоит в конце; ' +
+            'подлежащее "das Modell" в единственном числе — "wird".',
         },
         {
           id: exerciseId("de-ai-consultant-vorgangspassiv-ex3"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.FillBlank,
+          evaluation: ExerciseEvaluation.Graded,
           prompt:
             'Ergänzen Sie "von" oder "durch": "Der Bericht wird ___ dem ' +
             'Berater geprüft."',
           expectedAnswer: "von",
           explanation:
-            'Der handelnde Urheber (eine Person) wird mit "von" + Dativ ' +
-            "angeschlossen.",
+            'Действующее лицо (человек) присоединяется предлогом "von" + ' +
+            "Dativ.",
         },
         {
           id: exerciseId("de-ai-consultant-vorgangspassiv-ex4"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.FillBlank,
+          evaluation: ExerciseEvaluation.Graded,
           prompt:
             'Ergänzen Sie "von" oder "durch": "Die Auswertung wird ___ ' +
             'ein Skript erstellt."',
           expectedAnswer: "durch",
           explanation:
-            'Das Mittel oder Werkzeug einer Handlung wird mit "durch" + ' +
-            "Akkusativ angeschlossen.",
+            "Средство или инструмент действия присоединяется предлогом " +
+            '"durch" + Akkusativ.',
         },
         {
           id: exerciseId("de-ai-consultant-vorgangspassiv-ex5"),
           skillArea: SkillArea.Grammar,
+          format: ExerciseFormat.Transformation,
+          evaluation: ExerciseEvaluation.Open,
           prompt:
             'Formen Sie ins Vorgangspassiv um: "Das Team stellt die ' +
             'Ergebnisse vor."',
-          expectedAnswer: "Die Ergebnisse werden vorgestellt.",
-          acceptedAnswers: ["Die Ergebnisse werden vorgestellt"],
+          sampleAnswer: "Die Ergebnisse werden vorgestellt.",
           explanation:
-            "Trennbares Verb: Im Partizip II bleibt die Vorsilbe verbunden — " +
-            '"vorgestellt".',
+            "Отделяемый глагол: в партиципе II приставка остаётся " +
+            'присоединённой — "vorgestellt".',
         },
       ],
     },
@@ -174,9 +212,15 @@ export const germanAiConsultantPassive: Lesson = {
       title: "Schreibaufgabe",
       prompt:
         "Ein Kunde bittet um eine kurze Beschreibung, wie ein KI-Projekt " +
-        "abläuft. Beschreiben Sie den Ablauf in 120–150 Wörtern und verwenden " +
-        "Sie mindestens fünf Passivkonstruktionen. Achten Sie auf einen " +
-        "sachlichen, professionellen Ton.",
+        "abläuft. Beschreiben Sie den Ablauf und verwenden Sie mindestens " +
+        "fünf Passivkonstruktionen. Achten Sie auf einen sachlichen, " +
+        "professionellen Ton.",
+      wordRange: { min: 120, max: 150 },
+      requirements: [
+        "Опишите ход проекта по шагам",
+        "Используйте не менее пяти пассивных конструкций (Vorgangspassiv)",
+        "Сохраняйте деловой, нейтральный тон",
+      ],
     },
   ],
 };

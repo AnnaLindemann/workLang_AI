@@ -44,6 +44,14 @@ deterministic logic from expensive, non-deterministic LLM calls. See
 The guiding rule: **do not use the LLM where deterministic logic is
 sufficient.**
 
+Deterministic answer checking applies **only to `GradedExercise` content** —
+closed or controlled multiple choice, fill-in-the-blank, short controlled
+answers, and tightly defined word-order tasks. `OpenExercise` content and open
+production (for example the writing task) must **not** be strictly marked wrong
+by deterministic string matching, because more than one answer can be correct.
+Open exercises show a sample answer and an explanation rather than a pass/fail
+grade; LLM evaluation belongs to Phase 7.
+
 ## The learning loop
 
 Every lesson runs the same end-to-end loop. All steps are deterministic except
@@ -58,8 +66,11 @@ Every lesson runs the same end-to-end loop. All steps are deterministic except
 5. **Grammar theory** — the lesson's grammar explanation.
 6. **Professional vocabulary** — track-relevant vocabulary.
 7. **Professional reading** — a work-context reading passage.
-8. **Deterministic grammar practice** — exercises with local answer checking.
-9. **Writing task** — the learner writes in a real work context.
+8. **Deterministic grammar practice** — closed/controlled exercises (multiple
+   choice, fill-in-the-blank, short controlled answers, tightly defined word
+   order) with local answer checking.
+9. **Writing task** — the learner writes in a real work context. This is
+   semi-free production: it is never auto-graded as wrong by string matching.
 10. **LLM feedback** — the only LLM step: feedback, CEFR estimate, and an
     improved version of the writing.
 11. **Mistake storage** — mistakes from practice and writing are recorded.
