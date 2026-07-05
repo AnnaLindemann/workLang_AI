@@ -10,6 +10,7 @@
 import { useSyncExternalStore } from "react";
 
 import { Language } from "@/types";
+import { getLessonCopy } from "@/components/lesson/lesson-copy";
 
 import styles from "./pronounce-button.module.css";
 
@@ -42,6 +43,7 @@ export function PronounceButton({
   );
 
   if (!supported) return null;
+  const label = getLessonCopy(language).pronounce(text);
 
   function speak(event: React.MouseEvent) {
     // Never let the speaker trigger card selection/matching around it.
@@ -71,8 +73,8 @@ export function PronounceButton({
       type="button"
       className={`${styles.button} ${size === "large" ? styles.large : ""}`}
       onClick={speak}
-      aria-label={`Pronounce ${text}`}
-      title={`Pronounce ${text}`}
+      aria-label={label}
+      title={label}
     >
       <span aria-hidden="true">🔊</span>
     </button>

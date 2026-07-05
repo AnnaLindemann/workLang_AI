@@ -220,7 +220,13 @@ remain fully deterministic and are never sent to the LLM.
 Every LLM request records a request log and a cost record in PostgreSQL, making
 LLM spend transparent and auditable.
 
-## Phase 9 — Content Expansion
+## Phase 9 — Progress Dashboard ⏸️ (postponed)
+
+The learner-facing progress dashboard is intentionally postponed. The existing
+mastery, error, adaptive-review, and cost-tracking data remains unchanged and
+continues to be persisted; this phase is not part of the current work.
+
+## Phase 10 — Content Expansion 🚧 (active)
 
 Broaden lessons, grammar, vocabulary, and reading across both career tracks and
 toward the German C1 / English B2 targets. All future lesson creation must
@@ -263,7 +269,13 @@ Each lesson should reference the grammar sources used for validation (if
 applicable), but must not reproduce copyrighted text. Its catalog metadata must
 be recorded in [`content-catalog.md`](content-catalog.md).
 
-## Phase 10 — Portfolio Release
+The current Phase 10 curriculum expansion is complete: both German and English
+career tracks contain the full ten-lesson grammar sequence. The final block
+added the English Customer Success / Hospitality curriculum with professional
+contexts spanning hotel operations, MICE, onboarding, service recovery, CRM,
+and AI-supported customer success.
+
+## Phase 11 — Portfolio Release
 
 Polish, documentation, and release as a portfolio-ready MVP.
 

@@ -11,21 +11,13 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { ActivityKind } from "@/types";
-import type { ActivityKind as ActivityKindType, Lesson } from "@/types";
+import type { Lesson } from "@/types";
 import type { SelectedReviewTask } from "@/domain/review";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
 import { ActivityView } from "./activity-view";
+import { getLessonCopy } from "./lesson-copy";
 import styles from "./lesson-runner.module.css";
-
-const kindLabels: Record<ActivityKindType, string> = {
-  [ActivityKind.Review]: "Review",
-  [ActivityKind.GrammarTheory]: "Grammar theory",
-  [ActivityKind.Vocabulary]: "Vocabulary",
-  [ActivityKind.Reading]: "Reading",
-  [ActivityKind.GrammarPractice]: "Practice",
-  [ActivityKind.Writing]: "Writing",
-};
 
 interface CrumbTarget {
   label: string;
@@ -44,6 +36,7 @@ export function LessonRunner({
   reviewTasks: SelectedReviewTask[];
 }) {
   const total = lesson.activities.length;
+  const copy = getLessonCopy(lesson.language);
   // `step` runs 0..total-1 over the activities, then `total` for the
   // completion screen.
   const [step, setStep] = useState(0);
@@ -58,7 +51,7 @@ export function LessonRunner({
   const breadcrumbs = (
     <Breadcrumbs
       items={[
-        { label: "Learn", href: "/learn" },
+        { label: copy.learn, href: "/learn" },
         { label: language.label, href: `/learn/${language.slug}` },
         { label: track.label, href: backHref },
         { label: lesson.title },
@@ -71,23 +64,18 @@ export function LessonRunner({
       <>
         {breadcrumbs}
         <div className={styles.complete}>
-          <h1 className={styles.completeTitle}>Lesson complete</h1>
-          <p className={styles.completeText}>
-            You worked through every screen of “{lesson.title}”. Saving graded
-            answers also updated your mistake history and topic mastery. Open
-            exercises and writing remain self-check activities and were not
-            graded.
-          </p>
+          <h1 className={styles.completeTitle}>{copy.lessonComplete}</h1>
+          <p className={styles.completeText}>{copy.completion(lesson.title)}</p>
           <div className={styles.completeActions}>
             <button
               type="button"
               className={styles.secondaryButton}
               onClick={() => goToStep(0)}
             >
-              Start over
+              {copy.startOver}
             </button>
             <Link href={backHref} className={styles.primaryLink}>
-              Back to lessons
+              {copy.backToLessons}
             </Link>
           </div>
         </div>
@@ -96,7 +84,7 @@ export function LessonRunner({
   }
 
   const activity = lesson.activities[step];
-  const heading = activity.title ?? kindLabels[activity.kind];
+  const heading = activity.title ?? copy.activityKinds[activity.kind];
   const isFirst = step === 0;
   const isLast = step === total - 1;
   const canAdvanceFromPractice =
@@ -111,7 +99,7 @@ export function LessonRunner({
       <div className={styles.lessonHeader}>
         <h1 className={styles.lessonTitle}>{lesson.title}</h1>
         <p className={styles.lessonMeta}>
-          {language.label} · {track.label} · Target {lesson.targetLevel}
+          {language.label} · {track.label} · {copy.target} {lesson.targetLevel}
         </p>
       </div>
 
@@ -122,7 +110,7 @@ export function LessonRunner({
           aria-valuenow={step + 1}
           aria-valuemin={1}
           aria-valuemax={total}
-          aria-label="Lesson progress"
+          aria-label={copy.lessonProgress}
         >
           <span
             className={styles.progressFill}
@@ -130,12 +118,15 @@ export function LessonRunner({
           />
         </div>
         <p className={styles.progressLabel}>
-          Step {step + 1} of {total} · {kindLabels[activity.kind]}
+          {copy.step} {step + 1} {copy.of} {total} ·{" "}
+          {copy.activityKinds[activity.kind]}
         </p>
       </div>
 
       <section className={styles.activityCard} aria-live="polite">
-        <span className={styles.activityKind}>{kindLabels[activity.kind]}</span>
+        <span className={styles.activityKind}>
+          {copy.activityKinds[activity.kind]}
+        </span>
         <h2 className={styles.activityTitle}>{heading}</h2>
         <ActivityView
           activity={activity}
@@ -153,7 +144,7 @@ export function LessonRunner({
           onClick={() => goToStep(Math.max(0, step - 1))}
           disabled={isFirst}
         >
-          Previous
+          {copy.previous}
         </button>
         {canAdvanceFromPractice && (
           <button
@@ -161,7 +152,7 @@ export function LessonRunner({
             className={styles.primaryButton}
             onClick={() => goToStep(step + 1)}
           >
-            {isLast ? "Finish" : "Next"}
+            {isLast ? copy.finish : copy.next}
           </button>
         )}
       </div>

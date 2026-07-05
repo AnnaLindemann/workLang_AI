@@ -125,4 +125,8 @@ See [roadmap.md](roadmap.md) for the full Phase 0–11 plan.
   first migration in place. No repositories/services yet.
 - **Phases 0–6:** foundation, domain/content/UI, deterministic practice,
   persisted error/mastery processing, and adaptive review are implemented.
-- **Phase 7 — LLM Writing Feedback:** next; no LLM provider is implemented.
+- **Phases 7–8:** LLM feedback, universal open-grammar checking, vocabulary
+  training, and cost tracking are implemented.
+- **Phase 9 — Progress Dashboard:** intentionally postponed.
+- **Phase 10 — Content Expansion:** the current 40-lesson scope is complete;
+  each language and career track contains ten lessons.

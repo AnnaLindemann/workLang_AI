@@ -9,14 +9,14 @@
 import type { Lesson } from "@/types";
 
 import { germanAiConsultantLessons } from "./german/ai-consultant";
-import { germanCustomerSuccessKonjunktiv } from "./german/customer-success";
-import { englishAiConsultantConditionals } from "./english/ai-consultant";
-import { englishCustomerSuccessTenses } from "./english/customer-success";
+import { germanCustomerSuccessLessons } from "./german/customer-success";
+import { englishAiConsultantLessons } from "./english/ai-consultant";
+import { englishCustomerSuccessLessons } from "./english/customer-success";
 
 /** Every authored lesson, in a stable order. */
 export const lessons: readonly Lesson[] = [
   ...germanAiConsultantLessons,
-  germanCustomerSuccessKonjunktiv,
-  englishAiConsultantConditionals,
-  englishCustomerSuccessTenses,
+  ...germanCustomerSuccessLessons,
+  ...englishAiConsultantLessons,
+  ...englishCustomerSuccessLessons,
 ];
