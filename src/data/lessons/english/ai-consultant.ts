@@ -3157,7 +3157,7 @@ const articlesBusiness = compactLesson({
       prompt:
         'Choose the correct option: "___ Security requires evidence." (the / a / an / —)',
       answer: "—",
-      accepted: ["zero article", "no article"],
+      accepted: ["-", "zero article", "no article"],
       explanation: "Абстрактное общее понятие без артикля.",
       subcategory: "zero",
     },
@@ -3237,7 +3237,14 @@ type FinalLessonConfig = {
   theory: TheorySection[];
   words: ReadonlyArray<readonly [string, string, string]>;
   reading: string;
-  drills: ReadonlyArray<readonly [string, string, string]>;
+  drills: ReadonlyArray<
+    readonly [
+      prompt: string,
+      answer: string,
+      explanation: string,
+      accepted?: readonly string[],
+    ]
+  >;
   opens: ReadonlyArray<readonly [string, string, string]>;
   writing: string;
   requirements: string[];
@@ -3314,10 +3321,11 @@ function finalLesson(c: FinalLessonConfig): Lesson {
     vocabulary: vocabulary(c.words),
     readingTitle: c.scenario,
     reading: c.reading,
-    graded: c.drills.map(([prompt, answer, explanation], i) => ({
+    graded: c.drills.map(([prompt, answer, explanation, accepted], i) => ({
       format: drillMetadata[i][0],
       prompt,
       answer,
+      accepted: accepted ? [...accepted] : undefined,
       explanation,
       subcategory: drillMetadata[i][1],
     })),
@@ -3455,7 +3463,7 @@ const advancedPrepositions = finalLesson({
       "Responsible collocates with for.",
     ],
     [
-      "Correct: Costs fell to €9,000 by €39,000.",
+      "Correct only the two prepositions; keep all figures and wording: Costs fell to €9,000 by €39,000.",
       "Costs fell by €9,000 to €39,000.",
       "By marks change; to marks result.",
     ],
@@ -3470,7 +3478,7 @@ const advancedPrepositions = finalLesson({
       "Due to precedes a noun phrase.",
     ],
     [
-      "Complete: We saved money ___ caching.",
+      'Complete with "through" to express a process: We saved money ___ caching.',
       "through",
       "Through expresses a process.",
     ],
@@ -3614,7 +3622,7 @@ const participleClauses = finalLesson({
     "Using a central orchestrator, the proposed architecture sends each request to a specialist agent. Given a narrow role and limited tool permissions, each agent can be tested independently. The research agent gathers evidence, while the analysis agent compares options. Having combined their outputs, the orchestrator asks a judge agent to check completeness. Requests flagged as sensitive are sent to a human reviewer. Designed around explicit termination conditions, the workflow avoids uncontrolled loops. Recording every handoff in a shared trace, the platform also gives the operations team enough observability to investigate failures.",
   drills: [
     [
-      "Reduce: The system uses a router and selects an agent.",
+      'Reduce with an initial -ing clause beginning "Using a router,"; keep "the system" as subject.',
       "Using a router, the system selects an agent.",
       "Active simultaneous action uses -ing.",
     ],
@@ -3629,7 +3637,7 @@ const participleClauses = finalLesson({
       "Having + V3 marks prior action.",
     ],
     [
-      "Correct: Using a router, the request was assigned by the system.",
+      'Correct the dangling participle; begin "Using a router," and make "the system" the subject: Using a router, the request was assigned by the system.',
       "Using a router, the system assigned the request.",
       "The subjects must match.",
     ],
@@ -3644,12 +3652,12 @@ const participleClauses = finalLesson({
       "Passive meaning uses V3.",
     ],
     [
-      "Complete: Having ___ the trace, we found the loop.",
+      'Complete with the past participle of "review": Having ___ the trace, we found the loop.',
       "reviewed",
       "Having takes a past participle.",
     ],
     [
-      "Reduce: Because it was designed for routing, the agent stays narrow.",
+      'Reduce with the initial past-participle phrase "Designed for routing,"; keep the main clause unchanged.',
       "Designed for routing, the agent stays narrow.",
       "Passive clause reduces to V3.",
     ],
@@ -3804,7 +3812,7 @@ const emphasisInversion = finalLesson({
       "Use base verb after did.",
     ],
     [
-      "Cleft: Metadata enables filtering.",
+      'Form an it-cleft using "It is ... that" and keep metadata as the focus: Metadata enables filtering.',
       "It is metadata that enables filtering.",
       "Cleft highlights metadata.",
     ],
@@ -3958,7 +3966,7 @@ const hedging = finalLesson({
     "The pilot appears to support a positive ROI, although the evidence is not conclusive. Handling time fell by approximately 11%, which may indicate a productivity gain. However, the sample covers one unit and eight weeks. Payback is likely to be between 12 and 16 months, depending on adoption. It may be worth extending measurement. I would suggest presenting a confidence range and sensitivity analysis rather than one headline figure.",
   drills: [
     [
-      "Soften: The pilot proves ROI.",
+      'Soften with "appears to indicate" and keep "The pilot" as subject: The pilot proves ROI.',
       "The pilot appears to indicate positive ROI.",
       "Avoid overstating evidence.",
     ],
@@ -3971,7 +3979,7 @@ const hedging = finalLesson({
     ],
     ["Demand is likely ___ grow.", "to", "Likely takes to-infinitive."],
     [
-      "Soften: The estimate is wrong.",
+      'Soften with "may be inaccurate" and keep "The estimate" as subject: The estimate is wrong.',
       "The estimate may be inaccurate.",
       "May softens criticism.",
     ],
@@ -4120,7 +4128,7 @@ const emailStyle = finalLesson({
     "Subject: Decision required — approve phase one\n\nDear Committee,\n\nFollowing the successful pilot, we recommend a phased enterprise rollout. Phase one will establish governance, integrate identity controls, and train priority users. Phase two will expand proven use cases; phase three will optimise operations using adoption data. With this in mind, we request funding approval and confirmation of a sponsor. Subject to approval by 15 September, work can begin on 1 October. Could you confirm both decisions by Friday? The roadmap is attached for your review.\n\nKind regards,\nProject Team",
   drills: [
     [
-      "Make concise: We write for the purpose of requesting approval.",
+      'Make concise by replacing "for the purpose of requesting" with "to request"; keep all other wording: We write for the purpose of requesting approval.',
       "We write to request approval.",
       "Infinitive states purpose.",
     ],
@@ -4138,6 +4146,7 @@ const emailStyle = finalLesson({
       "Parallelise: integrating, training, and we measure.",
       "integrating, training, and measuring",
       "Parallel forms.",
+      ["integrating, training and measuring"],
     ],
   ],
   opens: [

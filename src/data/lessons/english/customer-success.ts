@@ -2040,10 +2040,269 @@ const advancedVocabularyExamples: Readonly<Record<string, readonly string[]>> =
     ],
   };
 
+type ExerciseGuidance = {
+  graded: readonly string[];
+  open: readonly string[];
+};
+
+const advancedExerciseGuidance: Readonly<Record<string, ExerciseGuidance>> = {
+  "third-conditional": {
+    graded: [
+      "В условной части Third Conditional нужен Past Perfect: had discussed обозначает несостоявшееся раннее обсуждение бюджета.",
+      "После would have используется Participle II renewed: речь о непродлённом договоре в прошлом.",
+      "В Third Conditional if-clause требует had known, а результат — would have acted; обе части описывают упущенную возможность.",
+      "Might have показывает возможный, но не гарантированный эффект более длительного срока на повышение цены.",
+      "Инверсия Had Procurement approved заменяет if; в результате нужен would have signed.",
+      "Past Perfect образуется с Participle II gone, поэтому had went неверно.",
+      "Could have applied выражает возможный прошлый результат при более высокой фактической загрузке.",
+      "If вводит условие, при котором стороны согласились бы изменить срок уведомления.",
+    ],
+    open: [
+      "Используйте Third Conditional для упущенного прошлого действия и его делового последствия; сохраните контекст продления и нейтральный профессиональный тон.",
+      "Замените if-clause инверсией Had + subject + Participle II; сохраните смысл условия, результат с would/could/might have и контекст переговоров.",
+    ],
+  },
+  "mixed-conditionals": {
+    graded: [
+      "Would be связывает невыполненное обучение в прошлом с более низким уровнем использования сейчас.",
+      "Would have exposed выражает прошлый результат нереального текущего условия if the plan were clearer.",
+      "Would be показывает нынешнее состояние health score как результат прошлого улучшения поддержки.",
+      "Для текущего нереального условия нужен Past Simple tracked, а для прошлого результата — would have noticed.",
+      "Would have removed описывает прошлое устранение блокера при нереальном текущем условии were active.",
+      "Would be связывает неназначенных в прошлом владельцев с нынешней неясностью плана.",
+      "Were — нормативная форма сослагательного наклонения после if для нереального условия.",
+      "Were visible задаёт нереальное текущее состояние риска, от которого зависело прошлое действие клиента.",
+    ],
+    open: [
+      "Используйте mixed conditional: if + Past Perfect для пропущенного обучения и would + infinitive для нынешней слабой адаптации; сохраните QBR-контекст и деловой тон.",
+      "Используйте if + Past Simple с were для нынешней неясности плана и would have + Participle II для пропущенной эскалации; сохраните профессиональный смысл.",
+    ],
+  },
+  causative: {
+    graded: [
+      "После had + object нужен Participle II reconstructed: восстановление хронологии выполнил другой специалист.",
+      "Конструкция got + object + Participle II требует validated и подчёркивает организованную внешнюю проверку выборки.",
+      "Have something done строится без to: had the logs reviewed означает, что проверку выполнила другая сторона.",
+      "В будущем causative сохраняет have + object + Participle II: will have the rules tested.",
+      "После getting the report нужен Participle II checked, поскольку отчёт проверяет другой исполнитель.",
+      "Had reviewed — более формальная causative-модель для организованной проверки в SLA-расследовании.",
+      "Had the SLA confirmed описывает организованное подтверждение SLA, выполненное вчера.",
+      "Causative had our logs analysed сохраняет Operations как исполнителя через by-phrase.",
+    ],
+    open: [
+      "Преобразуйте два действия расследования в have/get + object + Participle II; укажите внешнего исполнителя при необходимости и сохраните SLA-контекст и формальный тон.",
+      "Сформулируйте вежливую просьбу с get + object + Participle II, сохранив действие проверки, срок и профессиональный регистр.",
+    ],
+  },
+  "quantifiers-approximation": {
+    graded: [
+      "Many употребляется с исчисляемым множественным cases и передаёт большое количество заявок без точной цифры.",
+      "Little сочетается с неисчисляемым evidence и подчёркивает недостаток доказательств.",
+      "Most of + the urgent cases обозначает большинство конкретной группы срочных заявок.",
+      "Every требует существительного в единственном числе и глагола has.",
+      "Just under 80% точно передаёт 79% без ложной точности в отчёте.",
+      "A few означает некоторое положительное количество случаев; few подчёркивало бы их нехватку.",
+      "Information неисчисляемо, поэтому с ним употребляется much, а не many.",
+      "Nearly all показывает, что ответили почти все команды, но не утверждает полный охват.",
+    ],
+    open: [
+      "Передайте 118 из 120 с nearly all или равнозначным приблизительным квантификатором; не искажайте долю и сохраните нейтральный тон отчёта.",
+      "Используйте a small number of, a few или сходный квантификатор для трёх нерешённых случаев; сохраните проблему ownership и дипломатичный деловой регистр.",
+    ],
+  },
+  "articles-business-english": {
+    graded: [
+      "A вводит исчисляемый warning sign впервые в обсуждение риска оттока.",
+      "The указывает на конкретную issue, уточнённую оборотом found yesterday.",
+      "Абстрактное Retention в общем значении употребляется с нулевым артиклем, обозначенным тире.",
+      "Перед account нужен an, потому что слово начинается с гласного звука.",
+      "The относится к конкретному usage decline в данном аккаунте.",
+      "Singular countable offer требует неопределённого артикля a при первом упоминании.",
+      "Customer loyalty обозначает общее понятие, поэтому артикль перед ним не нужен.",
+      "Перед urgent нужен an, так как слово начинается с гласного звука.",
+    ],
+    open: [
+      "Сначала введите исчисляемый риск с a/an, затем сошлитесь на тот же риск с the; сохраните контекст аккаунта и профессиональный тон.",
+      "Используйте нулевой артикль для retention в общем значении и the для конкретного retention plan; сохраните различие смыслов и клиентский контекст.",
+    ],
+  },
+  "advanced-prepositions": {
+    graded: [
+      "By показывает величину изменения: выручка выросла на 8%.",
+      "To показывает конечный уровень конверсии — 24%, а не величину роста.",
+      "Due to вводит именную причину stronger demand в отчёте о росте затрат.",
+      "Impact устойчиво сочетается с on при описании влияния на выручку.",
+      "Through обозначает процесс или средство улучшения предложений — персонализацию.",
+      "Устойчивое выражение in line with означает соответствие целевому показателю.",
+      "Перед полным предложением demand increased нужен because, а because of требует существительного.",
+      "Despite вводит контраст и принимает noun phrase higher rates.",
+    ],
+    open: [
+      "Используйте by для роста на 10% и to для конечного значения €110; сохраните обе цифры и деловой контекст выручки.",
+      "Преобразуйте контраст с despite + noun phrase или gerund; сохраните более высокие тарифы, стабильную удовлетворённость и профессиональный тон.",
+    ],
+  },
+  "participle-clauses": {
+    graded: [
+      "Using a playbook — -ing clause с тем же субъектом we; она показывает способ координации площадок.",
+      "Given означает «при наличии/учитывая» и вводит условие ясной ответственности.",
+      "Having completed показывает, что обучение завершилось до начала работы champions.",
+      "Субъект -ing clause должен выполнять действие: team использует checklist и подтверждает readiness.",
+      "Supported — пассивное Participle II: площадки запускаются безопасно при поддержке менеджеров.",
+      "Phasing — активная -ing clause с субъектом we, описывающая способ снижения риска.",
+      "После having нужен Participle II completed для более раннего завершённого setup.",
+      "Delayed — сокращённая пассивная конструкция, объясняющая перенос площадки в следующую волну.",
+    ],
+    open: [
+      "Объедините действия через -ing participle clause с общим субъектом; сохраните смысл координации onboarding и профессиональный регистр.",
+      "Используйте Having + Participle II для действия, завершённого до следующего этапа; сохраните последовательность setup и training в рабочем контексте.",
+    ],
+  },
+  "emphasis-inversion": {
+    graded: [
+      "После Only after нужна инверсия did + subject + base verb understand для акцента на моменте анализа.",
+      "Not only в начале требует вспомогательного did перед субъектом и базовой формы fall.",
+      "Under no circumstances вызывает инверсию; should выражает запрет на начало rollout.",
+      "После did основной глагол остаётся в базовой форме understand, а не understood.",
+      "Cleft It was ownership that выделяет ownership как причину задержки.",
+      "Not until в начале требует инверсии did we receive для завершённого события в пятницу.",
+      "Only when вызывает инверсию will we proceed в условии о будущем решении.",
+      "Never в начале предложения требует инверсии Past Perfect: had we seen.",
+    ],
+    open: [
+      "Используйте cleft It is/was ... that для выделения ownership; сохраните причинный смысл, rollout-контекст и формальный тон.",
+      "Используйте Not only с правильной инверсией и but also для второго преимущества; сохраните оба executive-результата и профессиональный регистр.",
+    ],
+  },
+  "hedging-diplomatic-language": {
+    graded: [
+      "May be related to заменяет категоричную причинность на обоснованную возможность при неполных данных.",
+      "Appears to смягчает вывод о двух регионах и показывает предварительный статус информации.",
+      "После likely нужен to-infinitive: is likely to take передаёт вероятную длительность восстановления.",
+      "Suggest требует gerund using, а не to-infinitive, при рекомендации workaround.",
+      "Устойчивое выражение subject to change требует предлога to.",
+      "Is likely to work сохраняет рекомендацию, но не обещает гарантированный результат исправления.",
+      "Устойчивое выражение to some extent ограничивает степень полезности решения.",
+      "После would нужен suggest; конструкция вежливо рекомендует дождаться подтверждения.",
+    ],
+    open: [
+      "Используйте may/might, appears to или preliminary evidence suggests для возможной причины; не выдавайте гипотезу за факт и сохраните incident-контекст и формальный тон.",
+      "Используйте would suggest/recommend с грамматически верным дополнением; ясно назовите workaround, временное условие и сохраните дипломатичный профессиональный регистр.",
+    ],
+  },
+  "advanced-business-email-style": {
+    graded: [
+      "To request заменяет громоздкое for the purpose of requesting и делает деловую просьбу короче.",
+      "Could вводит вежливый прямой вопрос о владельце действия.",
+      "Устойчивое выражение subject to approval требует предлога to.",
+      "Глагол review заменяет номинальную конструкцию conduct a review без потери смысла.",
+      "To ensure выражает цель обучения менеджеров кратко и прямо.",
+      "Decision required — confirm priorities ясно сообщает действие получателю уже в теме письма.",
+      "После appreciate нужен притяжательный определитель your перед response.",
+      "В параллельном списке все элементы имеют форму gerund: completing, training, measuring.",
+    ],
+    open: [
+      "Замените vague request на вежливый прямой вопрос с конкретным owner и deadline; сохраните account-review контекст и профессиональный тон.",
+      "Напишите краткое opening с контекстом annual review и ясной рекомендацией; сохраните стратегический клиентский контекст и деловой регистр.",
+    ],
+  },
+};
+
+type TheoryGuidance = {
+  professionalExample: string;
+  takeaway: string;
+};
+
+const advancedTheoryGuidance: Readonly<Record<string, TheoryGuidance>> = {
+  "third-conditional": {
+    professionalExample:
+      "На переговорах можно нейтрально связать упущенное прошлое действие с его последствием: Had we reviewed the usage data earlier, we might have offered a different renewal structure. Инверсия Had we reviewed звучит формально и не превращает анализ в прямое обвинение.",
+    takeaway:
+      "Используйте Third Conditional для необратимых прошлых решений: if/had + Past Perfect и would/could/might have + Participle II. Не ставьте would в if-clause и выбирайте modal по степени уверенности результата.",
+  },
+  "mixed-conditionals": {
+    professionalExample:
+      "В QBR прошлую причину можно связать с текущим результатом: If we had trained the regional managers in January, adoption would be stronger now. Обратная модель объясняет прошлое решение текущим условием: If the success plan were clearer, we would have escalated sooner.",
+    takeaway:
+      "Используйте mixed conditionals, когда условие и результат относятся к разному времени. Сначала определите временную связь; не смешивайте формы автоматически и используйте were для нереального текущего условия.",
+  },
+  causative: {
+    professionalExample:
+      "В отчёте об SLA-нарушении Customer Success может показать организованную проверку: We had the incident timeline reconstructed and got the ticket sample independently validated. Фокус остаётся на выполненной работе, а не на сотруднике, который её выполнил.",
+    takeaway:
+      "Используйте have/get + object + Participle II, когда вы организуете выполнение работы другим специалистом. После объекта нужен Participle II без to; have обычно формальнее, чем get.",
+  },
+  "quantifiers-approximation": {
+    professionalExample:
+      "В межфункциональной эскалации точность должна соответствовать данным: Nearly all urgent cases now have owners, but a small number still require Finance input. Такая формулировка сообщает масштаб проблемы без ложной точности.",
+    takeaway:
+      "Выбирайте quantifier по типу существительного и смыслу: many/few с countable, much/little с uncountable, most of для конкретной группы. Не путайте few с a few и не используйте every с глаголом во множественном числе.",
+  },
+  "articles-business-english": {
+    professionalExample:
+      "В churn-review объект сначала вводится, затем становится конкретным: We identified a churn risk. The risk is linked to low adoption. Для общего понятия артикль не нужен: Retention requires trust.",
+    takeaway:
+      "Используйте a/an при первом упоминании исчисляемого объекта, the для уже известного или уточнённого объекта и zero article для общих абстрактных понятий. Не опускайте артикль перед singular countable noun.",
+  },
+  "advanced-prepositions": {
+    professionalExample:
+      "В revenue-рекомендации предлоги различают величину, итог, причину и контраст: Revenue rose by 10% to €110 due to stronger demand. Despite higher rates, satisfaction remained stable.",
+    takeaway:
+      "Выбирайте by для величины изменения, to для конечного значения, due to перед noun phrase и despite перед noun/-ing. Проверяйте устойчивые сочетания вроде impact on и in line with, а не переводите предлог отдельно.",
+  },
+  "participle-clauses": {
+    professionalExample:
+      "В плане многоэтапного onboarding можно компактно показать способ и последовательность: Using a shared playbook, the team tracks readiness across all sites. Having completed identity setup, the first location began user training.",
+    takeaway:
+      "Используйте -ing для активного действия, V3 для пассивного состояния и having + V3 для предшествования. Субъект participle clause должен совпадать с субъектом main clause; иначе возникает dangling participle.",
+  },
+  "emphasis-inversion": {
+    professionalExample:
+      "В executive briefing акцент помогает выделить условие решения: Only after Finance validated the evidence did we recommend expansion. It is the unresolved integration that poses the greatest renewal risk.",
+    takeaway:
+      "После fronted only/not until/never используйте auxiliary + subject + base verb; после did глагол не ставится в Past Simple. Cleft sentence выделяет один решающий фактор без изменения фактов.",
+  },
+  "hedging-diplomatic-language": {
+    professionalExample:
+      "В кризисном обновлении отделяйте подтверждённое от предварительного: Current evidence suggests that the disruption may be related to the message queue. We would suggest using manual confirmations until testing is complete.",
+    takeaway:
+      "Используйте may, appears to и suggests для непроверенных причин, а would suggest для дипломатичной рекомендации. Не ослабляйте подтверждённые факты и помните: suggest требует -ing или that-clause, не to-infinitive.",
+  },
+  "advanced-business-email-style": {
+    professionalExample:
+      "Стратегическое письмо сразу показывает решение и срок: Decision required — confirm next-year priorities. Could you confirm the executive owner and target dates by Friday? Детали остаются в приложенном success plan.",
+    takeaway:
+      "Начинайте с цели и clear ask, используйте прямые глаголы и параллельные списки, указывайте owner и deadline. Вежливость не должна скрывать требуемое решение; избегайте тяжёлых конструкций вроде for the purpose of.",
+  },
+};
+
+const advancedAcceptedAnswers: Readonly<
+  Record<string, Readonly<Record<number, readonly string[]>>>
+> = {
+  "articles-business-english": {
+    2: ["-", "zero article", "no article"],
+  },
+  "advanced-business-email-style": {
+    7: ["completing, training and measuring"],
+  },
+};
+
 function advancedLesson(s: AdvancedSpec): Lesson {
   const examples = advancedVocabularyExamples[s.slug];
+  const guidance = advancedExerciseGuidance[s.slug];
+  const theoryGuidance = advancedTheoryGuidance[s.slug];
   if (!examples || examples.length !== s.words.length) {
     throw new Error(`Invalid vocabulary examples for ${s.slug}`);
+  }
+  if (
+    !guidance ||
+    guidance.graded.length !== s.drills.length ||
+    guidance.open.length !== s.open.length
+  ) {
+    throw new Error(`Invalid exercise guidance for ${s.slug}`);
+  }
+  if (!theoryGuidance) {
+    throw new Error(`Invalid theory guidance for ${s.slug}`);
   }
   const vocab = s.words.map(
     ([term, translation], index) =>
@@ -2059,12 +2318,12 @@ function advancedLesson(s: AdvancedSpec): Lesson {
       { heading: "Форма", body: s.form },
       {
         heading: "Профессиональный пример",
-        body: `Эта структура помогает точно и дипломатично обсуждать сценарий «${s.scenario}».`,
+        body: theoryGuidance.professionalExample,
       },
       { heading: "Типичные ошибки", body: s.errors },
       {
         heading: "Запомните",
-        body: "Сначала определите время, значение и деловой регистр; затем выбирайте форму.",
+        body: theoryGuidance.takeaway,
       },
     ],
     vocabulary: vocab,
@@ -2076,17 +2335,13 @@ function advancedLesson(s: AdvancedSpec): Lesson {
           i % 3 === 0 ? ExerciseFormat.ShortAnswer : ExerciseFormat.FillBlank,
           prompt,
           answer,
-          "Форма соответствует правилу урока и сохраняет профессиональный смысл.",
+          guidance.graded[i],
+          advancedAcceptedAnswers[s.slug]?.[i],
         ] as const,
     ),
     open: s.open.map(
-      ([prompt, sample]) =>
-        [
-          ExerciseFormat.Rewrite,
-          prompt,
-          sample,
-          "нужна целевая грамматическая конструкция, грамматическая точность и профессиональный регистр",
-        ] as const,
+      ([prompt, sample], index) =>
+        [ExerciseFormat.Rewrite, prompt, sample, guidance.open[index]] as const,
     ),
     writingPrompt: s.writing,
     writingRequirements: [
@@ -2134,7 +2389,7 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
       ],
       ["The client would have ___ (renew) at 6%.", "renewed"],
       [
-        "Correct: If we would have known, we acted sooner.",
+        "Correct only the two verb forms; keep all other wording: If we would have known, we acted sooner.",
         "If we had known, we would have acted sooner.",
       ],
       ["A longer term ___ have reduced the uplift.", "might"],
@@ -2195,7 +2450,7 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
         "would be",
       ],
       [
-        "Correct: If we would track adoption, we had noticed the gap.",
+        "Correct only the conditional verb forms; keep all other wording: If we would track adoption, we had noticed the gap.",
         "If we tracked adoption, we would have noticed the gap.",
       ],
       [
@@ -2258,7 +2513,7 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
       ["Choose the formal option: had reviewed / got done", "had reviewed"],
       ["We ___ the SLA confirmed yesterday.", "had"],
       [
-        "Rewrite: Operations analysed our logs.",
+        'Rewrite with have something done; begin "We had" and retain the by-agent "by Operations": Operations analysed our logs.',
         "We had our logs analysed by Operations.",
       ],
     ],
@@ -2461,20 +2716,20 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
       "Using a shared playbook, the group will onboard twelve locations in three waves. Given different identity systems, each site must complete a readiness checklist. Having finished training, local champions will run practice sessions before go-live. Supported by regional managers, the customer success team will compare adoption against a common baseline. Locations missing a go-live gate will move to the next wave.",
     drills: [
       [
-        "Combine: We use a playbook. We coordinate sites.",
+        'Combine and begin with "Using a playbook,": We use a playbook. We coordinate sites.',
         "Using a playbook, we coordinate sites.",
       ],
       ["___ clear ownership, rollout is faster.", "Given"],
       ["___ completed training, champions can coach.", "Having"],
       [
-        "Correct: Using the checklist, readiness was confirmed by the team.",
+        'Correct the dangling participle; begin "Using the checklist," and make "the team" the subject: Using the checklist, readiness was confirmed by the team.',
         "Using the checklist, the team confirmed readiness.",
       ],
       ["___ by managers, sites launch safely.", "Supported"],
       ["___ rollout by region, we reduce risk.", "Phasing"],
       ["Having ___ setup, the site tested access.", "completed"],
       [
-        "Reduce: Because it was delayed, the site moved waves.",
+        'Reduce with the initial past-participle clause "Delayed," and use "moved to the next wave": Because it was delayed, the site moved waves.',
         "Delayed, the site moved to the next wave.",
       ],
     ],
@@ -2528,7 +2783,7 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
       ["Under no circumstances ___ rollout begin.", "should"],
       ["Correct: Only then did we understood.", "Only then did we understand."],
       [
-        "Cleft: Ownership caused the delay.",
+        'Form an it-cleft using "It was ... that" and keep ownership as the focus: Ownership caused the delay.',
         "It was ownership that caused the delay.",
       ],
       ["Not until Friday ___ we receive approval.", "did"],
@@ -2578,7 +2833,7 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
       "Our current understanding is that the outage appears to affect booking confirmations in two regions. The issue may be related to a failed message queue, although the investigation is ongoing. Existing reservations remain safe. Service is likely to be restored within ninety minutes, but that estimate is subject to change. We would suggest using the manual confirmation workaround for urgent arrivals. The next status update will be issued at 16:00.",
     drills: [
       [
-        "Soften: The queue caused the outage.",
+        'Soften with "may be related to"; begin "The outage": The queue caused the outage.',
         "The outage may be related to the queue.",
       ],
       ["The issue ___ affect two regions.", "appears to"],
@@ -2588,7 +2843,10 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
         "We suggest using the workaround.",
       ],
       ["The estimate is subject ___ change.", "to"],
-      ["Soften: The fix will work.", "The fix is likely to work."],
+      [
+        'Soften with "is likely to"; keep "The fix" as subject: The fix will work.',
+        "The fix is likely to work.",
+      ],
       ["This helps ___ some extent.", "to"],
       ["We would ___ waiting for confirmation.", "suggest"],
     ],
@@ -2635,7 +2893,7 @@ const advancedCustomerSuccessLessons: readonly Lesson[] = [
       "Subject: Decision required — confirm next-year account priorities. Dear Ms Chen, This year's review shows higher adoption, faster support resolution, and one unresolved integration dependency. With this in mind, we propose three priorities: complete the integration, expand manager training, and establish quarterly value reviews. Could you confirm the executive owner and target dates by Friday? Subject to your approval, we will update the joint success plan next week. The year-in-review summary is attached for your review.",
     drills: [
       [
-        "Make concise: We write for the purpose of requesting confirmation.",
+        'Make concise by replacing "for the purpose of requesting" with "to request"; keep all other wording: We write for the purpose of requesting confirmation.',
         "We write to request confirmation.",
       ],
       ["___ you confirm the owner?", "Could"],

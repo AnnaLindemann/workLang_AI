@@ -2028,6 +2028,242 @@ const advancedVocabularyExamples: Readonly<Record<string, readonly string[]>> =
     ],
   };
 
+type ExerciseGuidance = {
+  graded: readonly string[];
+  open: readonly string[];
+};
+
+const advancedExerciseGuidance: Readonly<Record<string, ExerciseGuidance>> = {
+  "partizipien-als-attribute": {
+    graded: [
+      "Partizip I laufend beschreibt die aktive Verhandlung; nach die erhält es die Endung -e.",
+      "Partizip II überarbeitet bezeichnet das fertige Angebot; nach das lautet die Endung -e.",
+      "Gestaffelt ist Partizip II; im Dativ Plural nach den braucht es -en.",
+      "Auslaufend beschreibt einen laufenden Vorgang; nach ein im Nominativ Maskulinum steht -er.",
+      "Gewährt ist ein passives Ergebnis; die gewährten Rabatte stehen im Plural mit -en.",
+      "Verhandelnd ist Partizip I für den aktiv handelnden Einkauf; nach der steht -e.",
+      "Definiert ist Partizip II; das definierte Ziel ist das abgeschlossene Verhandlungsergebnis.",
+      "Der Relativsatz wird zu daraus entstehende verdichtet; Partizip I bewahrt den aktiven Prozess.",
+    ],
+    open: [
+      "Verwenden Sie mindestens zwei korrekt deklinierte Partizip-I/II-Attribute; erhalten Sie Inhalt, Verhandlungskontext und formellen Ton.",
+      "Bilden Sie ein erweitertes Partizipialattribut mit klarer Bezugsgröße; bewahren Sie den Vorteil der Vertragsverlängerung und professionelles Register.",
+    ],
+  },
+  "infinitiv-mit-zu": {
+    graded: [
+      "Bei trennbaren Verben steht zu zwischen Präfix und Stamm: auf-zubereiten; so wird die QBR-Aufgabe bezeichnet.",
+      "Um ... zu markiert den Zweck; bei zeigen steht zu vor dem Infinitiv.",
+      "Ohne ... zu bezeichnet eine vermiedene Begleithandlung; ausblenden wird zu auszublenden.",
+      "Statt ... zu kennzeichnet die Alternative; vor betonen steht zu.",
+      "Nach dem Modalverb müssen steht festlegen ohne zu.",
+      "Es gilt verlangt zu-Infinitiv; beim trennbaren nachverfolgen steht zu im Verb.",
+      "Dazu dienen verlangt zu-Infinitiv und beschreibt den Zweck der Agenda: Entscheidungen vorzubereiten.",
+      "Scheinen wird mit zu + Infinitiv ergänzt: bereit zu sein beschreibt den QBR-Status.",
+    ],
+    open: [
+      "Verbinden Sie Zweck mit um ... zu und Einschränkung mit ohne ... zu; erhalten Sie Analyse, Fortschritt, Risiken und professionellen QBR-Ton.",
+      "Formulieren Sie drei parallele zu-Infinitivgruppen nach es gilt; bewahren Sie alle QBR-Aufgaben und formelles Register.",
+    ],
+  },
+  "erweiterte-passivformen": {
+    graded: [
+      "Muss + Partizip II untersucht + werden bildet die Pflicht im Vorgangspassiv.",
+      "Ist abgeschlossen worden ist Perfekt Passiv und bezeichnet den beendeten Prüfvorgang.",
+      "Sich nachvollziehen lassen ist eine Passivalternative und betont die Möglichkeit der Rekonstruktion.",
+      "Sein + zu-Infinitiv bestätigen bezeichnet die Pflicht zur SLA-Dokumentation.",
+      "Im Nebensatz steht der passive Infinitiv geprüft werden vor dem Modalverb muss.",
+      "Werden ausgewertet ist Präsens Vorgangspassiv und fokussiert die Prüfung der Zeitstempel.",
+      "Perfekt Passiv verwendet worden, nicht geworden: ist geprüft worden.",
+      "Lässt sich rekonstruieren ersetzt man kann und hält den Fokus auf dem Incident-Verlauf.",
+    ],
+    open: [
+      "Verwenden Sie Vorgangs-, Zustands- und Modalpassiv für Prozess, Ergebnis und Pflicht; erhalten Sie SLA-Sachverhalt und formellen Untersuchungsstil.",
+      "Ersetzen Sie man durch sich lassen und sein + zu-Infinitiv; bewahren Sie Rekonstruktion, Dokumentationspflicht und professionellen Kontext.",
+    ],
+  },
+  modalpartikeln: {
+    graded: [
+      "Ja verweist auf geteiltes Wissen und macht die Erinnerung im Eskalationsgespräch weniger konfrontativ.",
+      "Doch mildert den Vorschlag und erinnert an eine naheliegende Priorisierung.",
+      "Denn macht die Frage nach der Terminverantwortung interessiert und gesprächsnah.",
+      "Wohl kennzeichnet eine vorsichtige Einschätzung, dass die Maßnahme ausreicht.",
+      "Eben stellt die Notwendigkeit als gegeben dar, ohne eine neue Begründung einzuführen.",
+      "Doch verwandelt den Imperativ in eine kooperative Aufforderung zur Prüfung.",
+      "Prüfen wir das ersetzt das umgangssprachliche mal durch eine professionelle Formulierung.",
+      "Denn mildert die direkte Zuständigkeitsfrage, ohne den sachlichen Inhalt zu ändern.",
+    ],
+    open: [
+      "Verwenden Sie doch für einen kooperativen Gegenvorschlag; erhalten Sie Ownership-Konflikt, Kontext und respektvollen professionellen Ton.",
+      "Formulieren Sie mit wohl oder dürfte wohl eine vorsichtige Vermutung; bewahren Sie die mögliche Ursache und den formellen Eskalationskontext.",
+    ],
+  },
+  "komplexe-satzklammer": {
+    graded: [
+      "Im Konjunktiv-II-Passiv schließt müssen die Klammer hätte erkannt werden müssen und bezeichnet ein Versäumnis.",
+      "Im Perfekt mit Modalverb steht der Ersatzinfinitiv müssen statt gemusst: hat reagieren müssen.",
+      "Futur Passiv mit Modalverb endet auf müssen: wird belegt werden müssen.",
+      "Im Nebensatz mit Ersatzinfinitiv steht hat vor handeln müssen.",
+      "Dürfte übersehen worden sein bildet eine vorsichtige Vermutung im Perfekt Passiv.",
+      "Bei einem weiteren Infinitiv verwendet das Modalverb den Ersatzinfinitiv müssen, nicht gemusst.",
+      "Hätte angeboten werden sollen verbindet Konjunktiv II, Passiv und Modalverb für eine versäumte Schulung.",
+      "Wird gemessen werden müssen ist Futur Passiv mit Pflicht und macht die Adoption-Messung verbindlich.",
+    ],
+    open: [
+      "Verwenden Sie hätte + Partizip II + werden + Modalinfinitiv für eine versäumte Maßnahme; bewahren Sie Retention-Kontext und professionellen Ton.",
+      "Begründen Sie mit Nebensatz und Ersatzinfinitiv hat handeln müssen; erhalten Sie schnelle Reaktion, Recovery-Plan und formelles Register.",
+    ],
+  },
+  "genitiv-alternativen": {
+    graded: [
+      "Aufgrund regiert den Genitiv; Nachfrage ist feminin, daher der Nachfrage.",
+      "Hinsichtlich verlangt Genitiv; Umsatz ist maskulin und erhält des Umsatzes.",
+      "Innerhalb regiert Genitiv; ein Monat wird zu eines Monats.",
+      "Der Genitiv des Hotels ordnet die Strategie eindeutig dem Hotel zu.",
+      "Von + Dativ Modell A ist bei einem Namen eine natürliche Alternative zum Genitiv.",
+      "Während regiert Genitiv; die feminine Hochsaison wird zu während der Hochsaison.",
+      "Nach angesichts steht Genitiv; ohne Artikel zeigt steigender die Genitivendung.",
+      "Buchungsverlauf verdichtet Verlauf der Buchungen zu einem präzisen Fachkompositum.",
+    ],
+    open: [
+      "Lösen Sie die Genitivkette mit Kompositum, von-Konstruktion oder Präpositionalattribut auf; erhalten Sie alle Bezüge und den professionellen Analysekontext.",
+      "Verwenden Sie zwei Genitivpräpositionen wie aufgrund und während; bewahren Sie Ursache, Preismaßnahme, Zeitbezug und formellen Revenue-Kontext.",
+    ],
+  },
+  "adjektivdeklination-advanced": {
+    graded: [
+      "Nach ein trägt das Adjektiv im Nominativ Maskulinum -er: ein neuer Standort.",
+      "Nach der steht im Nominativ Maskulinum die schwache Endung -e: der priorisierte Standort.",
+      "Nach mit steht Dativ Plural; klar erhält die Endung -en.",
+      "Nach für steht Akkusativ Plural; ohne Artikel lautet die starke Form lokale Teams.",
+      "Im Plural ohne Artikel lautet die starke Form zentrale Zugangsdaten.",
+      "Parallele Adjektive im Dativ Plural erhalten beide -en: klaren, verbindlichen Kriterien.",
+      "Nach ein im Nominativ Maskulinum trägt verantwortlich die Endung -er.",
+      "Das substantivierte Adjektiv übernimmt Genus und Endung: eine Beteiligte bezeichnet eine Person.",
+    ],
+    open: [
+      "Verwenden Sie drei Adjektive mit unterschiedlichen Artikelsignalen und korrekten Kasusendungen; erhalten Sie Onboarding-Komponenten und professionellen Kontext.",
+      "Substantivieren Sie ein Adjektiv mit passendem Artikel und Großschreibung; formulieren Sie eine klare Onboarding-Regel im formellen Register.",
+    ],
+  },
+  "konzessive-konstruktionen": {
+    graded: [
+      "Obwohl leitet einen Nebensatz mit Verb am Ende ein und kontrastiert Adoption mit fehlenden Daten.",
+      "Trotz regiert eine Nominalgruppe und verbindet gute Ergebnisse mit verbleibenden Fragen.",
+      "Zwar ... jedoch bildet ein zweiteiliges konzessives Paar für eine ausgewogene Bewertung.",
+      "Obwohl verbindet beide Aussagen; im Nebensatz steht steigt am Ende.",
+      "Selbst wenn markiert, dass die Messung auch unter der stärksten positiven Bedingung fortgesetzt wird.",
+      "Trotz guter Ergebnisse nominalisiert den obwohl-Satz und bewahrt den konzessiven Sinn.",
+      "Dennoch ist ein Konjunktionaladverb und signalisiert die Empfehlung trotz begrenzter Daten.",
+      "Wenngleich ist eine formelle Alternative zu obwohl und leitet einen Nebensatz ein.",
+    ],
+    open: [
+      "Verwenden Sie zwar ... jedoch für Ergebnis und Einschränkung; bewahren Sie Empfehlung, Freigabekontext und formellen Executive-Ton.",
+      "Verwenden Sie selbst wenn für den starken Einwand; erhalten Sie Skalierungswunsch, Messregeln und professionellen Entscheidungskontext.",
+    ],
+  },
+  partizipialkonstruktionen: {
+    graded: [
+      "Die feste Konstruktion lautet von den aktuellen Daten ausgehend; der Bezug muss zum handelnden Subjekt passen.",
+      "Technisch betrachtet ist eine Partizip-II-Konstruktion, die die Perspektive begrenzt.",
+      "Nach Priorität geordnet beschreibt mit Partizip II das Ergebnis der Sortierung.",
+      "Einbezogen ist Partizip II und markiert, dass die Kosten berücksichtigt sind.",
+      "Um Effekte bereinigt ist eine passive Partizipialkonstruktion für korrigierte Kennzahlen.",
+      "Das explizite Subjekt das Team beseitigt den falschen Bezug und führt die Prognoseänderung aus.",
+      "Mit gestern verglichen nutzt Partizip II für einen klaren zeitlichen Vergleich.",
+      "Der wenn-Satz löst die verkürzte Schätzung auf und macht den unpersönlichen Bezug eindeutig.",
+    ],
+    open: [
+      "Verwenden Sie zwei klare Partizipialkonstruktionen für Perspektive und Einschränkung; sichern Sie eindeutige Bezüge, Statusinhalt und professionellen Krisenton.",
+      "Lösen Sie die unklare Konstruktion in einen Nebensatz mit eindeutigem Subjekt auf; bewahren Sie Ablauf, Prognose und Krisenkontext.",
+    ],
+  },
+  "stilverbesserung-buerodeutsch": {
+    graded: [
+      "Bitte stimmen Sie zu ersetzt die leere Einleitung hiermit und nennt die gewünschte Handlung direkt.",
+      "Der Aktivsatz IT integriert das System macht Verantwortlichen und Handlung sichtbar.",
+      "Zuständig sein für verlangt für; der Artikel die gehört zu Schulung.",
+      "Die konkrete Bitte nennt Handlung und Frist statt des vagen zeitnah.",
+      "Bereits und schon sind redundant; bereits abgeschlossen ist präzise.",
+      "Vorbehaltlich regiert Genitiv; das Possessivpronomen lautet Ihrer Zustimmung.",
+      "Der Aktivsatz nennt den Vorstand als Entscheidungsträger und vermeidet unnötiges Passiv.",
+      "Ein paralleler Infinitivsatz verwendet integrieren, schulen und messen.",
+    ],
+    open: [
+      "Ersetzen Sie die vage Bitte durch klare Handlung, Owner und Frist; bewahren Sie Jahresbewertung und professionellen Ton.",
+      "Ersetzen Sie Nominalstil und Floskeln durch aktive Verben; erhalten Sie Prüfschritt, Entscheidung und formellen Account-Kontext.",
+    ],
+  },
+};
+
+type TheoryGuidance = {
+  professionalExample: string;
+  takeaway: string;
+};
+
+const advancedTheoryGuidance: Readonly<Record<string, TheoryGuidance>> = {
+  "partizipien-als-attribute": {
+    professionalExample:
+      "In einer Verhandlungsnotiz verdichten Attribute zentrale Informationen: Das überarbeitete Angebot verbindet die vom Einkauf geforderte Preisstaffel mit einer verbindlich zugesagten Laufzeit. Partizip II markiert Ergebnisse, Partizip I laufende oder aktive Vorgänge.",
+    takeaway:
+      "Verwenden Sie Partizip I für aktive Prozesse und Partizip II für abgeschlossene oder passive Ergebnisse. Bestimmen Sie danach Artikel, Kasus, Genus und Numerus; eine passende Partizipform mit falscher Endung bleibt grammatisch falsch.",
+  },
+  "infinitiv-mit-zu": {
+    professionalExample:
+      "Eine QBR-Agenda kann Ziele und Pflichten knapp bündeln: Es gilt, Kennzahlen aufzubereiten, Abweichungen zu erklären und Prioritäten festzulegen, um den Sponsor zu einer Entscheidung zu führen, ohne Risiken auszublenden.",
+    takeaway:
+      "Nutzen Sie zu-Infinitive für geplante Aufgaben und um/ohne/statt + zu für Zweck, Einschränkung oder Alternative. Bei trennbaren Verben steht zu im Verb; nach Modalverben und lassen steht kein zu.",
+  },
+  "erweiterte-passivformen": {
+    professionalExample:
+      "Im SLA-Bericht unterscheiden die Passivformen Prozess, Ergebnis und Pflicht: Der Verstoß wird untersucht, die Priorisierung ist bereits geklärt, und die Reaktionsfrist muss bis Freitag bestätigt werden. Der Verlauf lässt sich anhand des Audit-Logs rekonstruieren.",
+    takeaway:
+      "Wählen Sie Vorgangspassiv für Prozesse, Zustandspassiv für Ergebnisse und Modalpassiv oder sein + zu für Pflichten. Im Perfekt Passiv heißt es ist geprüft worden, nicht ist geprüft geworden.",
+  },
+  modalpartikeln: {
+    professionalExample:
+      "In einer angespannten Eskalationsrunde kann die Formulierung kooperativ bleiben: Wir könnten doch zunächst den Übergabepunkt prüfen. Wer ist denn für die Rückmeldung an den Kunden zuständig? Die Verzögerung dürfte wohl bei Finance liegen.",
+    takeaway:
+      "Setzen Sie doch für kooperative Vorschläge, denn für interessierte Fragen und wohl für vorsichtige Vermutungen ein. Modalpartikeln verändern Haltung und Ton, nicht den Sachverhalt; vermeiden Sie sie in streng formellen Berichten.",
+  },
+  "komplexe-satzklammer": {
+    professionalExample:
+      "Eine Retention-Analyse kann Versäumnis und künftige Pflicht präzise ausdrücken: Der Nutzungsrückgang hätte früher erkannt werden müssen. Künftig wird die Adoption monatlich gemessen werden müssen.",
+    takeaway:
+      "Bauen Sie mehrteilige Verbgruppen vom rechten Satzende aus: Partizip/Infinitiv + werden + Modalinfinitiv. Bei Perfekt mit Modalverb und weiterem Infinitiv steht der Ersatzinfinitiv müssen, nicht gemusst.",
+  },
+  "genitiv-alternativen": {
+    professionalExample:
+      "Eine Revenue-Empfehlung kann Beziehungen kompakt markieren: Aufgrund der steigenden Nachfrage prüft das Team während der Hochsaison täglich die Preisstrategie des Hotels. Die Empfehlung von Modell A bleibt eine von-Konstruktion, weil der Name keinen Artikel trägt.",
+    takeaway:
+      "Verwenden Sie Genitivpräpositionen wie aufgrund, hinsichtlich und während für formelle Bezüge. Lösen Sie schwere Genitivketten mit Komposita, von + Dativ oder Präpositionalattributen auf; Präzision ist wichtiger als maximale Verdichtung.",
+  },
+  "adjektivdeklination-advanced": {
+    professionalExample:
+      "Ein Rollout-Status kombiniert verschiedene Deklinationstypen: Ein neuer Standort erhält die zentrale Vorlage; der priorisierte Standort startet mit klaren Kriterien; lokale Teams benennen einen verantwortlichen Champion.",
+    takeaway:
+      "Bestimmen Sie zuerst Artikeltyp und Kasus, dann die Adjektivendung. Achten Sie besonders auf starke Endungen ohne Artikel, parallele Adjektive und substantivierte Formen wie ein Verantwortlicher.",
+  },
+  "konzessive-konstruktionen": {
+    professionalExample:
+      "Eine Entscheidungsvorlage kann Ergebnis und Vorbehalt ausgewogen verbinden: Die Adoption ist zwar gestiegen, jedoch fehlt noch belastbare Evidenz zur Skalierung. Selbst wenn der Vorstand schneller investieren möchte, müssen einheitliche Messregeln gelten.",
+    takeaway:
+      "Nutzen Sie obwohl/wenngleich mit Nebensatz, trotz + Genitiv/Dativ als Nominalform und zwar ... jedoch für ausgewogene Gegenüberstellung. Verwechseln Sie trotz nicht mit einem vollständigen dass-Satz.",
+  },
+  partizipialkonstruktionen: {
+    professionalExample:
+      "Ein Krisenstatus lässt sich kompakt strukturieren: Technisch betrachtet und auf den mobilen Check-in begrenzt, ist der Ausfall beherrschbar. Von aktuellen Daten ausgehend, erwartet das Krisenteam die Wiederherstellung bis 18 Uhr.",
+    takeaway:
+      "Verwenden Sie Partizipialkonstruktionen nur bei eindeutigem Bezug zum Subjekt. Prüfen Sie aktiv/passiv und lösen Sie mehrdeutige Konstruktionen in einen Nebensatz auf; Kürze darf die Verantwortlichkeit nicht verschleiern.",
+  },
+  "stilverbesserung-buerodeutsch": {
+    professionalExample:
+      "Eine klare Jahresbewertung nennt Entscheidung und Verantwortung direkt: Bitte bestätigen Sie die drei Prioritäten bis Freitag. IT schließt die Integration bis Ende März ab; HR schult die regionalen Manager.",
+    takeaway:
+      "Ersetzen Sie Nominalstil, Passiv und leere Floskeln durch aktive Verben, klare Owner und konkrete Fristen. Halten Sie Aufzählungen parallel und vermeiden Sie Redundanzen wie bereits schon.",
+  },
+};
+
 const advancedSpec = (s: AdvancedSpec): LessonSpec => ({
   slug: s.slug,
   topic: s.topic,
@@ -2038,12 +2274,12 @@ const advancedSpec = (s: AdvancedSpec): LessonSpec => ({
     { heading: "Форма", body: s.form },
     {
       heading: "Профессиональный контекст",
-      body: `Эта структура позволяет точно и уместно обсуждать сценарий «${s.scenario}».`,
+      body: advancedTheoryGuidance[s.slug]?.professionalExample,
     },
     { heading: "Типичные ошибки", body: s.errors },
     {
       heading: "Вывод",
-      body: "Определите значение, падеж и регистр до выбора формы.",
+      body: advancedTheoryGuidance[s.slug]?.takeaway,
     },
   ],
   vocabulary: s.words.map(([term, translation], index) => {
@@ -2055,18 +2291,20 @@ const advancedSpec = (s: AdvancedSpec): LessonSpec => ({
   }),
   readingTitle: s.scenario,
   reading: s.reading,
-  graded: s.drills.map(([prompt, answer]) => ({
-    prompt,
-    answer,
-    explanation:
-      "Форма соответствует правилу урока и сохраняет профессиональный смысл.",
-  })),
-  open: s.open.map(([prompt, sample]) => ({
-    prompt,
-    sample,
-    criteria:
-      "целевая конструкция, грамматическая точность, сохранение смысла и профессиональный регистр.",
-  })),
+  graded: s.drills.map(([prompt, answer], index) => {
+    const guidance = advancedExerciseGuidance[s.slug];
+    if (!guidance || guidance.graded.length !== s.drills.length) {
+      throw new Error(`Invalid graded exercise guidance for ${s.slug}`);
+    }
+    return { prompt, answer, explanation: guidance.graded[index] };
+  }),
+  open: s.open.map(([prompt, sample], index) => {
+    const guidance = advancedExerciseGuidance[s.slug];
+    if (!guidance || guidance.open.length !== s.open.length) {
+      throw new Error(`Invalid open exercise guidance for ${s.slug}`);
+    }
+    return { prompt, sample, criteria: guidance.open[index] };
+  }),
   writing: s.writing,
   wordRange: { min: 140, max: 180 },
   requirements: [
@@ -2115,7 +2353,7 @@ const advancedSpecs: LessonSpec[] = [
       ["der ___ Einkauf (verhandeln)", "verhandelnde"],
       ["das gemeinsam ___ Ziel (definieren)", "definierte"],
       [
-        "Verdichten Sie: die Einsparung, die daraus entsteht.",
+        'Verdichten Sie mit Partizip I; beginnen Sie "die daraus": die Einsparung, die daraus entsteht.',
         "die daraus entstehende Einsparung",
       ],
     ],
@@ -2223,7 +2461,7 @@ const advancedSpecs: LessonSpec[] = [
       ["Die Zeitstempel werden ___.", "ausgewertet"],
       ["Korrigieren Sie: ist geprüft geworden.", "ist geprüft worden"],
       [
-        "Formulieren Sie Möglichkeit: Man kann den Verlauf rekonstruieren.",
+        'Formulieren Sie die Möglichkeit mit "lässt sich": Man kann den Verlauf rekonstruieren.',
         "Der Verlauf lässt sich rekonstruieren.",
       ],
     ],
@@ -2275,12 +2513,15 @@ const advancedSpecs: LessonSpec[] = [
       ["Das dürfte ___ reichen.", "wohl"],
       ["Die Maßnahme ist ___ notwendig.", "eben"],
       [
-        "Mildern Sie: Prüfen Sie den Übergabepunkt.",
+        'Mildern Sie, indem Sie "doch" direkt nach dem Verb einsetzen: Prüfen Sie den Übergabepunkt.',
         "Prüfen Sie doch den Übergabepunkt.",
       ],
-      ["Entfernen Sie Umgangssprache: Schauen wir mal.", "Prüfen wir das."],
       [
-        "Formulieren Sie mit denn: Wer ist zuständig?",
+        'Ersetzen Sie "Schauen wir mal" durch die formelle Formulierung "Prüfen wir das".',
+        "Prüfen wir das.",
+      ],
+      [
+        'Fügen Sie "denn" unmittelbar nach "ist" ein: Wer ist zuständig?',
         "Wer ist denn zuständig?",
       ],
     ],
@@ -2334,7 +2575,7 @@ const advancedSpecs: LessonSpec[] = [
       ["Korrigieren Sie: hat reagieren gemusst.", "hat reagieren müssen"],
       ["Die Schulung hätte angeboten werden ___.", "sollen"],
       [
-        "Bilden Sie Futur: Man muss Adoption messen.",
+        'Bilden Sie Futur Passiv und beginnen Sie mit "Die Adoption": Man muss die Adoption messen.',
         "Die Adoption wird gemessen werden müssen.",
       ],
     ],
@@ -2492,17 +2733,17 @@ const advancedSpecs: LessonSpec[] = [
       ["___ guter Ergebnisse bleiben Fragen.", "Trotz"],
       ["zwar klar, ___ unvollständig", "jedoch"],
       [
-        "Verbinden Sie: Zahlen steigen. Evidenz fehlt.",
+        'Beginnen Sie mit "Obwohl", bewahren Sie "Evidenz" ohne Artikel und verbinden Sie: Zahlen steigen. Evidenz fehlt.',
         "Obwohl die Zahlen steigen, fehlt Evidenz.",
       ],
       ["___ wenn alles gelingt, messen wir weiter.", "Selbst"],
       [
-        "Nominalisieren Sie: Obwohl Ergebnisse gut sind.",
+        'Nominalisieren Sie mit "Trotz" und bewahren Sie "gute Ergebnisse": Obwohl Ergebnisse gut sind.',
         "Trotz guter Ergebnisse",
       ],
       ["Die Daten sind begrenzt; ___ empfehlen wir den Pilot.", "dennoch"],
       [
-        "Formell: Obwohl der Ansatz reif ist.",
+        'Ersetzen Sie nur "Obwohl" durch "Wenngleich": Obwohl der Ansatz reif ist.',
         "Wenngleich der Ansatz reif ist",
       ],
     ],
@@ -2554,12 +2795,12 @@ const advancedSpecs: LessonSpec[] = [
       ["Kosten ___, bleibt der Plan stabil.", "einbezogen"],
       ["Um Effekte ___", "bereinigt"],
       [
-        "Korrigieren Sie den Bezug: Ausgehend von Daten, stieg die Prognose.",
+        'Korrigieren Sie den Bezug; beginnen Sie mit "Von den Daten ausgehend" und machen Sie "das Team" zum Subjekt: Ausgehend von Daten, stieg die Prognose.',
         "Von den Daten ausgehend, erhöhte das Team die Prognose.",
       ],
       ["Mit gestern ___", "verglichen"],
       [
-        "Lösen Sie auf: Vorsichtig geschätzt, dauert es eine Stunde.",
+        'Lösen Sie mit einem wenn-Satz auf; beginnen Sie "Wenn man vorsichtig schätzt": Vorsichtig geschätzt, dauert es eine Stunde.',
         "Wenn man vorsichtig schätzt, dauert es eine Stunde.",
       ],
     ],
@@ -2606,26 +2847,26 @@ const advancedSpecs: LessonSpec[] = [
       "Betreff: Entscheidung zu den Prioritäten des Key Accounts. Die Jahresbewertung zeigt höhere Adoption, schnellere Lösungszeiten und eine offene Integrationsabhängigkeit. Wir empfehlen drei Prioritäten: IT schließt die Integration ab, HR erweitert die Managerschulung und Customer Success führt quartalsweise Wertgespräche durch. Bitte bestätigen Sie bis Freitag den Executive Owner und die Zieltermine. Vorbehaltlich Ihrer Zustimmung aktualisieren wir den gemeinsamen Erfolgsplan nächste Woche.",
     drills: [
       [
-        "Kürzen Sie: Wir möchten hiermit um Zustimmung bitten.",
+        'Kürzen Sie zu einer direkten Bitte; verwenden Sie genau das Verb "zustimmen": Wir möchten hiermit um Zustimmung bitten.',
         "Bitte stimmen Sie zu.",
       ],
       [
-        "Aktivieren Sie: Die Integration erfolgt durch IT.",
+        'Formulieren Sie im Aktiv; behalten Sie "IT", "integriert" und "das System": Die Integration erfolgt durch IT.',
         "IT integriert das System.",
       ],
       ["HR ist ___ Schulung zuständig.", "für die"],
       [
-        "Machen Sie konkret: Rückmeldung wäre zeitnah hilfreich.",
+        'Machen Sie konkret und verwenden Sie "uns" und "bis Freitag": Rückmeldung wäre zeitnah hilfreich.',
         "Bitte geben Sie uns bis Freitag Rückmeldung.",
       ],
       ["Kürzen Sie: bereits schon abgeschlossen.", "bereits abgeschlossen"],
       ["Vorbehaltlich ___ Zustimmung", "Ihrer"],
       [
-        "Aktivieren Sie: Die Freigabe wird vom Vorstand erteilt.",
+        'Formulieren Sie im Aktiv; beginnen Sie mit "Der Vorstand" und verwenden Sie "erteilt": Die Freigabe wird vom Vorstand erteilt.',
         "Der Vorstand erteilt die Freigabe.",
       ],
       [
-        "Parallelisieren Sie: integrieren, Schulung und wir messen.",
+        "Parallelisieren Sie als drei Infinitive und bewahren Sie die Reihenfolge: integrieren, Schulung und wir messen.",
         "integrieren, schulen und messen",
       ],
     ],

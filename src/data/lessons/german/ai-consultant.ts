@@ -4050,7 +4050,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Verbinden Sie mit um: Wir testen. Wir messen Sicherheit.",
+        'Verbinden Sie mit um; beginnen Sie mit "Wir testen" und bewahren Sie die übrigen Wörter: Wir testen. Wir messen Sicherheit.',
         "Wir testen, um Sicherheit zu messen.",
         "Um ... zu drückt Ziel aus.",
       ],
@@ -4179,7 +4179,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Formulieren Sie Zustand: Man hat die Shortlist freigegeben.",
+        'Formulieren Sie Zustandspassiv; beginnen Sie mit "Die Shortlist ist": Man hat die Shortlist freigegeben.',
         "Die Shortlist ist freigegeben.",
         "Sein + Partizip II beschreibt Ergebnis.",
       ],
@@ -4209,7 +4209,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Formulieren Sie Möglichkeit: Man kann die Leistung messen.",
+        'Formulieren Sie die Möglichkeit mit "lässt sich": Man kann die Leistung messen.',
         "Die Leistung lässt sich messen.",
         "Sich lassen drückt Möglichkeit aus.",
       ],
@@ -4356,7 +4356,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Mildern Sie: Prüfen Sie die Evidenz.",
+        'Mildern Sie, indem Sie "doch" direkt nach dem Verb einsetzen: Prüfen Sie die Evidenz.',
         "Prüfen Sie doch die Evidenz.",
         "Doch macht die Aufforderung kooperativer.",
       ],
@@ -4368,13 +4368,13 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Entfernen Sie Umgangssprache: Schauen wir mal auf die Zahlen.",
+        'Ersetzen Sie "Schauen wir mal auf" durch das formelle Verb "betrachten": Schauen wir mal auf die Zahlen.',
         "Betrachten wir die Zahlen.",
         "Mal passt nicht in jeden formellen Kontext.",
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Formulieren Sie eine natürliche Frage mit denn: Welche Regel gilt?",
+        'Fügen Sie "denn" unmittelbar vor dem Fragezeichen ein: Welche Regel gilt?',
         "Welche Regel gilt denn?",
         "Denn steht im Mittelfeld.",
       ],
@@ -5019,7 +5019,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Verbinden Sie mit obwohl: Quellen sind aktuell. Fehler bleiben.",
+        'Beginnen Sie mit "Obwohl" und bewahren Sie alle Inhaltswörter: Quellen sind aktuell. Fehler bleiben.',
         "Obwohl die Quellen aktuell sind, bleiben Fehler.",
         "Verb am Nebensatzende.",
       ],
@@ -5043,7 +5043,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Formell umformulieren: Obwohl der Ansatz gut ist.",
+        'Ersetzen Sie nur "Obwohl" durch die formelle Konjunktion "Wenngleich": Obwohl der Ansatz gut ist.',
         "Wenngleich der Ansatz gut ist",
         "Wenngleich ist formeller.",
       ],
@@ -5183,7 +5183,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Verdichten Sie: Wenn man Kosten einbezieht, sinkt ROI.",
+        'Verdichten Sie mit der initialen Partizipialkonstruktion "Kosten einbezogen" und verwenden Sie "der ROI": Wenn man Kosten einbezieht, sinkt ROI.',
         "Kosten einbezogen, sinkt der ROI.",
         "Partizip II ersetzt Bedingung.",
       ],
@@ -5195,7 +5195,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Korrigieren Sie den Bezug: Ausgehend vom Pilotwert, stieg die Prognose.",
+        'Korrigieren Sie den Bezug; beginnen Sie mit "Vom Pilotwert ausgehend" und machen Sie "das Team" zum Subjekt: Ausgehend vom Pilotwert, stieg die Prognose.',
         "Vom Pilotwert ausgehend, erhöhte das Team die Prognose.",
         "Handelnder Bezug muss klar sein.",
       ],
@@ -5207,7 +5207,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Lösen Sie auf: Vorsichtig bewertet, bleibt Potenzial.",
+        'Lösen Sie mit einem wenn-Satz auf; beginnen Sie "Wenn man die Ergebnisse vorsichtig bewertet": Vorsichtig bewertet, bleibt Potenzial.',
         "Wenn man die Ergebnisse vorsichtig bewertet, bleibt Potenzial.",
         "Expliziter Bedingungssatz.",
       ],
@@ -5338,13 +5338,13 @@ const advancedGermanLessons: readonly Lesson[] = [
     drills: [
       [
         ExerciseFormat.ShortAnswer,
-        "Kürzen Sie: Wir möchten hiermit die Bitte an Sie richten, zuzustimmen.",
+        'Kürzen Sie zu einer direkten Bitte; verwenden Sie genau das Verb "zustimmen": Wir möchten hiermit die Bitte an Sie richten, zuzustimmen.',
         "Bitte stimmen Sie zu.",
         "Direkte Bitte ersetzt Floskel.",
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Verbalisieren Sie: Die Durchführung der Integration erfolgt durch IT.",
+        'Verbalisieren Sie; beginnen Sie mit "IT" und verwenden Sie "integriert": Die Durchführung der Integration erfolgt durch IT.',
         "IT integriert das System.",
         "Aktiv und Verb sind kürzer.",
       ],
@@ -5356,7 +5356,7 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Machen Sie konkret: Eine Rückmeldung wäre zeitnah hilfreich.",
+        'Machen Sie konkret und verwenden Sie "uns" und "bis Freitag": Eine Rückmeldung wäre zeitnah hilfreich.',
         "Bitte geben Sie uns bis Freitag Rückmeldung.",
         "Klare Handlung und Frist.",
       ],
@@ -5374,13 +5374,13 @@ const advancedGermanLessons: readonly Lesson[] = [
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Aktivieren Sie: Die Freigabe wird durch den Vorstand erteilt.",
+        'Formulieren Sie im Aktiv; beginnen Sie mit "Der Vorstand" und verwenden Sie "erteilt": Die Freigabe wird durch den Vorstand erteilt.',
         "Der Vorstand erteilt die Freigabe.",
         "Aktiv nennt Verantwortlichen.",
       ],
       [
         ExerciseFormat.ShortAnswer,
-        "Teilen Sie den Satz: Nach Prüfung starten wir und schulen Nutzer und messen Adoption.",
+        'Teilen Sie in zwei Sätze; beginnen Sie mit "Nach der Prüfung" und den zweiten Satz mit "Anschließend": Nach Prüfung starten wir und schulen Nutzer und messen Adoption.',
         "Nach der Prüfung starten wir. Anschließend schulen wir die Nutzer und messen die Adoption.",
         "Zwei klare Aussagen verbessern Lesbarkeit.",
       ],
