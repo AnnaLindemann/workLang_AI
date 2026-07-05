@@ -1839,5 +1839,637 @@ const specs: LessonSpec[] = [
   },
 ];
 
-export const germanCustomerSuccessLessons: readonly Lesson[] =
-  specs.map(buildLesson);
+interface AdvancedSpec {
+  slug: string;
+  topic: string;
+  title: string;
+  scenario: string;
+  rule: string;
+  form: string;
+  errors: string;
+  words: ReadonlyArray<readonly [string, string]>;
+  reading: string;
+  drills: ReadonlyArray<readonly [string, string]>;
+  open: ReadonlyArray<readonly [string, string]>;
+  writing: string;
+}
+const advancedSpec = (s: AdvancedSpec): LessonSpec => ({
+  slug: s.slug,
+  topic: s.topic,
+  title: s.title,
+  sources: commonSources,
+  theory: [
+    { heading: "Когда использовать", body: s.rule },
+    { heading: "Форма", body: s.form },
+    {
+      heading: "Профессиональный контекст",
+      body: `Эта структура позволяет точно и уместно обсуждать сценарий «${s.scenario}».`,
+    },
+    { heading: "Типичные ошибки", body: s.errors },
+    {
+      heading: "Вывод",
+      body: "Определите значение, падеж и регистр до выбора формы.",
+    },
+  ],
+  vocabulary: s.words.map(([term, translation]) =>
+    v(
+      term,
+      translation,
+      `Im Kontext „${s.scenario}“ verwenden wir den Ausdruck „${term}“ präzise.`,
+    ),
+  ),
+  readingTitle: s.scenario,
+  reading: s.reading,
+  graded: s.drills.map(([prompt, answer]) => ({
+    prompt,
+    answer,
+    explanation:
+      "Форма соответствует правилу урока и сохраняет профессиональный смысл.",
+  })),
+  open: s.open.map(([prompt, sample]) => ({
+    prompt,
+    sample,
+    criteria:
+      "целевая конструкция, грамматическая точность, сохранение смысла и профессиональный регистр.",
+  })),
+  writing: s.writing,
+  wordRange: { min: 140, max: 180 },
+  requirements: [
+    "Используйте минимум пять целевых конструкций",
+    "Включите минимум шесть слов и фраз урока",
+    "Укажите конкретное действие, владельца и срок",
+    "Сохраняйте профессиональный клиентский тон",
+  ],
+});
+
+const advancedSpecs: LessonSpec[] = [
+  advancedSpec({
+    slug: "partizipien-als-attribute",
+    topic: "partizipien-als-attribute",
+    title: "Partizip I und II als Attribute",
+    scenario: "Vertragsverlängerung verhandeln",
+    rule: "Partizip I beschreibt aktive laufende Vorgänge, Partizip II abgeschlossene oder passive Ergebnisse; attributiv ersetzen sie längere Relativsätze.",
+    form: "Infinitiv + d bzw. Partizip II plus Adjektivendung: die laufende Verhandlung, das überarbeitete Angebot.",
+    errors:
+      "Partizip und Endung müssen zu Bedeutung, Artikel, Kasus, Genus und Numerus passen.",
+    words: [
+      ["die laufende Verhandlung", "текущие переговоры"],
+      ["das überarbeitete Angebot", "переработанное предложение"],
+      ["die vereinbarte Laufzeit", "согласованный срок"],
+      ["der steigende Listenpreis", "растущая базовая цена"],
+      ["die zugesagte Leistung", "обещанная услуга"],
+      ["der auslaufende Vertrag", "истекающий договор"],
+      ["die gewährte Gutschrift", "предоставленная компенсация"],
+      ["der entscheidende Einwand", "решающее возражение"],
+      ["die erwartete Nutzung", "ожидаемое использование"],
+      ["der verhandelnde Einkauf", "ведущий переговоры отдел закупок"],
+      ["die vorgeschlagene Staffelung", "предложенная градация"],
+      ["der verbleibende Spielraum", "оставшийся простор"],
+      ["die bindende Zusage", "обязательное обещание"],
+      ["das gemeinsam definierte Ziel", "совместно определённая цель"],
+      ["die daraus entstehende Einsparung", "возникающая экономия"],
+    ],
+    reading:
+      "Der auslaufende Vertrag enthält eine automatisch steigende Preisklausel. Im überarbeiteten Angebot verbindet das Hotel eine längere, verbindlich zugesagte Laufzeit mit gestaffelten Preisen. Der verhandelnde Einkauf fordert zusätzlich eine Servicegutschrift. Die bereits gewährten Rabatte lassen jedoch nur begrenzten Spielraum. Als entscheidenden Vorteil nennt das Customer-Success-Team die gemeinsam definierte Adoption und die daraus entstehende Einsparung.",
+    drills: [
+      ["die ___ Verhandlung (laufen)", "laufende"],
+      ["das ___ Angebot (überarbeiten)", "überarbeitete"],
+      ["mit den ___ Preisen (staffeln)", "gestaffelten"],
+      ["ein ___ Vertrag (auslaufen)", "auslaufender"],
+      ["die bereits ___ Rabatte (gewähren)", "gewährten"],
+      ["der ___ Einkauf (verhandeln)", "verhandelnde"],
+      ["das gemeinsam ___ Ziel (definieren)", "definierte"],
+      [
+        "Verdichten Sie: die Einsparung, die daraus entsteht.",
+        "die daraus entstehende Einsparung",
+      ],
+    ],
+    open: [
+      [
+        "Verdichten Sie zwei Aussagen zur Verlängerung mit Partizipialattributen.",
+        "Das überarbeitete Angebot berücksichtigt die vom Einkauf geforderte Preisstaffel.",
+      ],
+      [
+        "Formulieren Sie einen Vorteil mit erweitertem Partizipialattribut.",
+        "Die durch eine längere Laufzeit entstehende Planungssicherheit nützt beiden Seiten.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Zusammenfassung der Vertragsverhandlung mit Positionen, Zugeständnissen und nächstem Schritt.",
+  }),
+  advancedSpec({
+    slug: "infinitiv-mit-zu",
+    topic: "infinitiv-mit-zu",
+    title: "Infinitiv mit zu",
+    scenario: "Quarterly Business Review vorbereiten",
+    rule: "Infinitivgruppen bündeln Ziele, Pflichten und Empfehlungen, wenn der logische Träger aus dem Hauptsatz hervorgeht.",
+    form: "zu + Infinitiv; festzulegen bei trennbaren Verben; um/ohne/statt + zu. Kommas markieren erweiterte Gruppen.",
+    errors:
+      "Nach Modalverben und lassen steht kein zu; der Bezug der Infinitivgruppe muss eindeutig sein.",
+    words: [
+      ["Kennzahlen aufzubereiten", "подготовить показатели"],
+      ["Ziele festzulegen", "определить цели"],
+      ["um Fortschritt zu zeigen", "чтобы показать прогресс"],
+      ["ohne Risiken auszublenden", "не скрывая риски"],
+      [
+        "statt Einzelfälle zu betonen",
+        "вместо подчёркивания отдельных случаев",
+      ],
+      ["die Nutzung auszuwerten", "проанализировать использование"],
+      ["Maßnahmen nachzuverfolgen", "отслеживать меры"],
+      ["den Sponsor einzubinden", "вовлечь спонсора"],
+      ["eine Prognose abzugeben", "дать прогноз"],
+      ["Abweichungen zu erklären", "объяснить отклонения"],
+      ["die Agenda abzustimmen", "согласовать повестку"],
+      ["Mehrwert nachzuweisen", "доказать ценность"],
+      ["Prioritäten zu bestätigen", "подтвердить приоритеты"],
+      ["es gilt zu klären", "следует прояснить"],
+      ["dazu dienen", "служить для"],
+    ],
+    reading:
+      "Für das QBR plant das Team, Nutzungsdaten und Supporttrends aufzubereiten. Um den erzielten Mehrwert nachzuweisen, sind die Werte mit den vereinbarten Zielen zu vergleichen. Statt einzelne Erfolgsgeschichten zu betonen, möchte die Leiterin auch Abweichungen erklären. Es gilt, offene Maßnahmen nachzuverfolgen, ohne operative Risiken auszublenden. Die finale Agenda dient dazu, Entscheidungen vorzubereiten und den Executive Sponsor gezielt einzubinden.",
+    drills: [
+      ["Wir planen, Kennzahlen ___. (aufbereiten)", "aufzubereiten"],
+      ["um Fortschritt ___ (zeigen)", "zu zeigen"],
+      ["ohne Risiken ___ (ausblenden)", "auszublenden"],
+      ["statt Einzelfälle ___ (betonen)", "zu betonen"],
+      ["Wir müssen Ziele ___. (festlegen)", "festlegen"],
+      ["Es gilt, Maßnahmen ___. (nachverfolgen)", "nachzuverfolgen"],
+      ["Die Agenda dient dazu, Entscheidungen ___.", "vorzubereiten"],
+      ["Das Team scheint bereit ___. (sein)", "zu sein"],
+    ],
+    open: [
+      [
+        "Verbinden Sie Ziel und Einschränkung mit um und ohne.",
+        "Wir analysieren die Nutzung, um Fortschritt zu zeigen, ohne Risiken auszublenden.",
+      ],
+      [
+        "Formulieren Sie drei parallele QBR-Aufgaben mit zu.",
+        "Es gilt, Kennzahlen aufzubereiten, Abweichungen zu erklären und Prioritäten festzulegen.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie einen Vorbereitungsvermerk für ein QBR mit Zielen, Daten, Risiken und Entscheidungen.",
+  }),
+  advancedSpec({
+    slug: "erweiterte-passivformen",
+    topic: "erweiterte-passivformen",
+    title: "Erweiterte Passivformen",
+    scenario: "SLA-Verstoß untersuchen",
+    rule: "Vorgangspassiv zeigt den Prozess, Zustandspassiv das Ergebnis; Modalpassiv und Passivalternativen markieren Pflicht oder Möglichkeit.",
+    form: "werden/sein + Partizip II; muss geprüft werden; lässt sich prüfen; ist zu dokumentieren.",
+    errors:
+      "Im Perfekt Passiv heißt es worden, nicht geworden; im Nebensatz steht das Modalverb am Ende.",
+    words: [
+      ["untersucht werden", "быть расследованным"],
+      ["bereits geklärt sein", "быть уже выясненным"],
+      ["geprüft worden sein", "быть проверенным"],
+      ["sich nachvollziehen lassen", "поддаваться отслеживанию"],
+      ["zu dokumentieren sein", "подлежать документированию"],
+      ["der SLA-Verstoß", "нарушение SLA"],
+      ["die Reaktionsfrist", "срок реакции"],
+      ["der Zeitstempel", "временная метка"],
+      ["die Priorisierung", "приоритизация"],
+      ["der Eskalationsweg", "путь эскалации"],
+      ["der Bereitschaftsdienst", "дежурная служба"],
+      ["die Ursachenanalyse", "анализ причин"],
+      ["wiederhergestellt werden", "быть восстановленным"],
+      ["nachgewiesen werden", "быть подтверждённым"],
+      ["abgeschlossen sein", "быть завершённым"],
+    ],
+    reading:
+      "Der SLA-Verstoß wird anhand der Zeitstempel untersucht. Die Priorisierung ist bereits geklärt, doch der Eskalationsweg muss noch geprüft werden. Aus den Protokollen lässt sich nachvollziehen, dass der Bereitschaftsdienst zu spät benachrichtigt wurde. Die korrekte Berechnung der Reaktionsfrist ist durch Quality zu bestätigen. Sobald die Ursachenanalyse abgeschlossen ist, werden Korrekturmaßnahmen vereinbart und monatlich überwacht.",
+    drills: [
+      ["Der Verstoß muss untersucht ___.", "werden"],
+      ["Die Prüfung ist abgeschlossen ___.", "worden"],
+      ["Die Ursache lässt sich ___.", "nachvollziehen"],
+      ["Die Frist ist zu ___.", "bestätigen"],
+      ["weil der Weg geprüft werden ___.", "muss"],
+      ["Die Zeitstempel werden ___.", "ausgewertet"],
+      ["Korrigieren Sie: ist geprüft geworden.", "ist geprüft worden"],
+      [
+        "Formulieren Sie Möglichkeit: Man kann den Verlauf rekonstruieren.",
+        "Der Verlauf lässt sich rekonstruieren.",
+      ],
+    ],
+    open: [
+      [
+        "Beschreiben Sie Prozess, Zustand und Pflicht in drei Passivformen.",
+        "Der Verstoß wird untersucht, die Priorisierung ist geklärt und die Frist muss bestätigt werden.",
+      ],
+      [
+        "Ersetzen Sie man durch zwei Passivalternativen.",
+        "Der Verlauf lässt sich rekonstruieren; die Berechnung ist zu dokumentieren.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie ein sachliches Update zur Untersuchung eines SLA-Verstoßes.",
+  }),
+  advancedSpec({
+    slug: "modalpartikeln",
+    topic: "modalpartikeln-im-berufsalltag",
+    title: "Modalpartikeln im Berufsalltag",
+    scenario: "Abteilungsübergreifende Eskalation koordinieren",
+    rule: "doch, ja, wohl, eben und denn steuern Erwartung, Vermutung und Ton in Gesprächen, ohne die Kernaussage zu ändern.",
+    form: "Modalpartikeln stehen meist im Mittelfeld; doch mildert, wohl vermutet, ja verweist auf Bekanntes, denn belebt Fragen.",
+    errors:
+      "In formellen Beschlüssen sparsam einsetzen; mal kann zu umgangssprachlich wirken.",
+    words: [
+      ["doch priorisieren", "всё же приоритизировать"],
+      ["wohl zuständig sein", "вероятно отвечать"],
+      ["ja bereits eskaliert", "ведь уже эскалировано"],
+      ["eben notwendig", "просто необходимо"],
+      ["Wer übernimmt denn?", "Кто же возьмёт?"],
+      ["Schauen wir doch", "давайте посмотрим"],
+      ["der Übergabepunkt", "точка передачи"],
+      ["die Zuständigkeitslücke", "пробел ответственности"],
+      ["der Eskalationskreis", "группа эскалации"],
+      ["die Sofortmaßnahme", "немедленная мера"],
+      ["verbindlich zusagen", "твёрдо обещать"],
+      ["gemeinsam lösen", "решить совместно"],
+      ["Das ist doch lösbar", "Это ведь решаемо"],
+      ["Das dürfte wohl reichen", "Вероятно, этого хватит"],
+      ["Wie wäre es denn?", "Как насчёт?"],
+    ],
+    reading:
+      "Der Fall ist ja bereits an drei Abteilungen eskaliert worden. Trotzdem ist wohl noch nicht eindeutig, wer den nächsten Kundentermin übernimmt. Schauen wir doch zuerst auf den Übergabepunkt zwischen Billing und Operations. Dort fehlt eben eine verbindliche Zuständigkeit. Wie wäre es denn mit einem gemeinsamen Owner bis zur endgültigen Klärung? Im formellen Maßnahmenprotokoll werden anschließend nur Owner und Frist festgehalten.",
+    drills: [
+      ["Das ist ___ bereits bekannt.", "ja"],
+      ["Wir sollten das ___ priorisieren.", "doch"],
+      ["Wer übernimmt ___ den Termin?", "denn"],
+      ["Das dürfte ___ reichen.", "wohl"],
+      ["Die Maßnahme ist ___ notwendig.", "eben"],
+      [
+        "Mildern Sie: Prüfen Sie den Übergabepunkt.",
+        "Prüfen Sie doch den Übergabepunkt.",
+      ],
+      ["Entfernen Sie Umgangssprache: Schauen wir mal.", "Prüfen wir das."],
+      [
+        "Formulieren Sie mit denn: Wer ist zuständig?",
+        "Wer ist denn zuständig?",
+      ],
+    ],
+    open: [
+      [
+        "Mildern Sie ein hartes Gegenargument mit doch.",
+        "Wir könnten doch zunächst einen gemeinsamen Owner benennen.",
+      ],
+      [
+        "Formulieren Sie eine vorsichtige Vermutung mit wohl.",
+        "Die Verzögerung dürfte wohl am ungeklärten Übergabepunkt liegen.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie einen Gesprächsauszug zur Eskalation und danach ein formelles Maßnahmenprotokoll.",
+  }),
+  advancedSpec({
+    slug: "komplexe-satzklammer",
+    topic: "komplexe-satzklammer",
+    title: "Komplexe Satzklammer",
+    scenario: "Kundenabwanderung verhindern",
+    rule: "Mehrteilige Verbkomplexe ermöglichen präzise Aussagen über versäumte, notwendige und künftige Retention-Maßnahmen.",
+    form: "hätte erkannt werden müssen; hat reagieren müssen; wird verbessert werden müssen; weil man hat handeln müssen.",
+    errors:
+      "Beim Modalverb im Perfekt steht häufig der Ersatzinfinitiv; komplexe Verbteile gehören in die rechte Klammer.",
+    words: [
+      ["hätte erkannt werden müssen", "следовало распознать"],
+      ["hat reagieren müssen", "пришлось реагировать"],
+      ["wird verbessert werden müssen", "нужно будет улучшить"],
+      ["dürfte übersehen worden sein", "вероятно было упущено"],
+      ["das Abwanderungssignal", "сигнал оттока"],
+      ["der Nutzungsrückgang", "снижение использования"],
+      ["die Bindungsmaßnahme", "мера удержания"],
+      ["das Kündigungsrisiko", "риск расторжения"],
+      ["die Entscheiderin", "лицо, принимающее решение"],
+      ["der Wettbewerber", "конкурент"],
+      ["frühzeitig nachfassen", "заранее связаться"],
+      ["individuell ansprechen", "обратиться индивидуально"],
+      ["den Mehrwert belegen", "доказать ценность"],
+      ["unverzüglich handeln", "действовать немедленно"],
+      ["langfristig stabilisieren", "стабилизировать долгосрочно"],
+    ],
+    reading:
+      "Der starke Nutzungsrückgang hätte früher als Abwanderungssignal erkannt werden müssen. Das Account-Team hat unverzüglich reagieren müssen, nachdem die Entscheiderin ein Angebot des Wettbewerbers erwähnt hatte. Die fehlende Schulung dürfte in der letzten Übergabe übersehen worden sein. Künftig wird der Mehrwert regelmäßiger belegt werden müssen. Zusätzlich sollen lokale Nutzer individuell angesprochen und die Beziehung langfristig stabilisiert werden.",
+    drills: [
+      ["Das Signal hätte erkannt werden ___.", "müssen"],
+      ["Das Team hat reagieren ___.", "müssen"],
+      ["Der Mehrwert wird belegt werden ___.", "müssen"],
+      ["weil das Team hat handeln ___.", "müssen"],
+      ["Das Risiko dürfte übersehen worden ___.", "sein"],
+      ["Korrigieren Sie: hat reagieren gemusst.", "hat reagieren müssen"],
+      ["Die Schulung hätte angeboten werden ___.", "sollen"],
+      [
+        "Bilden Sie Futur: Man muss Adoption messen.",
+        "Die Adoption wird gemessen werden müssen.",
+      ],
+    ],
+    open: [
+      [
+        "Formulieren Sie eine versäumte Retention-Maßnahme.",
+        "Der Nutzungsrückgang hätte früher mit der Entscheiderin besprochen werden müssen.",
+      ],
+      [
+        "Begründen Sie eine schnelle Reaktion mit Ersatzinfinitiv.",
+        "Da das Team sofort hat handeln müssen, wurde noch am selben Tag ein Recovery-Plan vereinbart.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Churn-Risk-Analyse mit versäumten Signalen und künftigen Maßnahmen.",
+  }),
+  advancedSpec({
+    slug: "genitiv-alternativen",
+    topic: "genitiv-und-genitivalternativen",
+    title: "Genitiv und Genitivalternativen",
+    scenario: "Umsatzoptimierung mit KI-Insights",
+    rule: "Genitiv und Genitivpräpositionen markieren präzise Zugehörigkeit, Ursache und Bezugsrahmen; von-Gruppen und Komposita vermeiden schwere Ketten.",
+    form: "aufgrund des Trends, während der Saison, hinsichtlich der Nachfrage; die Prognose des Systems / die Prognose von System A.",
+    errors:
+      "Maskulin und Neutrum Singular brauchen meist -s/-es; lange Genitivketten stilistisch auflösen.",
+    words: [
+      ["aufgrund der Nachfrage", "из-за спроса"],
+      ["hinsichtlich des Umsatzes", "относительно выручки"],
+      ["während der Hochsaison", "в высокий сезон"],
+      ["innerhalb eines Monats", "в течение месяца"],
+      ["die Prognose des Systems", "прогноз системы"],
+      ["die Empfehlung von Modell A", "рекомендация модели A"],
+      ["der Umsatz des Hotels", "выручка отеля"],
+      ["die Preisstrategie", "ценовая стратегия"],
+      ["der Buchungsverlauf", "динамика бронирований"],
+      ["die Zusatzleistung", "дополнительная услуга"],
+      ["angesichts steigender Nachfrage", "с учётом растущего спроса"],
+      ["außerhalb der Spitzenzeiten", "вне пикового времени"],
+      ["zwecks Optimierung", "в целях оптимизации"],
+      ["die Konversionsrate", "коэффициент конверсии"],
+      ["der Nachfrageindikator", "индикатор спроса"],
+    ],
+    reading:
+      "Aufgrund der steigenden Wochenendnachfrage empfiehlt das System eine Anpassung der Upgrade-Angebote. Während der Hochsaison soll die Preisstrategie des Hotels täglich überprüft werden. Hinsichtlich der Konversionsrate zeigen personalisierte Zusatzleistungen den größten Effekt. Die Empfehlung von Modell A wird jedoch mit dem Buchungsverlauf des Vorjahres abgeglichen. Zwecks transparenter Steuerung erhält jedes Haus innerhalb eines Monats ein eigenes Umsatzdashboard.",
+    drills: [
+      ["aufgrund ___ Nachfrage", "der"],
+      ["hinsichtlich ___ Umsatzes", "des"],
+      ["innerhalb ___ Monats", "eines"],
+      ["Bilden Sie: die Strategie / das Hotel.", "die Strategie des Hotels"],
+      [
+        "Alternative mit von: die Empfehlung / Modell A.",
+        "die Empfehlung von Modell A",
+      ],
+      ["während ___ Hochsaison", "der"],
+      ["angesichts ___ Nachfrage (steigend)", "steigender"],
+      ["Verdichten Sie: Verlauf der Buchungen.", "Buchungsverlauf"],
+    ],
+    open: [
+      [
+        "Lösen Sie eine lange Genitivkette stilistisch auf.",
+        "Die Analyse des Teams zur Entwicklung des Hotelumsatzes → Die Teamanalyse zur Hotelumsatzentwicklung.",
+      ],
+      [
+        "Begründen Sie eine Preismaßnahme mit zwei Genitivpräpositionen.",
+        "Aufgrund der hohen Nachfrage prüfen wir die Preise während der Hochsaison täglich.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Empfehlung zur Umsatzoptimierung mit KI-Insights und transparenten Annahmen.",
+  }),
+  advancedSpec({
+    slug: "adjektivdeklination-advanced",
+    topic: "adjektivdeklination-advanced",
+    title: "Adjektivdeklination (Advanced)",
+    scenario: "Enterprise-Onboarding mehrerer Standorte",
+    rule: "Adjektivendungen kodieren Kasus, Genus und Numerus; in komplexen Rollout-Plänen müssen sie auch bei mehreren Attributen konsistent bleiben.",
+    form: "der neue Standort; ein neuer Standort; neuer Standort; mit klaren, verbindlichen Kriterien.",
+    errors:
+      "Artikeltyp und Kasus zuerst bestimmen; parallele Adjektive erhalten dieselbe Endung.",
+    words: [
+      ["ein neuer Standort", "новая площадка"],
+      ["der priorisierte Standort", "приоритетная площадка"],
+      ["mit klaren Kriterien", "с ясными критериями"],
+      ["für lokale Teams", "для местных команд"],
+      ["zentrale Zugangsdaten", "центральные данные доступа"],
+      ["eine gemeinsame Vorlage", "общий шаблон"],
+      ["verbindliche Meilensteine", "обязательные вехи"],
+      ["begrenzte Ressourcen", "ограниченные ресурсы"],
+      ["ein verantwortlicher Champion", "ответственный представитель"],
+      ["die technische Freigabe", "техническое одобрение"],
+      ["robuste Schulungspläne", "надёжные учебные планы"],
+      ["regionale Besonderheiten", "региональные особенности"],
+      ["ein Beteiligter", "участник"],
+      ["nichts Ungeklärtes", "ничего невыясненного"],
+      ["für jeden betroffenen Standort", "для каждой затронутой площадки"],
+    ],
+    reading:
+      "Ein zentraler Rollout-Plan koordiniert zwölf neue Standorte. Jeder priorisierte Standort erhält eine gemeinsame Vorlage, verbindliche Meilensteine und einen verantwortlichen lokalen Champion. Mit klaren technischen Kriterien prüft das Programmteam die Bereitschaft. Begrenzte regionale Ressourcen werden bei der Reihenfolge berücksichtigt. Nichts Ungeklärtes darf die technische Freigabe passieren.",
+    drills: [
+      ["ein neu___ Standort", "neuer"],
+      ["der priorisiert___ Standort", "priorisierte"],
+      ["mit klar___ Kriterien", "klaren"],
+      ["für lokal___ Teams", "lokale"],
+      ["zentral___ Zugangsdaten", "zentrale"],
+      [
+        "mit klar, verbindlich Kriterien",
+        "mit klaren, verbindlichen Kriterien",
+      ],
+      ["ein verantwortlich___ Champion", "verantwortlicher"],
+      ["Substantivieren Sie: eine beteiligte Person.", "eine Beteiligte"],
+    ],
+    open: [
+      [
+        "Beschreiben Sie drei Onboarding-Komponenten mit verschiedenen Deklinationstypen.",
+        "Ein zentraler Plan unterstützt die lokalen Teams mit klaren Meilensteinen.",
+      ],
+      [
+        "Formulieren Sie eine Regel mit substantiviertem Adjektiv.",
+        "Ein Verantwortlicher bestätigt die technische Freigabe.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie einen Rollout-Plan für das Onboarding mehrerer Standorte.",
+  }),
+  advancedSpec({
+    slug: "konzessive-konstruktionen",
+    topic: "konzessive-konstruktionen",
+    title: "Konzessive Konstruktionen",
+    scenario: "Kommunikation mit Executive Stakeholdern",
+    rule: "Konzessive Strukturen anerkennen Einwände und halten dennoch eine Empfehlung aufrecht.",
+    form: "obwohl/auch wenn + Nebensatz; trotz + Genitiv; zwar ..., jedoch ...; selbst wenn für starke Hypothesen.",
+    errors:
+      "Im Nebensatz steht das Verb am Ende; trotz verlangt standardsprachlich Genitiv.",
+    words: [
+      ["obwohl die Zahlen steigen", "хотя показатели растут"],
+      ["trotz guter Ergebnisse", "несмотря на хорошие результаты"],
+      ["auch wenn", "даже если"],
+      ["selbst wenn", "даже в случае"],
+      ["zwar … jedoch", "хотя … однако"],
+      ["wenngleich", "хотя"],
+      ["der Vorstandstermin", "встреча правления"],
+      ["die Entscheidungsvorlage", "документ для решения"],
+      ["der strategische Einwand", "стратегическое возражение"],
+      ["die Investitionsfreigabe", "одобрение инвестиций"],
+      ["die Ergebnisabweichung", "отклонение результата"],
+      ["dennoch", "тем не менее"],
+      ["ungeachtet", "невзирая на"],
+      ["einerseits … andererseits", "с одной стороны…с другой"],
+      ["die belastbare Evidenz", "надёжные данные"],
+    ],
+    reading:
+      "Obwohl die Adoption deutlich gestiegen ist, bleibt die finanzielle Wirkung noch nicht vollständig belegt. Zwar zeigen drei Standorte klare Produktivitätsgewinne, jedoch fehlt für zwei Regionen eine belastbare Vergleichsbasis. Trotz dieser Einschränkung empfiehlt das Customer-Success-Team eine begrenzte Investitionsfreigabe. Auch wenn der Vorstand eine schnellere Ausweitung wünscht, sollten zuerst einheitliche Messregeln gelten.",
+    drills: [
+      ["___ die Adoption steigt, fehlen Daten.", "Obwohl"],
+      ["___ guter Ergebnisse bleiben Fragen.", "Trotz"],
+      ["zwar klar, ___ unvollständig", "jedoch"],
+      [
+        "Verbinden Sie: Zahlen steigen. Evidenz fehlt.",
+        "Obwohl die Zahlen steigen, fehlt Evidenz.",
+      ],
+      ["___ wenn alles gelingt, messen wir weiter.", "Selbst"],
+      [
+        "Nominalisieren Sie: Obwohl Ergebnisse gut sind.",
+        "Trotz guter Ergebnisse",
+      ],
+      ["Die Daten sind begrenzt; ___ empfehlen wir den Pilot.", "dennoch"],
+      [
+        "Formell: Obwohl der Ansatz reif ist.",
+        "Wenngleich der Ansatz reif ist",
+      ],
+    ],
+    open: [
+      [
+        "Formulieren Sie eine ausgewogene Empfehlung mit zwar ... jedoch.",
+        "Die Ergebnisse sind zwar vielversprechend, jedoch sollte die Freigabe zunächst begrenzt bleiben.",
+      ],
+      [
+        "Behandeln Sie einen starken Einwand mit selbst wenn.",
+        "Selbst wenn der Vorstand schneller skalieren möchte, müssen einheitliche Messregeln gelten.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie eine abwägende Executive-Vorlage mit Einwänden, Evidenz und Empfehlung.",
+  }),
+  advancedSpec({
+    slug: "partizipialkonstruktionen",
+    topic: "partizipialkonstruktionen",
+    title: "Partizipialkonstruktionen",
+    scenario: "Krisenkommunikation bei einem Systemausfall",
+    rule: "Freie Partizipialkonstruktionen verdichten Zeit, Ursache, Bedingung und Perspektive in Statusmeldungen.",
+    form: "Von aktuellen Daten ausgehend…; technisch betrachtet…; nach Priorität geordnet…",
+    errors:
+      "Der logische Bezug muss eindeutig sein; unklare Konstruktionen besser als Nebensatz formulieren.",
+    words: [
+      ["von aktuellen Daten ausgehend", "исходя из текущих данных"],
+      ["technisch betrachtet", "с технической точки зрения"],
+      ["nach Priorität geordnet", "в порядке приоритета"],
+      ["unter Einbeziehung der Standorte", "с учётом площадок"],
+      ["um Sondereffekte bereinigt", "с поправкой на разовые эффекты"],
+      ["der Systemausfall", "системный сбой"],
+      ["die Wiederherstellungszeit", "время восстановления"],
+      ["der Notbetrieb", "аварийный режим"],
+      ["die Statusmeldung", "статусное сообщение"],
+      ["der betroffene Kanal", "затронутый канал"],
+      ["vorsichtig geschätzt", "при осторожной оценке"],
+      ["zusammenfassend betrachtet", "в целом"],
+      ["verglichen mit", "по сравнению с"],
+      ["manuell überbrückt", "перекрытый вручную"],
+      ["vollständig wiederhergestellt", "полностью восстановленный"],
+    ],
+    reading:
+      "Von den aktuellen Monitoring-Daten ausgehend, betrifft der Ausfall nur den mobilen Check-in. Technisch betrachtet, bleiben Reservierungen und Zahlungen intakt. Nach Priorität geordnet, werden zunächst Anreisen innerhalb der nächsten zwei Stunden manuell überbrückt. Vorsichtig geschätzt, ist der Dienst in neunzig Minuten wiederhergestellt. Unter Einbeziehung aller Standorte veröffentlicht das Krisenteam alle dreißig Minuten eine Statusmeldung.",
+    drills: [
+      ["___ aktuellen Daten ausgehend", "Von den"],
+      ["Technisch ___, bleiben Daten sicher.", "betrachtet"],
+      ["Nach Priorität ___", "geordnet"],
+      ["Kosten ___, bleibt der Plan stabil.", "einbezogen"],
+      ["Um Effekte ___", "bereinigt"],
+      [
+        "Korrigieren Sie den Bezug: Ausgehend von Daten, stieg die Prognose.",
+        "Von den Daten ausgehend, erhöhte das Team die Prognose.",
+      ],
+      ["Mit gestern ___", "verglichen"],
+      [
+        "Lösen Sie auf: Vorsichtig geschätzt, dauert es eine Stunde.",
+        "Wenn man vorsichtig schätzt, dauert es eine Stunde.",
+      ],
+    ],
+    open: [
+      [
+        "Verdichten Sie Status und Einschränkung mit zwei Partizipialkonstruktionen.",
+        "Technisch betrachtet und auf den Check-in begrenzt, ist der Ausfall beherrschbar.",
+      ],
+      [
+        "Überarbeiten Sie eine unklare Konstruktion.",
+        "Nachdem das Krisenteam alle Standorte einbezogen hatte, aktualisierte es die Prognose.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Krisenmeldung zu einem Systemausfall mit Auswirkung, Workaround und Update-Zeit.",
+  }),
+  advancedSpec({
+    slug: "stilverbesserung-buerodeutsch",
+    topic: "stilverbesserung-und-buerodeutsch",
+    title: "Stilverbesserung und Bürodeutsch",
+    scenario: "Strategische Jahresbewertung eines Key Accounts",
+    rule: "Guter Bürostil macht Zweck, Ergebnis, Entscheidung, Owner und Termin sichtbar und ersetzt Floskeln durch präzise Verben.",
+    form: "Kurzer Betreff; aktive Sätze; parallele Maßnahmen; höfliche Bitte mit Frist.",
+    errors:
+      "Vermeiden Sie Nominalketten, Passiv ohne Grund, Füllwörter und vage Zeitangaben.",
+    words: [
+      ["die Jahresbewertung", "годовая оценка"],
+      ["das strategische Ziel", "стратегическая цель"],
+      ["der gemeinsame Erfolgsplan", "совместный план успеха"],
+      ["die Entscheidungsgrundlage", "основа решения"],
+      ["die Priorität bestätigen", "подтвердить приоритет"],
+      ["einen Owner benennen", "назначить ответственного"],
+      ["bis zum Stichtag", "к контрольной дате"],
+      ["vorbehaltlich der Zustimmung", "при условии согласия"],
+      ["mit Blick auf", "с учётом"],
+      ["konkret bedeutet das", "конкретно это означает"],
+      ["zuständig sein für", "отвечать за"],
+      ["eine Rückmeldung geben", "дать обратную связь"],
+      ["zur Kenntnis nehmen", "принять к сведению"],
+      ["auf den Weg bringen", "запустить"],
+      ["ohne unnötige Verzögerung", "без лишней задержки"],
+    ],
+    reading:
+      "Betreff: Entscheidung zu den Prioritäten des Key Accounts. Die Jahresbewertung zeigt höhere Adoption, schnellere Lösungszeiten und eine offene Integrationsabhängigkeit. Wir empfehlen drei Prioritäten: IT schließt die Integration ab, HR erweitert die Managerschulung und Customer Success führt quartalsweise Wertgespräche durch. Bitte bestätigen Sie bis Freitag den Executive Owner und die Zieltermine. Vorbehaltlich Ihrer Zustimmung aktualisieren wir den gemeinsamen Erfolgsplan nächste Woche.",
+    drills: [
+      [
+        "Kürzen Sie: Wir möchten hiermit um Zustimmung bitten.",
+        "Bitte stimmen Sie zu.",
+      ],
+      [
+        "Aktivieren Sie: Die Integration erfolgt durch IT.",
+        "IT integriert das System.",
+      ],
+      ["HR ist ___ Schulung zuständig.", "für die"],
+      [
+        "Machen Sie konkret: Rückmeldung wäre zeitnah hilfreich.",
+        "Bitte geben Sie uns bis Freitag Rückmeldung.",
+      ],
+      ["Kürzen Sie: bereits schon abgeschlossen.", "bereits abgeschlossen"],
+      ["Vorbehaltlich ___ Zustimmung", "Ihrer"],
+      [
+        "Aktivieren Sie: Die Freigabe wird vom Vorstand erteilt.",
+        "Der Vorstand erteilt die Freigabe.",
+      ],
+      [
+        "Parallelisieren Sie: integrieren, Schulung und wir messen.",
+        "integrieren, schulen und messen",
+      ],
+    ],
+    open: [
+      [
+        "Überarbeiten Sie eine vage Bitte mit Owner und Frist.",
+        "Bitte bestätigen Sie den Executive Owner und die Zieltermine bis Freitag.",
+      ],
+      [
+        "Ersetzen Sie Amtsdeutsch durch klare Sprache.",
+        "Wir prüfen die Ergebnisse und entscheiden anschließend über die Prioritäten.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie eine strategische Jahresbewertung eines Key Accounts mit Ergebnissen, Prioritäten und Entscheidungsbedarf.",
+  }),
+];
+
+export const germanCustomerSuccessLessons: readonly Lesson[] = [
+  ...specs,
+  ...advancedSpecs,
+].map(buildLesson);

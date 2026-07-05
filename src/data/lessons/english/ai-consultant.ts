@@ -2228,6 +2228,1690 @@ const gerundsInfinitives = createLesson({
   ],
 });
 
+const advancedSources = [
+  "Cambridge Dictionary — English Grammar",
+  "British Council — LearnEnglish Grammar (B2)",
+  "Oxford Learner's Dictionaries — grammar reference",
+];
+
+const thirdConditional = createLesson({
+  slug: "third-conditional",
+  topic: "third-conditional",
+  title: "Third Conditional",
+  practiceTitle: "Practice: analysing an AI incident",
+  sources: advancedSources,
+  theory: [
+    {
+      heading: "Когда использовать",
+      body: "Third Conditional описывает нереальное прошлое: условие уже не произошло, поэтому результат тоже нельзя изменить. В post-mortem эта конструкция помогает анализировать причины без утверждений о реальном ходе событий.",
+    },
+    {
+      heading: "Форма",
+      items: [
+        "If + past perfect, would have + past participle.",
+        "If we had tested the fallback, we would have detected the defect.",
+        "Could/might have передают возможность или менее уверенный результат.",
+      ],
+    },
+    {
+      heading: "Порядок частей",
+      body: "Части можно менять местами. Запятая нужна, когда if-clause стоит первой: If the alert had fired, we would have responded. We would have responded if the alert had fired.",
+    },
+    {
+      heading: "Типичные ошибки",
+      items: [
+        "Не используйте would в if-clause: if we had known, не if we would have known.",
+        "После had нужен past participle: had gone, had been, had seen.",
+        "Не подменяйте факты обвинением: формулируйте вывод и corrective action нейтрально.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "Past perfect задаёт нереальное условие в прошлом; would/could/might have + V3 показывает его воображаемое следствие.",
+    },
+  ],
+  vocabulary: vocabulary([
+    [
+      "incident post-mortem",
+      "разбор инцидента",
+      "The incident post-mortem identified three control gaps.",
+    ],
+    [
+      "root cause",
+      "коренная причина",
+      "A missing validation rule was the root cause.",
+    ],
+    [
+      "contributing factor",
+      "сопутствующий фактор",
+      "Limited monitoring was a contributing factor.",
+    ],
+    [
+      "fallback mechanism",
+      "резервный механизм",
+      "The fallback mechanism did not activate.",
+    ],
+    [
+      "audit trail",
+      "журнал аудита",
+      "The audit trail showed every model decision.",
+    ],
+    [
+      "severity level",
+      "уровень серьёзности",
+      "The team classified the event as severity level two.",
+    ],
+    [
+      "contain an incident",
+      "локализовать инцидент",
+      "Earlier detection could have contained the incident.",
+    ],
+    [
+      "trigger an alert",
+      "вызвать оповещение",
+      "A higher error rate should trigger an alert.",
+    ],
+    [
+      "corrective action",
+      "корректирующее действие",
+      "Each corrective action has an owner.",
+    ],
+    [
+      "prevent a recurrence",
+      "предотвратить повторение",
+      "The new test should prevent a recurrence.",
+    ],
+    [
+      "Had we known…",
+      "Если бы мы знали…",
+      "Had we known about the drift, we would have paused deployment.",
+    ],
+    [
+      "If the control had worked…",
+      "Если бы контроль сработал…",
+      "If the control had worked, fewer records would have been affected.",
+    ],
+    [
+      "would have detected",
+      "обнаружили бы",
+      "A canary test would have detected the issue.",
+    ],
+    [
+      "might have avoided",
+      "возможно, избежали бы",
+      "We might have avoided the outage with a rollback plan.",
+    ],
+    [
+      "lessons learned",
+      "извлечённые уроки",
+      "The lessons learned informed the next release.",
+    ],
+  ]),
+  readingTitle: "Post-mortem: incorrect document routing",
+  reading:
+    "A document-routing model sent 8% of incoming claims to the wrong queue after a Friday release. The team contained the incident within two hours and restored the previous model. The root cause was a mapping change that had not been included in the staging data. If the staging set had represented the new mapping, the validation test would have failed. Monitoring also focused on latency rather than routing accuracy. A distribution alert might have exposed the change within minutes. The post-mortem assigns two corrective actions: update representative test data and add a routing-quality alert. Had these controls existed before the release, the team could have prevented most of the manual rework.",
+  graded: [
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt:
+        'Complete: "If we ___ (include) the mapping, the test would have failed."',
+      answer: "had included",
+      explanation: "В if-clause нужен Past Perfect.",
+      subcategory: "if-clause",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "The alert would have ___ (detect) the shift."',
+      answer: "detected",
+      explanation: "После would have используется V3.",
+      subcategory: "result-clause",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        'Choose A or B: A) "If we had known, we would pause." B) "If we had known, we would have paused."',
+      answer: "B",
+      accepted: ["b"],
+      explanation: "Нереальный прошлый результат требует would have + V3.",
+      subcategory: "form",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt: 'Correct: "If the monitor would have worked, we had responded."',
+      answer: "If the monitor had worked, we would have responded.",
+      explanation: "Had + V3 в условии; would have + V3 в результате.",
+      subcategory: "form",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt:
+        'Complete with possibility: "A canary release ___ have prevented the outage."',
+      answer: "might",
+      accepted: ["could"],
+      explanation: "Might/could have выражает возможный прошлый результат.",
+      subcategory: "modals",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt:
+        'Complete: "Had the team tested the fallback, it ___ have activated."',
+      answer: "would",
+      explanation: "Had the team tested = inverted if-clause.",
+      subcategory: "inversion",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt: 'Choose the correct form: A) "had went" B) "had gone"',
+      answer: "B",
+      accepted: ["b"],
+      explanation: "Past participle от go — gone.",
+      subcategory: "past-participle",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt:
+        'Complete the result: "If the logs had been complete, ..." Use detect.',
+      answer: "we would have detected the root cause.",
+      accepted: ["We would have detected the root cause"],
+      explanation: "Результат строится с would have + detected.",
+      subcategory: "result-clause",
+    },
+  ],
+  open: [
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        'Write a neutral third-conditional lesson from this fact: "The team skipped load testing; the service failed."',
+      sample:
+        "If the team had completed load testing, it might have detected the capacity limit before the service failed.",
+      criteria:
+        "third conditional, нейтральный post-mortem register, причинная связь и исходный смысл сохранены.",
+    },
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        'Rewrite with inverted Had: "If the alert had fired, we would have contained the incident sooner."',
+      sample:
+        "Had the alert fired, we would have contained the incident sooner.",
+      criteria:
+        "корректная инверсия Had + subject + V3, результат и смысл сохранены.",
+    },
+  ],
+  writingPrompt:
+    "Write a concise AI incident post-mortem covering impact, root cause, counterfactual analysis, and corrective actions.",
+  writingRequirements: [
+    "Используйте минимум четыре third conditionals.",
+    "Включите would have, could have и might have.",
+    "Разделите root cause и contributing factors.",
+    "Предложите минимум две corrective actions.",
+  ],
+});
+
+const mixedConditionals = createLesson({
+  slug: "mixed-conditionals",
+  topic: "mixed-conditionals",
+  title: "Mixed Conditionals",
+  practiceTitle: "Practice: designing an AI evaluation framework",
+  sources: advancedSources,
+  theory: [
+    {
+      heading: "Зачем смешивать времена",
+      body: "Mixed Conditionals связывают условие и результат из разных периодов. В evaluation framework они показывают, как прошлое решение влияет на текущую надёжность или как постоянное свойство объясняет прошлый результат.",
+    },
+    {
+      heading: "Прошлое → настоящее",
+      items: [
+        "If + past perfect, would + base verb.",
+        "If we had defined thresholds earlier, the framework would be reliable now.",
+      ],
+    },
+    {
+      heading: "Настоящее → прошлое",
+      items: [
+        "If + past simple, would have + past participle.",
+        "If the benchmark were representative, it would have revealed the bias.",
+      ],
+    },
+    {
+      heading: "Типичные ошибки",
+      items: [
+        "Определите реальное время каждой части до выбора формы.",
+        "Не ставьте would в if-clause.",
+        "Were допустимо со всеми лицами в формальном гипотетическом условии.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "Форма каждой части отражает её собственное время: прошлое условие может иметь нынешний результат, а нынешнее состояние — прошлое следствие.",
+    },
+  ],
+  vocabulary: vocabulary([
+    [
+      "evaluation framework",
+      "система оценки",
+      "The evaluation framework covers quality and safety.",
+    ],
+    [
+      "success criterion",
+      "критерий успеха",
+      "Each success criterion has a threshold.",
+    ],
+    [
+      "benchmark set",
+      "набор контрольных примеров",
+      "The benchmark set reflects real requests.",
+    ],
+    [
+      "acceptance threshold",
+      "порог приёмки",
+      "Accuracy exceeded the acceptance threshold.",
+    ],
+    [
+      "representative sample",
+      "репрезентативная выборка",
+      "We need a representative sample of edge cases.",
+    ],
+    [
+      "false positive",
+      "ложноположительный результат",
+      "The test tracks every false positive.",
+    ],
+    [
+      "failure mode",
+      "сценарий отказа",
+      "Prompt injection is one failure mode.",
+    ],
+    [
+      "human baseline",
+      "человеческий базовый уровень",
+      "The model outperformed the human baseline on speed.",
+    ],
+    [
+      "weighted score",
+      "взвешенная оценка",
+      "Safety has the highest weighted score.",
+    ],
+    [
+      "trade-off",
+      "компромисс",
+      "The dashboard makes the cost-quality trade-off visible.",
+    ],
+    [
+      "If we had defined…",
+      "Если бы мы определили…",
+      "If we had defined ownership, the process would be clearer now.",
+    ],
+    [
+      "would be more reliable now",
+      "был бы надёжнее сейчас",
+      "The result would be more reliable now.",
+    ],
+    [
+      "If the sample were…",
+      "Если бы выборка была…",
+      "If the sample were balanced, it would have exposed the gap.",
+    ],
+    [
+      "would have revealed",
+      "выявил бы",
+      "A multilingual test would have revealed the weakness.",
+    ],
+    [
+      "evidence-based decision",
+      "решение на основе данных",
+      "The framework supports an evidence-based decision.",
+    ],
+  ]),
+  readingTitle: "Why the first evaluation failed",
+  reading:
+    "A retailer is redesigning its evaluation framework after an inconclusive pilot. The original benchmark contained mostly short English questions, although the production system serves multilingual, multi-step requests. If the team had sampled production traffic earlier, its benchmark would be more representative now. The scoring model also gives equal weight to speed and safety. If safety were the primary criterion, the previous vendor would not have passed the pilot. The revised framework separates quality, safety, latency, and cost, and defines an acceptance threshold for each dimension. It also compares model performance with a human baseline. These changes will make the next recommendation traceable and evidence-based.",
+  graded: [
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt:
+        'Complete: "If we had sampled traffic, the set ___ (be) stronger now."',
+      answer: "would be",
+      explanation: "Прошлое условие имеет настоящий результат.",
+      subcategory: "past-present",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt:
+        'Complete: "If the sample were balanced, it ___ (reveal) the issue last month."',
+      answer: "would have revealed",
+      explanation: "Настоящее свойство объясняет прошлый результат.",
+      subcategory: "present-past",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        'Choose A or B: A) "If we had set thresholds, decisions would be clearer now." B) "If we set thresholds, decisions would have been clearer now."',
+      answer: "A",
+      accepted: ["a"],
+      explanation:
+        "A корректно связывает прошлое условие с настоящим результатом.",
+      subcategory: "time-reference",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt:
+        'Correct: "If the benchmark would be realistic, it had caught the gap."',
+      answer: "If the benchmark were realistic, it would have caught the gap.",
+      explanation: "Were в условии, would have + V3 в прошлом результате.",
+      subcategory: "present-past",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt:
+        'Complete: "If ownership had been clear, we ___ not be revising the rubric now."',
+      answer: "would",
+      explanation: "Would + base verb выражает нынешний результат.",
+      subcategory: "past-present",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt:
+        'Complete: "If cost were less important, we ___ have selected the safer model."',
+      answer: "would",
+      explanation: "Настоящее условие связано с прошлым выбором.",
+      subcategory: "present-past",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        'Choose the formal hypothetical form: A) "If the metric was reliable" B) "If the metric were reliable"',
+      answer: "B",
+      accepted: ["b"],
+      explanation: "Were предпочтительно в формальной гипотезе.",
+      subcategory: "were",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt:
+        'Complete: "If we had documented the baseline, ..." Use be / easier / now.',
+      answer: "the comparison would be easier now.",
+      accepted: ["The comparison would be easier now"],
+      explanation: "Настоящий результат: would be.",
+      subcategory: "past-present",
+    },
+  ],
+  open: [
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        'Connect the past decision to the present: "We did not define safety thresholds. The recommendation is weak now."',
+      sample:
+        "If we had defined safety thresholds, the recommendation would be stronger now.",
+      criteria:
+        "past-to-present mixed conditional, смысл сохранён, профессиональный register.",
+    },
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        'Connect a current framework weakness to a past result: "The sample is narrow. It did not identify multilingual failures."',
+      sample:
+        "If the sample were broader, it would have identified the multilingual failures.",
+      criteria:
+        "present-to-past mixed conditional, грамматическая точность и причинная связь.",
+    },
+  ],
+  writingPrompt:
+    "Write a recommendation for redesigning an AI evaluation framework after a weak pilot.",
+  writingRequirements: [
+    "Используйте минимум четыре mixed conditionals обоих типов.",
+    "Определите quality, safety, latency и cost criteria.",
+    "Укажите thresholds и representative sample.",
+    "Объясните влияние прошлых решений на текущую оценку.",
+  ],
+});
+
+const causative = createLesson({
+  slug: "causative",
+  topic: "causative-have-get-something-done",
+  title: "Causative: Have/Get Something Done",
+  practiceTitle: "Practice: running a vendor comparison workshop",
+  sources: advancedSources,
+  theory: [
+    {
+      heading: "Значение",
+      body: "Have/get something done показывает, что работу выполняет другой человек или поставщик по нашей организации. В vendor workshop форма точно распределяет заказанную проверку и исполнителя, не фокусируясь на нём.",
+    },
+    {
+      heading: "Форма",
+      items: [
+        "have/get + object + past participle",
+        "We had the vendors demonstrate their controls. / We had the controls demonstrated.",
+        "Get обычно менее формально и иногда подчёркивает усилие.",
+      ],
+    },
+    {
+      heading: "Времена и вопросы",
+      body: "Изменяется have/get: we are having the API tested; we got the report translated; will you have the pricing reviewed? Past participle остаётся неизменным.",
+    },
+    {
+      heading: "Типичные ошибки",
+      items: [
+        "Не используйте инфинитив после объекта: have the contract reviewed.",
+        "Не путайте have someone do (активный исполнитель) и have something done (результат услуги).",
+        "В формальном отчёте чаще выбирайте have, а не get.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "Если ваша команда организует услугу, но не выполняет её сама, используйте have/get + object + V3.",
+    },
+  ],
+  vocabulary: vocabulary([
+    [
+      "vendor shortlist",
+      "короткий список поставщиков",
+      "We had the vendor shortlist approved.",
+    ],
+    [
+      "proof of concept",
+      "проверка концепции",
+      "Each vendor ran a proof of concept.",
+    ],
+    [
+      "due diligence",
+      "комплексная проверка",
+      "The client had legal due diligence completed.",
+    ],
+    [
+      "pricing model",
+      "модель ценообразования",
+      "We are getting the pricing model reviewed.",
+    ],
+    [
+      "reference check",
+      "проверка рекомендаций",
+      "Have the reference checks documented.",
+    ],
+    [
+      "security questionnaire",
+      "опросник по безопасности",
+      "The vendors completed a security questionnaire.",
+    ],
+    [
+      "solution demo",
+      "демонстрация решения",
+      "We had each solution demo recorded.",
+    ],
+    [
+      "scorecard",
+      "оценочная карта",
+      "The scorecard compares mandatory criteria.",
+    ],
+    [
+      "integration effort",
+      "трудозатраты на интеграцию",
+      "Integration effort affects the final score.",
+    ],
+    [
+      "total cost of ownership",
+      "совокупная стоимость владения",
+      "Finance validated the total cost of ownership.",
+    ],
+    [
+      "have the proposal reviewed",
+      "организовать проверку предложения",
+      "We will have the proposal reviewed by Legal.",
+    ],
+    [
+      "get the sandbox configured",
+      "добиться настройки песочницы",
+      "Can we get the sandbox configured by Tuesday?",
+    ],
+    [
+      "have a vendor demonstrate",
+      "попросить поставщика продемонстрировать",
+      "We had each vendor demonstrate audit logging.",
+    ],
+    [
+      "commission an assessment",
+      "заказать оценку",
+      "The client commissioned an independent assessment.",
+    ],
+    [
+      "make a like-for-like comparison",
+      "провести сопоставимое сравнение",
+      "The scorecard enables a like-for-like comparison.",
+    ],
+  ]),
+  readingTitle: "Preparing a fair vendor workshop",
+  reading:
+    "The consulting team is preparing a comparison workshop for three AI platform vendors. Before the session, it will have each sandbox configured with the same dataset. It is also getting the security questionnaires reviewed by the client's risk team. During the workshop, the consultants will have each vendor demonstrate identity management, audit logging, and model monitoring. They will not ask vendors to present generic slides. Instead, every supplier must complete the same use cases while observers record results in a shared scorecard. Afterward, the client will have reference checks completed and the total cost of ownership validated by Finance. This process should produce a like-for-like comparison rather than three unrelated sales presentations.",
+  graded: [
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "We will have the sandbox ___ (configure)."',
+      answer: "configured",
+      explanation: "После object используется V3.",
+      subcategory: "form",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "The client is getting the references ___ (check)."',
+      answer: "checked",
+      explanation: "Get + object + V3.",
+      subcategory: "get-causative",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        'Choose A or B: A) "have the contract review" B) "have the contract reviewed"',
+      answer: "B",
+      accepted: ["b"],
+      explanation: "Нужен past participle reviewed.",
+      subcategory: "form",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt: 'Rewrite causatively: "Legal will review our proposal."',
+      answer: "We will have our proposal reviewed by Legal.",
+      accepted: ["We will get our proposal reviewed by Legal"],
+      explanation: "Заказанная проверка выражается causative.",
+      subcategory: "transformation",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "Yesterday, we ___ the demo recorded."',
+      answer: "had",
+      accepted: ["got"],
+      explanation: "Past Simple меняет have/get.",
+      subcategory: "tense",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        'Choose the more formal option: A) "We had the assessment completed." B) "We got the assessment done."',
+      answer: "A",
+      accepted: ["a"],
+      explanation: "Have обычно формальнее get.",
+      subcategory: "register",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete the question: "Will you ___ the pricing validated?"',
+      answer: "have",
+      accepted: ["get"],
+      explanation: "После will нужна базовая форма.",
+      subcategory: "question",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt: 'Correct: "We are having the API to test."',
+      answer: "We are having the API tested.",
+      explanation: "Causative требует object + V3 без to.",
+      subcategory: "form",
+    },
+  ],
+  open: [
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        'Reformulate two workshop actions to show outsourced work: "Risk reviews security. Finance validates cost."',
+      sample:
+        "We are having security reviewed by Risk and the cost model validated by Finance.",
+      criteria:
+        "минимум две корректные causative structures, исполнители и смысл сохранены.",
+    },
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        "Write a polite request using get something done for sandbox setup by Friday.",
+      sample: "Could we get the vendor sandbox configured by Friday?",
+      criteria: "get + object + V3, срок, вежливый профессиональный register.",
+    },
+  ],
+  writingPrompt:
+    "Write a workshop plan explaining how your team will organize a fair comparison of three AI vendors.",
+  writingRequirements: [
+    "Используйте минимум пять causative forms в разных временах.",
+    "Упомяните sandbox, security review, demo и scorecard.",
+    "Различайте действия консультантов и заказанные проверки.",
+    "Объясните, как обеспечить like-for-like comparison.",
+  ],
+});
+
+function compactLesson(config: Omit<LessonSpec, "sources">): Lesson {
+  return createLesson({ ...config, sources: advancedSources });
+}
+
+const quantifiersApproximation = compactLesson({
+  slug: "quantifiers-approximation",
+  topic: "quantifiers-and-approximation",
+  title: "Quantifiers & Approximation",
+  practiceTitle: "Practice: AI governance metrics",
+  theory: [
+    {
+      heading: "Исчисляемость",
+      body: "Many/few употребляются с исчисляемыми, much/little — с неисчисляемыми; a lot of подходит обоим типам.",
+    },
+    {
+      heading: "Приблизительные данные",
+      items: [
+        "approximately/roughly/around + number",
+        "just over/under; nearly; up to",
+        "A small proportion of requests require review.",
+      ],
+    },
+    {
+      heading: "Доля",
+      body: "Most означает большинство без of; most of — долю конкретной группы. Each/every требуют существительное в единственном числе.",
+    },
+    {
+      heading: "Типичные ошибки",
+      items: [
+        "information, evidence и traffic неисчисляемы.",
+        "few/little = недостаточно; a few/a little = некоторое количество.",
+        "Не выдавайте приблизительное число за точное.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "Сначала определите исчисляемость, затем степень точности и только после этого выбирайте quantifier.",
+    },
+  ],
+  vocabulary: vocabulary([
+    [
+      "governance board",
+      "совет по управлению",
+      "The governance board reviews high-risk uses.",
+    ],
+    [
+      "policy coverage",
+      "охват политикой",
+      "Policy coverage is nearly complete.",
+    ],
+    ["risk tier", "уровень риска", "Each use case has a risk tier."],
+    [
+      "control owner",
+      "владелец контроля",
+      "Every control owner reports quarterly.",
+    ],
+    [
+      "compliance evidence",
+      "свидетельства соответствия",
+      "Little compliance evidence was available.",
+    ],
+    [
+      "exception rate",
+      "доля исключений",
+      "The exception rate is just under 4%.",
+    ],
+    [
+      "a large proportion of",
+      "значительная доля",
+      "A large proportion of cases are low risk.",
+    ],
+    [
+      "the vast majority of",
+      "подавляющее большинство",
+      "The vast majority of controls passed.",
+    ],
+    ["a handful of", "небольшое число", "A handful of exceptions remain."],
+    ["roughly", "примерно", "Roughly 200 users need training."],
+    ["just over", "чуть больше", "Just over half the models are registered."],
+    ["nearly", "почти", "Nearly all owners responded."],
+    ["up to", "до", "Reviews can take up to ten days."],
+    ["very little", "очень мало", "Very little evidence supports the claim."],
+    [
+      "most of the",
+      "большинство конкретных",
+      "Most of the high-risk systems were reviewed.",
+    ],
+  ]),
+  readingTitle: "A governance dashboard update",
+  reading:
+    "The governance board now tracks 42 AI use cases. Roughly two thirds are low risk, while just under a quarter require enhanced review. Most of the high-risk systems have named control owners, but a handful of teams have provided very little compliance evidence. Nearly all production models are registered, and every new use case receives an initial risk tier. The board expects policy coverage to reach approximately 95% this quarter. However, up to six legacy systems may need extra time because little reliable documentation exists.",
+  graded: [
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "___ evidence is available." (small amount)',
+      answer: "Little",
+      accepted: ["little"],
+      explanation: "Evidence неисчисляемо.",
+      subcategory: "uncountable",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "___ use cases need review." (large number)',
+      answer: "Many",
+      accepted: ["many"],
+      explanation: "Use cases исчисляемы.",
+      subcategory: "countable",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt: "Choose: A) most systems B) most of systems",
+      answer: "A",
+      accepted: ["a"],
+      explanation: "Без определителя используется most.",
+      subcategory: "most",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "___ of the registered models passed."',
+      answer: "Most",
+      accepted: ["most"],
+      explanation: "Перед the нужна конструкция most of.",
+      subcategory: "most-of",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt: 'Replace with an approximation: "101 users" (use just over).',
+      answer: "just over 100 users",
+      explanation: "Just over показывает небольшое превышение.",
+      subcategory: "approximation",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        "Choose for some positive amount: A) few controls B) a few controls",
+      answer: "B",
+      accepted: ["b"],
+      explanation: "A few = некоторое количество.",
+      subcategory: "few",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "Every control ___ an owner."',
+      answer: "has",
+      explanation: "Every требует единственного числа.",
+      subcategory: "agreement",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt: 'Correct: "many compliance evidence".',
+      answer: "much compliance evidence",
+      accepted: ["a lot of compliance evidence"],
+      explanation: "Evidence неисчисляемо.",
+      subcategory: "uncountable",
+    },
+  ],
+  open: [
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        "Summarise 48 of 50 compliant systems without claiming exactness.",
+      sample: "Nearly all systems are compliant.",
+      criteria:
+        "уместный approximation/quantifier, точный общий смысл, профессиональный register.",
+    },
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt: "Diplomatically report that only three teams lack evidence.",
+      sample:
+        "A small number of teams still have very little supporting evidence.",
+      criteria:
+        "quantifiers для countable и uncountable nouns, дипломатичный тон.",
+    },
+  ],
+  writingPrompt:
+    "Write a governance dashboard commentary summarising coverage, risk tiers, exceptions, and evidence gaps.",
+  writingRequirements: [
+    "Используйте минимум восемь разных quantifiers/approximators.",
+    "Различайте countable и uncountable nouns.",
+    "Включите доли и приблизительные числа.",
+    "Не создавайте ложной точности.",
+  ],
+});
+
+const articlesBusiness = compactLesson({
+  slug: "articles-business-english",
+  topic: "articles-in-business-english",
+  title: "Articles in Business English",
+  practiceTitle: "Practice: security and risk assessment",
+  theory: [
+    {
+      heading: "A/an",
+      body: "A/an вводит один неспецифичный исчисляемый объект: a vulnerability, an audit.",
+    },
+    {
+      heading: "The",
+      body: "The указывает на уже известный, уникальный в контексте или уточнённый объект: the risk identified yesterday.",
+    },
+    {
+      heading: "Нулевой артикль",
+      items: [
+        "Неисчисляемые и множественные существительные в общем значении: Security requires evidence.",
+        "Названия функций часто без артикля: Legal, Finance; но the legal team.",
+      ],
+    },
+    {
+      heading: "Типичные ошибки",
+      items: [
+        "Не пропускайте артикль у singular countable noun.",
+        "Не ставьте the перед общим абстрактным понятием.",
+        "Выбирайте an по звуку: an SSO issue, a user.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "Спросите: объект один и новый, конкретный или обобщённый? Это определяет a/an, the или zero article.",
+    },
+  ],
+  vocabulary: vocabulary([
+    ["threat model", "модель угроз", "We created a threat model."],
+    [
+      "attack surface",
+      "поверхность атаки",
+      "The attack surface includes the API.",
+    ],
+    ["data leakage", "утечка данных", "Data leakage is a critical risk."],
+    ["vulnerability", "уязвимость", "An external test found a vulnerability."],
+    ["mitigation", "мера снижения риска", "The mitigation reduces exposure."],
+    ["risk register", "реестр рисков", "The risk register has an owner."],
+    ["access control", "контроль доступа", "Access control requires testing."],
+    [
+      "security audit",
+      "аудит безопасности",
+      "The client commissioned a security audit.",
+    ],
+    ["likelihood", "вероятность", "The likelihood is low."],
+    [
+      "impact assessment",
+      "оценка влияния",
+      "An impact assessment is required.",
+    ],
+    [
+      "the issue identified",
+      "выявленная проблема",
+      "The issue identified yesterday is resolved.",
+    ],
+    ["a material risk", "существенный риск", "This is a material risk."],
+    [
+      "in production",
+      "в промышленной среде",
+      "The model is not yet in production.",
+    ],
+    ["under review", "на рассмотрении", "The mitigation is under review."],
+    [
+      "security by design",
+      "безопасность по замыслу",
+      "Security by design reduces later rework.",
+    ],
+  ]),
+  readingTitle: "Security assessment summary",
+  reading:
+    "A security assessment of the proposed assistant identified a material risk: users could place confidential data in an external prompt. The risk is higher in the production environment than in the controlled sandbox. Security recommended an access control, a data-loss prevention rule, and mandatory training. The control must be tested before launch. An independent audit will then verify the mitigation. The assessment also examined model access, retention, and the attack surface of the API. Security by design is now a requirement for the project.",
+  graded: [
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "We found ___ vulnerability."',
+      answer: "a",
+      explanation: "Новый singular countable object.",
+      subcategory: "indefinite",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "___ issue found yesterday is fixed."',
+      answer: "The",
+      accepted: ["the"],
+      explanation: "Уточнение делает объект конкретным.",
+      subcategory: "definite",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        'Choose the correct option: "___ Security requires evidence." (the / a / an / —)',
+      answer: "—",
+      accepted: ["zero article", "no article"],
+      explanation: "Абстрактное общее понятие без артикля.",
+      subcategory: "zero",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt: "Choose: A) a audit B) an audit",
+      answer: "B",
+      accepted: ["b"],
+      explanation: "Audit начинается с гласного звука.",
+      subcategory: "a-an",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "___ attack surface of the API is limited."',
+      answer: "The",
+      accepted: ["the"],
+      explanation: "Of-phrase определяет объект.",
+      subcategory: "definite",
+    },
+    {
+      format: ExerciseFormat.ShortAnswer,
+      prompt: 'Correct: "We need mitigation before launch."',
+      answer: "We need a mitigation before launch.",
+      explanation: "Mitigation здесь один исчисляемый объект.",
+      subcategory: "indefinite",
+    },
+    {
+      format: ExerciseFormat.MultipleChoice,
+      prompt:
+        "General meaning: A) The data leakage is dangerous. B) Data leakage is dangerous.",
+      answer: "B",
+      accepted: ["b"],
+      explanation: "Общее абстрактное значение требует zero article.",
+      subcategory: "zero",
+    },
+    {
+      format: ExerciseFormat.FillBlank,
+      prompt: 'Complete: "It was ___ SSO issue."',
+      answer: "an",
+      explanation: "Название S произносится с начальным гласным звуком.",
+      subcategory: "a-an",
+    },
+  ],
+  open: [
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt:
+        "Write two sentences that introduce a risk and then refer to it again.",
+      sample:
+        "The review identified a vulnerability. The vulnerability affects the authentication flow.",
+      criteria:
+        "a/an при первом упоминании, the при повторном, смысл и register.",
+    },
+    {
+      format: ExerciseFormat.Rewrite,
+      prompt: "Contrast security in general with the security of this API.",
+      sample:
+        "Security is essential, and the security of this API requires additional testing.",
+      criteria: "zero article для общего понятия и the для конкретного.",
+    },
+  ],
+  writingPrompt:
+    "Write a security and risk assessment summary for an AI assistant.",
+  writingRequirements: [
+    "Используйте a/an, the и zero article минимум по три раза.",
+    "Опишите threat, likelihood, impact и mitigation.",
+    "Сначала вводите риски, затем ссылайтесь на них.",
+    "Укажите решение до production launch.",
+  ],
+});
+
+type FinalLessonConfig = {
+  slug: string;
+  topic: string;
+  title: string;
+  scenario: string;
+  theory: TheorySection[];
+  words: ReadonlyArray<readonly [string, string, string]>;
+  reading: string;
+  drills: ReadonlyArray<readonly [string, string, string]>;
+  opens: ReadonlyArray<readonly [string, string, string]>;
+  writing: string;
+  requirements: string[];
+};
+function finalLesson(c: FinalLessonConfig): Lesson {
+  return compactLesson({
+    slug: c.slug,
+    topic: c.topic,
+    title: c.title,
+    practiceTitle: `Practice: ${c.scenario}`,
+    theory: c.theory,
+    vocabulary: vocabulary(c.words),
+    readingTitle: c.scenario,
+    reading: c.reading,
+    graded: c.drills.map(([prompt, answer, explanation], i) => ({
+      format:
+        i % 3 === 0 ? ExerciseFormat.ShortAnswer : ExerciseFormat.FillBlank,
+      prompt,
+      answer,
+      explanation,
+      subcategory: c.slug,
+    })),
+    open: c.opens.map(([prompt, sample, criteria]) => ({
+      format: ExerciseFormat.Rewrite,
+      prompt,
+      sample,
+      criteria,
+    })),
+    writingPrompt: c.writing,
+    writingRequirements: c.requirements,
+  });
+}
+
+const advancedPrepositions = finalLesson({
+  slug: "advanced-prepositions",
+  topic: "advanced-prepositions",
+  title: "Advanced Prepositions",
+  scenario: "optimising AI costs",
+  theory: [
+    {
+      heading: "Устойчивые сочетания",
+      body: "В деловом английском выбор предлога часто закреплён за существительным, глаголом или прилагательным: impact on, comply with, responsible for.",
+    },
+    {
+      heading: "Причина и средство",
+      items: [
+        "because of/due to + noun",
+        "by + method; through + process",
+        "Costs fell by 12% to €8,000.",
+      ],
+    },
+    {
+      heading: "Контраст",
+      body: "Despite/in spite of принимают noun или -ing; although вводит целое предложение.",
+    },
+    {
+      heading: "Типичные ошибки",
+      items: [
+        "Не смешивайте due to и because + clause.",
+        "Различайте by (величина изменения) и to (итог).",
+        "Учите предлог как часть collocation.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "Проверяйте структуру после предлога и точное отношение: причина, метод, изменение или контраст.",
+    },
+  ],
+  words: [
+    ["cost per request", "стоимость запроса", "Cost per request fell by 10%."],
+    [
+      "compute spend",
+      "расходы на вычисления",
+      "Compute spend is under review.",
+    ],
+    [
+      "token usage",
+      "использование токенов",
+      "We reduced cost through lower token usage.",
+    ],
+    [
+      "rate limit",
+      "лимит запросов",
+      "The service operates within the rate limit.",
+    ],
+    [
+      "reserved capacity",
+      "зарезервированная мощность",
+      "Savings depend on reserved capacity.",
+    ],
+    ["under budget", "в рамках бюджета", "The pilot stayed under budget."],
+    ["at scale", "в масштабе", "Caching matters at scale."],
+    ["in line with", "в соответствии с", "Spend is in line with forecasts."],
+    [
+      "with regard to",
+      "в отношении",
+      "We raised a concern with regard to latency.",
+    ],
+    [
+      "on behalf of",
+      "от имени",
+      "Procurement negotiated on behalf of the group.",
+    ],
+    ["due to", "из-за", "Costs rose due to longer prompts."],
+    ["by means of", "посредством", "We reduced calls by means of caching."],
+    ["despite", "несмотря на", "Despite higher traffic, spend fell."],
+    ["from…to…", "с…до…", "Latency fell from 900 to 600 ms."],
+    ["by 15%", "на 15%", "Usage decreased by 15%."],
+  ],
+  reading:
+    "The client reduced monthly inference spend from €48,000 to €39,000 by means of prompt compression and caching. Despite a 20% increase in traffic, cost per request fell by 31%. The largest saving came from routing simple requests to a smaller model. With regard to quality, evaluation scores remained in line with the baseline. The team stayed within rate limits and negotiated reserved capacity on behalf of three business units. Due to uncertain seasonal demand, it recommends reviewing capacity quarterly rather than committing to a longer term.",
+  drills: [
+    ["Complete: impact ___ cost", "on", "Impact collocates with on."],
+    ["Complete: comply ___ the limit", "with", "Comply collocates with with."],
+    [
+      "Complete: responsible ___ spend",
+      "for",
+      "Responsible collocates with for.",
+    ],
+    [
+      "Correct: Costs fell to €9,000 by €39,000.",
+      "Costs fell by €9,000 to €39,000.",
+      "By marks change; to marks result.",
+    ],
+    [
+      "Complete: ___ higher traffic, cost fell.",
+      "Despite",
+      "Despite takes a noun phrase.",
+    ],
+    [
+      "Complete: Costs rose ___ longer prompts.",
+      "due to",
+      "Due to precedes a noun phrase.",
+    ],
+    [
+      "Complete: We saved money ___ caching.",
+      "through",
+      "Through expresses a process.",
+    ],
+    ["Complete: from €48,000 ___ €39,000", "to", "From pairs with to."],
+  ],
+  opens: [
+    [
+      "Rephrase using despite: Traffic rose, but spend fell.",
+      "Despite higher traffic, spend fell.",
+      "despite + noun/gerund, contrast and meaning preserved.",
+    ],
+    [
+      "Report a 20% reduction ending at €8,000.",
+      "Costs fell by 20% to €8,000.",
+      "correct use of by and to, accurate meaning.",
+    ],
+  ],
+  writing:
+    "Write an AI cost-optimisation recommendation with current spend, savings, trade-offs, and next actions.",
+  requirements: [
+    "Используйте минимум восемь target prepositions.",
+    "Различайте by, from и to.",
+    "Включите cause, method и contrast.",
+    "Защитите качество при снижении расходов.",
+  ],
+});
+
+const participleClauses = finalLesson({
+  slug: "participle-clauses",
+  topic: "participle-clauses",
+  title: "Participle Clauses",
+  scenario: "planning a multi-agent architecture",
+  theory: [
+    {
+      heading: "-ing clauses",
+      body: "Present participle сокращает активную придаточную часть при одном субъекте: Using a router, the system selects an agent.",
+    },
+    {
+      heading: "-ed clauses",
+      body: "Past participle выражает пассивное значение: Given a clear role, each agent behaves predictably.",
+    },
+    {
+      heading: "Perfect participle",
+      items: [
+        "Having + V3 подчёркивает предшествование.",
+        "Having validated the output, the reviewer approved it.",
+      ],
+    },
+    {
+      heading: "Типичные ошибки",
+      items: [
+        "Субъект participle clause должен совпадать с субъектом main clause.",
+        "Не теряйте причинную или временную связь.",
+        "Избегайте dangling participles.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "-ing = активность, V3 = пассивность, having + V3 = более раннее завершённое действие.",
+    },
+  ],
+  words: [
+    [
+      "orchestrator",
+      "оркестратор",
+      "Acting as orchestrator, the service assigns tasks.",
+    ],
+    [
+      "specialist agent",
+      "агент-специалист",
+      "Each specialist agent has a narrow role.",
+    ],
+    [
+      "routing logic",
+      "логика маршрутизации",
+      "Using routing logic, the system selects an agent.",
+    ],
+    [
+      "shared memory",
+      "общая память",
+      "Shared memory requires access controls.",
+    ],
+    [
+      "handoff protocol",
+      "протокол передачи",
+      "Defined clearly, the handoff protocol reduces errors.",
+    ],
+    [
+      "tool permission",
+      "разрешение инструмента",
+      "Tool permissions follow least privilege.",
+    ],
+    [
+      "termination condition",
+      "условие завершения",
+      "A termination condition stops loops.",
+    ],
+    [
+      "human-in-the-loop",
+      "участие человека",
+      "Flagged as sensitive, requests become human-in-the-loop.",
+    ],
+    ["observability", "наблюдаемость", "Observability supports debugging."],
+    ["trace", "трассировка", "Each trace records agent actions."],
+    ["using", "используя", "Using a router, we reduce duplication."],
+    ["given", "при наличии", "Given clear context, the agent performs well."],
+    [
+      "having validated",
+      "проверив",
+      "Having validated the plan, we deployed it.",
+    ],
+    [
+      "designed to",
+      "спроектированный для",
+      "Designed to classify, the agent stays focused.",
+    ],
+    [
+      "acting as",
+      "выступая в роли",
+      "Acting as judge, one agent scores outputs.",
+    ],
+  ],
+  reading:
+    "Using a central orchestrator, the proposed architecture sends each request to a specialist agent. Given a narrow role and limited tool permissions, each agent can be tested independently. The research agent gathers evidence, while the analysis agent compares options. Having combined their outputs, the orchestrator asks a judge agent to check completeness. Requests flagged as sensitive are sent to a human reviewer. Designed around explicit termination conditions, the workflow avoids uncontrolled loops. Recording every handoff in a shared trace, the platform also gives the operations team enough observability to investigate failures.",
+  drills: [
+    [
+      "Reduce: The system uses a router and selects an agent.",
+      "Using a router, the system selects an agent.",
+      "Active simultaneous action uses -ing.",
+    ],
+    [
+      "Complete: ___ a clear role, the agent behaves predictably.",
+      "Given",
+      "Given introduces a passive condition.",
+    ],
+    [
+      "Complete: ___ validated the output, we approved it.",
+      "Having",
+      "Having + V3 marks prior action.",
+    ],
+    [
+      "Correct: Using a router, the request was assigned by the system.",
+      "Using a router, the system assigned the request.",
+      "The subjects must match.",
+    ],
+    [
+      "Complete: ___ as judge, the agent scores outputs.",
+      "Acting",
+      "Active role uses -ing.",
+    ],
+    [
+      "Complete: ___ as sensitive, the request goes to a human.",
+      "Flagged",
+      "Passive meaning uses V3.",
+    ],
+    [
+      "Complete: Having ___ the trace, we found the loop.",
+      "reviewed",
+      "Having takes a past participle.",
+    ],
+    [
+      "Reduce: Because it was designed for routing, the agent stays narrow.",
+      "Designed for routing, the agent stays narrow.",
+      "Passive clause reduces to V3.",
+    ],
+  ],
+  opens: [
+    [
+      "Combine with a present participle: The orchestrator checks intent. It selects an agent.",
+      "Checking the request's intent, the orchestrator selects an agent.",
+      "correct -ing clause, shared subject, meaning preserved.",
+    ],
+    [
+      "Combine to show prior completion: We validated permissions. We launched the workflow.",
+      "Having validated the permissions, we launched the workflow.",
+      "having + V3 and clear sequence.",
+    ],
+  ],
+  writing:
+    "Write an architecture note describing a multi-agent workflow, controls, and handoffs.",
+  requirements: [
+    "Используйте минимум шесть participle clauses.",
+    "Включите -ing, V3 и having + V3.",
+    "Не допускайте dangling participles.",
+    "Опишите routing, permissions и human review.",
+  ],
+});
+
+const emphasisInversion = finalLesson({
+  slug: "emphasis-inversion",
+  topic: "emphasis-and-inversion",
+  title: "Emphasis & Inversion",
+  scenario: "planning a RAG solution",
+  theory: [
+    {
+      heading: "Форма",
+      body: "После ограничительных выражений в начале предложения вспомогательный глагол ставится перед субъектом: Only then did we identify the gap.",
+    },
+    {
+      heading: "Модели",
+      items: [
+        "Not only did…, but … also…",
+        "Under no circumstances should…",
+        "It is/was X that…",
+      ],
+    },
+    {
+      heading: "Ошибки",
+      body: "После did нужен base verb; only вызывает инверсию, когда ограничивающая фраза вынесена вперёд.",
+    },
+    {
+      heading: "Эффект",
+      body: "Инверсия подчёркивает ограничение, а cleft sentence выделяет решающий компонент.",
+    },
+    {
+      heading: "Запомните",
+      body: "Limiting expression + auxiliary + subject + verb.",
+    },
+  ],
+  words: [
+    [
+      "retrieval pipeline",
+      "конвейер поиска",
+      "It is the pipeline that needs testing.",
+    ],
+    [
+      "knowledge base",
+      "база знаний",
+      "The knowledge base contains approved files.",
+    ],
+    ["chunking strategy", "стратегия разбиения", "Only then did we revise it."],
+    [
+      "embedding model",
+      "модель эмбеддингов",
+      "The embedding model affects recall.",
+    ],
+    [
+      "reranker",
+      "переранжировщик",
+      "Not only did it improve precision, but it also reduced noise.",
+    ],
+    [
+      "grounded answer",
+      "обоснованный ответ",
+      "A grounded answer cites sources.",
+    ],
+    ["citation accuracy", "точность ссылок", "Citation accuracy is mandatory."],
+    ["retrieval recall", "полнота поиска", "Recall improved."],
+    ["access filtering", "фильтрация доступа", "Access filtering must work."],
+    ["source freshness", "актуальность источника", "Freshness affects trust."],
+    ["only after", "только после", "Only after testing did we deploy."],
+    ["not until", "только когда", "Not until the audit did we see it."],
+    ["not only…but also", "не только…но и", "It improved both outcomes."],
+    [
+      "under no circumstances",
+      "ни при каких обстоятельствах",
+      "Under no circumstances may data leak.",
+    ],
+    ["it is…that", "именно…", "It is metadata that enables filtering."],
+  ],
+  reading:
+    "Only after testing the retrieval pipeline did the team discover that outdated policies dominated results. It was source freshness, not model size, that caused most incorrect answers. Not only did a reranker improve precision, but it also increased citation accuracy. Under no circumstances should the system retrieve documents outside a user's permissions. Only when access filtering passes testing will the team approve production use.",
+  drills: [
+    [
+      "Invert: We discovered the gap only after testing.",
+      "Only after testing did we discover the gap.",
+      "Fronted only requires inversion.",
+    ],
+    ["Not only ___ recall improve.", "did", "Past inversion uses did."],
+    [
+      "Under no circumstances ___ access be bypassed.",
+      "should",
+      "Modal precedes subject.",
+    ],
+    [
+      "Correct: Only then did we identified it.",
+      "Only then did we identify it.",
+      "Use base verb after did.",
+    ],
+    [
+      "Cleft: Metadata enables filtering.",
+      "It is metadata that enables filtering.",
+      "Cleft highlights metadata.",
+    ],
+    [
+      "Not until the audit ___ we see it.",
+      "did",
+      "Not until triggers inversion.",
+    ],
+    [
+      "Only when tests pass ___ we deploy.",
+      "will",
+      "Future inversion uses will.",
+    ],
+    [
+      "Invert: We had never seen this.",
+      "Never had we seen this.",
+      "Never triggers inversion.",
+    ],
+  ],
+  opens: [
+    [
+      "Emphasise source quality with a cleft.",
+      "It was source quality that caused the failure.",
+      "correct cleft and preserved meaning.",
+    ],
+    [
+      "Join precision and accuracy using Not only.",
+      "Not only did precision improve, but citation accuracy also increased.",
+      "inversion and parallel meaning.",
+    ],
+  ],
+  writing:
+    "Write a RAG planning note emphasising decisive choices and controls.",
+  requirements: [
+    "Используйте четыре inversion patterns.",
+    "Добавьте две cleft sentences.",
+    "Опишите retrieval, citations и access filtering.",
+    "Сохраняйте деловой стиль.",
+  ],
+});
+
+const hedging = finalLesson({
+  slug: "hedging-diplomatic-language",
+  topic: "hedging-and-diplomatic-language",
+  title: "Hedging & Diplomatic Language",
+  scenario: "presenting AI ROI",
+  theory: [
+    {
+      heading: "Назначение",
+      body: "Hedging отделяет факт от оценки и делает несогласие конструктивным.",
+    },
+    {
+      heading: "Средства",
+      items: [
+        "may/might/could",
+        "appears/seems/tends to",
+        "It may be worth… / I would suggest…",
+      ],
+    },
+    {
+      heading: "Точность",
+      body: "Смягчайте уверенность, а не данные; критические риски называйте прямо.",
+    },
+    {
+      heading: "Ошибки",
+      body: "Не складывайте много hedges и не представляйте прогноз как факт.",
+    },
+    {
+      heading: "Запомните",
+      body: "Укажите вывод, основание, степень уверенности и ограничение.",
+    },
+  ],
+  words: [
+    ["return on investment", "окупаемость", "ROI appears positive."],
+    ["payback period", "срок окупаемости", "It may be 14 months."],
+    ["benefit estimate", "оценка выгоды", "The estimate is conservative."],
+    ["confidence range", "диапазон уверенности", "Present a range."],
+    ["assumption", "допущение", "This may change."],
+    [
+      "sensitivity analysis",
+      "анализ чувствительности",
+      "It shows downside risk.",
+    ],
+    [
+      "productivity gain",
+      "рост производительности",
+      "The pilot suggests a gain.",
+    ],
+    ["cost avoidance", "предотвращённые расходы", "It is hard to verify."],
+    ["appears to", "по-видимому", "Adoption appears to improve."],
+    ["is likely to", "вероятно", "Demand is likely to grow."],
+    ["may indicate", "может указывать", "This may indicate a trend."],
+    ["to some extent", "до некоторой степени", "It helps to some extent."],
+    ["it may be worth", "возможно, стоит", "It may be worth extending."],
+    ["I would suggest", "я бы предложил", "I would suggest validating it."],
+    [
+      "cautious interpretation",
+      "осторожная интерпретация",
+      "A cautious interpretation is appropriate.",
+    ],
+  ],
+  reading:
+    "The pilot appears to support a positive ROI, although the evidence is not conclusive. Handling time fell by approximately 11%, which may indicate a productivity gain. However, the sample covers one unit and eight weeks. Payback is likely to be between 12 and 16 months, depending on adoption. It may be worth extending measurement. I would suggest presenting a confidence range and sensitivity analysis rather than one headline figure.",
+  drills: [
+    [
+      "Soften: The pilot proves ROI.",
+      "The pilot appears to indicate positive ROI.",
+      "Avoid overstating evidence.",
+    ],
+    ["The result ___ indicate a trend.", "may", "May marks uncertainty."],
+    ["It may be worth ___ the pilot.", "extending", "Worth takes -ing."],
+    [
+      "Correct: I suggest to validate it.",
+      "I suggest validating it.",
+      "Suggest takes a gerund.",
+    ],
+    ["Demand is likely ___ grow.", "to", "Likely takes to-infinitive."],
+    [
+      "Soften: The estimate is wrong.",
+      "The estimate may be inaccurate.",
+      "May softens criticism.",
+    ],
+    ["This helps ___ some extent.", "to", "Fixed phrase."],
+    [
+      "I would ___ presenting a range.",
+      "suggest",
+      "Diplomatic recommendation.",
+    ],
+  ],
+  opens: [
+    [
+      "Challenge a claim that savings are guaranteed.",
+      "The results appear promising, although they may not guarantee the projected savings.",
+      "hedging, limitation and respectful register.",
+    ],
+    [
+      "Recommend more measurement diplomatically.",
+      "It may be worth extending measurement before the final decision.",
+      "diplomatic action and timing.",
+    ],
+  ],
+  writing:
+    "Write an executive AI ROI summary with evidence, assumptions, uncertainty, and recommendation.",
+  requirements: [
+    "Используйте восемь hedges.",
+    "Отделите results от projections.",
+    "Укажите range и assumptions.",
+    "Дайте ясную рекомендацию.",
+  ],
+});
+
+const emailStyle = finalLesson({
+  slug: "advanced-business-email-style",
+  topic: "advanced-business-email-style",
+  title: "Advanced Business Email Style",
+  scenario: "proposing an enterprise adoption roadmap",
+  theory: [
+    {
+      heading: "Структура",
+      body: "Письмо быстро сообщает цель, контекст, решение и действие.",
+    },
+    {
+      heading: "Краткость",
+      items: [
+        "Используйте прямые глаголы.",
+        "Делайте bullets параллельными.",
+        "Одна основная цель на письмо.",
+      ],
+    },
+    {
+      heading: "Запрос",
+      body: "Could you confirm…? задаёт действие и срок без резкости.",
+    },
+    {
+      heading: "Связность",
+      items: [
+        "With this in mind — вывод.",
+        "To ensure — цель.",
+        "Subject to approval — условие.",
+      ],
+    },
+    {
+      heading: "Запомните",
+      body: "Каждый action item имеет owner, результат и deadline.",
+    },
+  ],
+  words: [
+    ["subject line", "тема письма", "The subject states the decision."],
+    ["executive summary", "резюме", "Lead with value."],
+    ["phased rollout", "поэтапное внедрение", "We recommend it."],
+    ["adoption roadmap", "дорожная карта", "It covers a year."],
+    ["decision required", "требуемое решение", "Approve phase one."],
+    ["action owner", "ответственный", "Each has a deadline."],
+    ["dependency", "зависимость", "Identity is a dependency."],
+    ["milestone", "контрольная точка", "Training is a milestone."],
+    ["subject to approval", "при условии одобрения", "Work starts Monday."],
+    ["with this in mind", "учитывая это", "We propose phases."],
+    ["to ensure", "чтобы обеспечить", "Train managers."],
+    [
+      "could you confirm",
+      "подтвердите, пожалуйста",
+      "Could you confirm the sponsor?",
+    ],
+    [
+      "we would appreciate",
+      "будем признательны",
+      "We would appreciate approval.",
+    ],
+    ["for your review", "на рассмотрение", "It is attached."],
+    ["next steps", "следующие шаги", "Owners are clear."],
+  ],
+  reading:
+    "Subject: Decision required — approve phase one\n\nDear Committee,\n\nFollowing the successful pilot, we recommend a phased enterprise rollout. Phase one will establish governance, integrate identity controls, and train priority users. Phase two will expand proven use cases; phase three will optimise operations using adoption data. With this in mind, we request funding approval and confirmation of a sponsor. Subject to approval by 15 September, work can begin on 1 October. Could you confirm both decisions by Friday? The roadmap is attached for your review.\n\nKind regards,\nProject Team",
+  drills: [
+    [
+      "Make concise: We write for the purpose of requesting approval.",
+      "We write to request approval.",
+      "Infinitive states purpose.",
+    ],
+    ["___ you confirm the sponsor?", "Could", "Polite request."],
+    ["Subject ___ approval.", "to", "Fixed phrase."],
+    ["Replace: conduct an evaluation.", "evaluate", "Direct verb is concise."],
+    ["To ___ adoption.", "ensure", "States purpose."],
+    [
+      "Clear subject: Update / Decision required — approve phase one",
+      "Decision required — approve phase one",
+      "States action.",
+    ],
+    ["We would appreciate ___ approval.", "your", "Needs noun phrase."],
+    [
+      "Parallelise: integrating, training, and we measure.",
+      "integrating, training, and measuring",
+      "Parallel forms.",
+    ],
+  ],
+  opens: [
+    [
+      "Request budget approval by Friday.",
+      "Could you approve the phase-one budget by Friday?",
+      "polite request and deadline.",
+    ],
+    [
+      "Open with a three-phase recommendation after a pilot.",
+      "Following the successful pilot, we recommend a three-phase adoption roadmap.",
+      "concise context and recommendation.",
+    ],
+  ],
+  writing:
+    "Write an executive email requesting approval for an enterprise AI adoption roadmap.",
+  requirements: [
+    "Добавьте informative subject и clear ask.",
+    "Опишите три phases параллельно.",
+    "Укажите owners и deadlines.",
+    "Используйте четыре diplomatic phrases.",
+  ],
+});
+
 export const englishAiConsultantLessons: readonly Lesson[] = [
   presentSimpleContinuous,
   pastSimplePresentPerfect,
@@ -2239,6 +3923,16 @@ export const englishAiConsultantLessons: readonly Lesson[] = [
   reportedSpeech,
   linkingWords,
   gerundsInfinitives,
+  thirdConditional,
+  mixedConditionals,
+  causative,
+  quantifiersApproximation,
+  articlesBusiness,
+  advancedPrepositions,
+  participleClauses,
+  emphasisInversion,
+  hedging,
+  emailStyle,
 ];
 
 // Kept as a named export for compatibility with existing imports.

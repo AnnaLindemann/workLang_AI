@@ -1851,6 +1851,647 @@ const gerundsInfinitives = createLesson({
   ],
 });
 
+type AdvancedSpec = {
+  slug: string;
+  topic: string;
+  title: string;
+  scenario: string;
+  rule: string;
+  form: string;
+  errors: string;
+  words: ReadonlyArray<readonly [string, string]>;
+  reading: string;
+  drills: ReadonlyArray<readonly [string, string]>;
+  open: ReadonlyArray<readonly [string, string]>;
+  writing: string;
+};
+function advancedLesson(s: AdvancedSpec): Lesson {
+  const vocab = s.words.map(
+    ([term, translation]) =>
+      [
+        term,
+        translation,
+        `The team used “${term}” in its ${s.scenario.toLowerCase()} update.`,
+      ] as const,
+  );
+  return createLesson({
+    slug: s.slug,
+    topic: s.topic,
+    title: s.title,
+    sources: grammarSources,
+    theory: [
+      { heading: "Когда использовать", body: s.rule },
+      { heading: "Форма", body: s.form },
+      {
+        heading: "Профессиональный пример",
+        body: `Эта структура помогает точно и дипломатично обсуждать сценарий «${s.scenario}».`,
+      },
+      { heading: "Типичные ошибки", body: s.errors },
+      {
+        heading: "Запомните",
+        body: "Сначала определите время, значение и деловой регистр; затем выбирайте форму.",
+      },
+    ],
+    vocabulary: vocab,
+    readingTitle: s.scenario,
+    reading: s.reading,
+    graded: s.drills.map(
+      ([prompt, answer], i) =>
+        [
+          i % 3 === 0 ? ExerciseFormat.ShortAnswer : ExerciseFormat.FillBlank,
+          prompt,
+          answer,
+          "Форма соответствует правилу урока и сохраняет профессиональный смысл.",
+        ] as const,
+    ),
+    open: s.open.map(
+      ([prompt, sample]) =>
+        [
+          ExerciseFormat.Rewrite,
+          prompt,
+          sample,
+          "нужна целевая грамматическая конструкция, грамматическая точность и профессиональный регистр",
+        ] as const,
+    ),
+    writingPrompt: s.writing,
+    writingRequirements: [
+      "Используйте минимум пять целевых конструкций.",
+      "Включите минимум шесть слов и фраз урока.",
+      "Сформулируйте конкретное действие, владельца и срок.",
+      "Сохраняйте профессиональный клиентский тон.",
+    ],
+  });
+}
+
+const advancedCustomerSuccessLessons: readonly Lesson[] = [
+  advancedLesson({
+    slug: "third-conditional",
+    topic: "third-conditional",
+    title: "Third Conditional",
+    scenario: "Contract renewal negotiation",
+    rule: "Third Conditional описывает нереальное прошлое и его невозможный результат; на переговорах он помогает анализировать упущенные возможности без прямого обвинения.",
+    form: "If + past perfect, would/could/might have + past participle. Инверсия Had we known… возможна в формальном стиле.",
+    errors:
+      "Не используйте would в if-clause и не заменяйте past participle формой Past Simple.",
+    words: [
+      ["renewal term", "срок продления"],
+      ["commercial concession", "коммерческая уступка"],
+      ["notice period", "срок уведомления"],
+      ["usage commitment", "обязательство по объёму"],
+      ["price uplift", "повышение цены"],
+      ["retention offer", "предложение для удержания"],
+      ["contract value", "стоимость договора"],
+      ["procurement approval", "одобрение закупок"],
+      ["renewal risk", "риск непродления"],
+      ["service credit", "сервисная компенсация"],
+      ["Had we known", "Если бы мы знали"],
+      ["would have renewed", "продлили бы"],
+      ["might have accepted", "возможно, приняли бы"],
+      ["reach an agreement", "достичь соглашения"],
+      ["meet halfway", "пойти навстречу"],
+    ],
+    reading:
+      "A hotel group delayed its renewal after a proposed 12% price increase. If the account team had discussed the new budget limits earlier, it could have offered a suitable two-year term before Procurement froze spending. The client said it would have renewed immediately if the increase had remained below 6%. Had both sides reviewed usage data together, they might have agreed on a volume commitment. The revised proposal combines a smaller uplift with quarterly adoption reviews and avoids blaming either party.",
+    drills: [
+      [
+        "If we ___ (discuss) the budget earlier, we could have adapted.",
+        "had discussed",
+      ],
+      ["The client would have ___ (renew) at 6%.", "renewed"],
+      [
+        "Correct: If we would have known, we acted sooner.",
+        "If we had known, we would have acted sooner.",
+      ],
+      ["A longer term ___ have reduced the uplift.", "might"],
+      ["Had Procurement approved it, we ___ have signed.", "would"],
+      ["Choose the participle: had went / had gone", "had gone"],
+      ["If usage had been higher, the discount ___ have applied.", "could"],
+      [
+        "Complete: We would have agreed ___ the notice period had changed.",
+        "if",
+      ],
+    ],
+    open: [
+      [
+        "State a neutral missed opportunity using the third conditional.",
+        "If we had reviewed usage earlier, we might have offered a better renewal structure.",
+      ],
+      [
+        "Rewrite with inverted Had.",
+        "Had the client shared its budget limit, we would have adjusted the proposal.",
+      ],
+    ],
+    writing:
+      "Write a renewal negotiation follow-up analysing past options and proposing a revised agreement.",
+  }),
+  advancedLesson({
+    slug: "mixed-conditionals",
+    topic: "mixed-conditionals",
+    title: "Mixed Conditionals",
+    scenario: "Quarterly Business Review (QBR)",
+    rule: "Mixed Conditionals связывают прошлое решение с текущим результатом или нынешнее состояние с прошлым результатом.",
+    form: "Past→present: if + past perfect, would + verb. Present→past: if + past simple, would have + V3.",
+    errors:
+      "Проверяйте временную точку каждой части и не ставьте would после if.",
+    words: [
+      ["quarterly business review", "квартальный бизнес-обзор"],
+      ["business outcome", "бизнес-результат"],
+      ["adoption trend", "тренд внедрения"],
+      ["health score", "индекс здоровья клиента"],
+      ["executive sponsor", "исполнительный спонсор"],
+      ["success plan", "план успеха"],
+      ["usage gap", "пробел в использовании"],
+      ["value milestone", "веха ценности"],
+      ["support volume", "объём обращений"],
+      ["action register", "реестр действий"],
+      ["would be stronger now", "был бы сильнее сейчас"],
+      ["would have prevented", "предотвратил бы"],
+      ["If adoption were", "Если бы внедрение было"],
+      ["year-to-date", "с начала года"],
+      ["on track", "по плану"],
+    ],
+    reading:
+      "The QBR shows strong satisfaction but uneven adoption. If the team had trained night managers last quarter, usage would be more consistent now. If the success plan were clearer, the client would have escalated the integration delay earlier. Revenue goals remain on track, yet one value milestone is late. The account team will add owners and dates to the action register and involve the executive sponsor in the next monthly review.",
+    drills: [
+      ["If we had trained managers, usage ___ be higher now.", "would"],
+      ["If the plan were clearer, it ___ have exposed the delay.", "would"],
+      [
+        "Complete: If support had improved, the health score ___ stronger now.",
+        "would be",
+      ],
+      [
+        "Correct: If we would track adoption, we had noticed the gap.",
+        "If we tracked adoption, we would have noticed the gap.",
+      ],
+      [
+        "If the sponsor were active, she ___ have removed the blocker.",
+        "would",
+      ],
+      ["If we had set owners, the plan ___ clear now.", "would be"],
+      ["Choose: If the data was/were reliable.", "were"],
+      [
+        "Complete: The client would have acted if the risk ___ visible.",
+        "were",
+      ],
+    ],
+    open: [
+      [
+        "Connect missing past training to weak adoption now.",
+        "If we had delivered role-based training, adoption would be stronger now.",
+      ],
+      [
+        "Connect an unclear current plan to a missed escalation.",
+        "If the plan were clearer, the team would have escalated sooner.",
+      ],
+    ],
+    writing:
+      "Write a QBR summary linking past actions to current outcomes and next-quarter priorities.",
+  }),
+  advancedLesson({
+    slug: "causative",
+    topic: "causative-have-get-something-done",
+    title: "Causative: Have/Get Something Done",
+    scenario: "SLA breach investigation",
+    rule: "Have/get something done показывает, что проверку или действие организует команда, а выполняет другой специалист.",
+    form: "have/get + object + past participle; время выражается формой have/get.",
+    errors: "После объекта нужен V3, не infinitive; have формальнее get.",
+    words: [
+      ["SLA breach", "нарушение SLA"],
+      ["response target", "целевое время ответа"],
+      ["incident timeline", "хронология инцидента"],
+      ["ticket sample", "выборка заявок"],
+      ["root-cause review", "анализ причины"],
+      ["audit log", "журнал аудита"],
+      ["service desk", "служба поддержки"],
+      ["priority code", "код приоритета"],
+      ["remediation plan", "план исправления"],
+      ["compliance report", "отчёт о соответствии"],
+      ["have the logs reviewed", "организовать проверку логов"],
+      ["get the sample validated", "добиться проверки выборки"],
+      ["have Legal confirm", "попросить юристов подтвердить"],
+      ["miss the target", "нарушить норматив"],
+      ["restore compliance", "восстановить соответствие"],
+    ],
+    reading:
+      "After two priority-one tickets missed the response target, the customer success lead had the incident timeline reconstructed by Service Operations. She also got a sample of fifty tickets validated by Quality. The client will have the audit logs reviewed independently and the priority rules tested. Once Legal has the SLA calculation confirmed, both sides will agree a remediation plan. The investigation focuses on evidence rather than assumptions.",
+    drills: [
+      ["We had the timeline ___ (reconstruct).", "reconstructed"],
+      ["The lead got the sample ___ (validate).", "validated"],
+      ["Correct: We had the logs to review.", "We had the logs reviewed."],
+      ["Tomorrow we will ___ the rules tested.", "have"],
+      ["Quality is getting the report ___ (check).", "checked"],
+      ["Choose the formal option: had reviewed / got done", "had reviewed"],
+      ["We ___ the SLA confirmed yesterday.", "had"],
+      [
+        "Rewrite: Operations analysed our logs.",
+        "We had our logs analysed by Operations.",
+      ],
+    ],
+    open: [
+      [
+        "Recast two outsourced investigation actions causatively.",
+        "We had the timeline reconstructed and the ticket sample independently validated.",
+      ],
+      [
+        "Make a polite request with get something done.",
+        "Could we get the priority rules tested by Friday?",
+      ],
+    ],
+    writing:
+      "Write an SLA breach investigation update describing commissioned checks, findings, and remediation.",
+  }),
+  advancedLesson({
+    slug: "quantifiers-approximation",
+    topic: "quantifiers-and-approximation",
+    title: "Quantifiers & Approximation",
+    scenario: "Cross-department escalation management",
+    rule: "Quantifiers показывают объём, а approximators сообщают степень точности при сводке эскалаций.",
+    form: "many/few для countable; much/little для uncountable; roughly, nearly, just over/under для приблизительных чисел.",
+    errors:
+      "Evidence и information неисчисляемы; most of требует определитель.",
+    words: [
+      ["escalation queue", "очередь эскалаций"],
+      ["case volume", "объём случаев"],
+      ["ownership gap", "пробел ответственности"],
+      ["handoff delay", "задержка передачи"],
+      ["a handful of", "несколько"],
+      ["the majority of", "большинство"],
+      ["roughly", "примерно"],
+      ["just under", "чуть меньше"],
+      ["nearly all", "почти все"],
+      ["very little evidence", "очень мало данных"],
+      ["cross-functional team", "межфункциональная команда"],
+      ["resolution rate", "доля решений"],
+      ["backlog", "накопившиеся задачи"],
+      ["clear ownership", "ясная ответственность"],
+      ["up to", "до"],
+    ],
+    reading:
+      "The escalation queue contains roughly 120 cases. Nearly two thirds involve handoff delays between Reservations and Billing, while a handful concern technical defects. Most of the urgent cases now have clear owners, but very little evidence is attached to some older records. Just under 80% are resolved within two days. A cross-functional team will review up to fifteen backlog cases each week.",
+    drills: [
+      ["___ cases need owners. (large number)", "Many"],
+      ["There is very ___ evidence.", "little"],
+      ["___ of the urgent cases have owners.", "Most"],
+      ["Every case ___ an owner.", "has"],
+      ["Replace 79% approximately.", "just under 80%"],
+      ["Choose positive amount: few / a few cases", "a few cases"],
+      ["Correct: many information.", "much information"],
+      ["Complete: ___ all teams responded.", "Nearly"],
+    ],
+    open: [
+      [
+        "Summarise 118 of 120 cases without false precision.",
+        "Nearly all cases have now been assigned.",
+      ],
+      [
+        "Diplomatically report three unresolved ownership gaps.",
+        "A small number of cases still lack clear ownership.",
+      ],
+    ],
+    writing:
+      "Write an escalation dashboard commentary using approximate volumes, ownership, and resolution data.",
+  }),
+  advancedLesson({
+    slug: "articles-business-english",
+    topic: "articles-in-business-english",
+    title: "Articles in Business English",
+    scenario: "Customer churn prevention",
+    rule: "A/an вводит новый единичный объект, the указывает на конкретный, zero article обобщает множественные и неисчисляемые понятия.",
+    form: "a risk; an account; the risk identified yesterday; Retention requires trust.",
+    errors:
+      "Singular countable noun требует determiner; выбирайте a/an по звуку.",
+    words: [
+      ["churn risk", "риск оттока"],
+      ["retention plan", "план удержания"],
+      ["account health", "здоровье аккаунта"],
+      ["warning sign", "предупреждающий сигнал"],
+      ["usage decline", "снижение использования"],
+      ["decision maker", "лицо, принимающее решение"],
+      ["competitor offer", "предложение конкурента"],
+      ["recovery action", "восстановительное действие"],
+      ["the account at risk", "аккаунт под риском"],
+      ["an urgent review", "срочный анализ"],
+      ["customer loyalty", "лояльность"],
+      ["renewal intent", "намерение продлить"],
+      ["a tailored offer", "индивидуальное предложение"],
+      ["the issue identified", "выявленная проблема"],
+      ["retention", "удержание"],
+    ],
+    reading:
+      "An enterprise account showed a sudden usage decline after a new manager joined. The customer success lead arranged an urgent review and identified a training gap, not a product failure. The issue identified in the review affects two locations. A tailored enablement plan and a temporary support package may restore confidence. Customer loyalty depends on consistent value, so the team will track renewal intent weekly.",
+    drills: [
+      ["We identified ___ warning sign.", "a"],
+      ["___ issue found yesterday affects two sites.", "The"],
+      [
+        'Choose the correct option: "___ Retention requires trust." (the / a / an / —)',
+        "—",
+      ],
+      ["Choose: a account / an account", "an account"],
+      ["___ usage decline in this account is serious.", "The"],
+      ["Correct: We need tailored offer.", "We need a tailored offer."],
+      [
+        "General: The customer loyalty / Customer loyalty matters.",
+        "Customer loyalty matters.",
+      ],
+      ["It was ___ urgent review.", "an"],
+    ],
+    open: [
+      [
+        "Introduce a risk and refer to it again.",
+        "We identified a churn risk. The risk is linked to low adoption.",
+      ],
+      [
+        "Contrast retention generally with this account's plan.",
+        "Retention requires trust, and the retention plan for this account needs clear owners.",
+      ],
+    ],
+    writing:
+      "Write a churn-prevention brief introducing risks, causes, and a targeted retention plan.",
+  }),
+  advancedLesson({
+    slug: "advanced-prepositions",
+    topic: "advanced-prepositions",
+    title: "Advanced Prepositions",
+    scenario: "Revenue optimization with AI insights",
+    rule: "Продвинутые предлоги выражают изменение, причину, метод и устойчивые связи в коммерческом анализе.",
+    form: "rise by 8% to €120; due to + noun; through/by means of + method; impact on.",
+    errors:
+      "By обозначает величину изменения, to — итог; because требует clause, due to — noun phrase.",
+    words: [
+      ["revenue per available room", "доход на доступный номер"],
+      ["upsell conversion", "конверсия допродаж"],
+      ["demand forecast", "прогноз спроса"],
+      ["price sensitivity", "ценовая чувствительность"],
+      ["by 8%", "на 8%"],
+      ["to €120", "до €120"],
+      ["due to demand", "из-за спроса"],
+      ["through personalization", "посредством персонализации"],
+      ["with regard to", "относительно"],
+      ["in line with", "в соответствии с"],
+      ["at peak times", "в пиковое время"],
+      ["impact on revenue", "влияние на доход"],
+      ["on behalf of", "от имени"],
+      ["despite higher rates", "несмотря на более высокие тарифы"],
+      ["within budget", "в рамках бюджета"],
+    ],
+    reading:
+      "AI insights helped the hotel increase upsell conversion by 8% to 24%. Revenue per available room rose due to stronger weekend demand and personalized pre-arrival offers. At peak times, the team targeted upgrades through guest-segment recommendations. Despite higher room rates, satisfaction remained in line with the quarterly benchmark. With regard to privacy, staff used only approved CRM attributes.",
+    drills: [
+      ["Revenue rose ___ 8%.", "by"],
+      ["Conversion increased ___ 24%.", "to"],
+      ["Costs rose ___ stronger demand.", "due to"],
+      ["The impact ___ revenue was positive.", "on"],
+      ["We improved offers ___ personalization.", "through"],
+      ["Results stayed ___ line with target.", "in"],
+      ["Correct: because of demand increased.", "because demand increased"],
+      ["Complete: ___ higher rates, satisfaction held.", "Despite"],
+    ],
+    open: [
+      ["Report a 10% rise ending at €110.", "Revenue rose by 10% to €110."],
+      [
+        "Contrast rates and satisfaction using despite.",
+        "Despite higher rates, guest satisfaction remained stable.",
+      ],
+    ],
+    writing:
+      "Write a revenue-optimization update explaining changes, methods, constraints, and guest impact.",
+  }),
+  advancedLesson({
+    slug: "participle-clauses",
+    topic: "participle-clauses",
+    title: "Participle Clauses",
+    scenario: "Enterprise onboarding across multiple locations",
+    rule: "Participle clauses компактно выражают активное одновременное, пассивное или предшествующее действие.",
+    form: "Using a shared plan…; Given clear ownership…; Having completed training…",
+    errors:
+      "Субъект participle clause должен совпадать с субъектом main clause; избегайте dangling participles.",
+    words: [
+      ["rollout wave", "волна внедрения"],
+      ["site readiness", "готовность площадки"],
+      ["local champion", "локальный представитель"],
+      ["shared playbook", "единый регламент"],
+      ["training cohort", "учебная группа"],
+      ["using a common template", "используя общий шаблон"],
+      ["given local constraints", "учитывая местные ограничения"],
+      ["having completed training", "завершив обучение"],
+      ["supported by champions", "при поддержке представителей"],
+      ["phased by region", "разбитый по регионам"],
+      ["readiness checklist", "чек-лист готовности"],
+      ["identity setup", "настройка доступа"],
+      ["go-live gate", "условие запуска"],
+      ["adoption baseline", "базовый уровень внедрения"],
+      ["regional dependency", "региональная зависимость"],
+    ],
+    reading:
+      "Using a shared playbook, the group will onboard twelve locations in three waves. Given different identity systems, each site must complete a readiness checklist. Having finished training, local champions will run practice sessions before go-live. Supported by regional managers, the customer success team will compare adoption against a common baseline. Locations missing a go-live gate will move to the next wave.",
+    drills: [
+      [
+        "Combine: We use a playbook. We coordinate sites.",
+        "Using a playbook, we coordinate sites.",
+      ],
+      ["___ clear ownership, rollout is faster.", "Given"],
+      ["___ completed training, champions can coach.", "Having"],
+      [
+        "Correct: Using the checklist, readiness was confirmed by the team.",
+        "Using the checklist, the team confirmed readiness.",
+      ],
+      ["___ by managers, sites launch safely.", "Supported"],
+      ["___ rollout by region, we reduce risk.", "Phasing"],
+      ["Having ___ setup, the site tested access.", "completed"],
+      [
+        "Reduce: Because it was delayed, the site moved waves.",
+        "Delayed, the site moved to the next wave.",
+      ],
+    ],
+    open: [
+      [
+        "Combine two onboarding actions with an -ing clause.",
+        "Using the shared template, the team tracks readiness across all sites.",
+      ],
+      [
+        "Show prior completion with Having + V3.",
+        "Having completed identity setup, the site began user training.",
+      ],
+    ],
+    writing:
+      "Write a multi-location onboarding plan using participle clauses to describe sequence, conditions, and ownership.",
+  }),
+  advancedLesson({
+    slug: "emphasis-inversion",
+    topic: "emphasis-and-inversion",
+    title: "Emphasis & Inversion",
+    scenario: "Executive stakeholder communication",
+    rule: "Инверсия и cleft sentences выделяют решающий факт или ограничение в сообщении руководству.",
+    form: "Only then did…; Not only did…, but…; Under no circumstances should…; It is X that…",
+    errors:
+      "После did нужен base verb; fronted limiting expression требует auxiliary перед subject.",
+    words: [
+      ["executive briefing", "брифинг руководства"],
+      ["decision point", "точка решения"],
+      ["strategic priority", "стратегический приоритет"],
+      ["material risk", "существенный риск"],
+      ["only after", "только после"],
+      ["not until", "только когда"],
+      ["not only…but also", "не только…но и"],
+      ["under no circumstances", "ни при каких обстоятельствах"],
+      ["it is…that", "именно"],
+      ["board-level concern", "вопрос уровня совета"],
+      ["decision owner", "владелец решения"],
+      ["critical dependency", "критическая зависимость"],
+      ["evidence pack", "пакет данных"],
+      ["clear recommendation", "ясная рекомендация"],
+      ["approval threshold", "порог одобрения"],
+    ],
+    reading:
+      "Only after reviewing the evidence pack did the executive sponsor understand the adoption gap. It was inconsistent regional ownership, not product quality, that caused the delay. Not only did the customer success team quantify the risk, but it also proposed a recovery owner. Under no circumstances should the next rollout wave begin without identity approval. Only when that dependency is resolved will the committee release funding.",
+    drills: [
+      [
+        "Invert: We understood only after reviewing data.",
+        "Only after reviewing data did we understand.",
+      ],
+      ["Not only ___ adoption fall, but risk rose.", "did"],
+      ["Under no circumstances ___ rollout begin.", "should"],
+      ["Correct: Only then did we understood.", "Only then did we understand."],
+      [
+        "Cleft: Ownership caused the delay.",
+        "It was ownership that caused the delay.",
+      ],
+      ["Not until Friday ___ we receive approval.", "did"],
+      ["Only when risk falls ___ we proceed.", "will"],
+      ["Invert: We had never seen this gap.", "Never had we seen this gap."],
+    ],
+    open: [
+      [
+        "Emphasise that ownership is decisive with a cleft.",
+        "It is clear ownership that will determine whether the rollout succeeds.",
+      ],
+      [
+        "Join two executive benefits with Not only.",
+        "Not only did the plan clarify the risk, but it also identified a decision owner.",
+      ],
+    ],
+    writing:
+      "Write an executive briefing that emphasises the main risk, decision, and non-negotiable dependency.",
+  }),
+  advancedLesson({
+    slug: "hedging-diplomatic-language",
+    topic: "hedging-and-diplomatic-language",
+    title: "Hedging & Diplomatic Language",
+    scenario: "Crisis communication during a system outage",
+    rule: "Hedging отмечает неполную уверенность и позволяет сообщать предварительные причины без спекуляции.",
+    form: "may/might/could; appears/seems; is likely to; our current understanding is…",
+    errors:
+      "Не смягчайте подтверждённые safety instructions и не выдавайте предварительную причину за факт.",
+    words: [
+      ["service disruption", "сбой сервиса"],
+      ["current understanding", "текущее понимание"],
+      ["preliminary finding", "предварительный вывод"],
+      ["appears to affect", "по-видимому, влияет"],
+      ["may be related to", "может быть связано"],
+      ["is likely to", "вероятно"],
+      ["to some extent", "до некоторой степени"],
+      ["estimated restoration", "ожидаемое восстановление"],
+      ["customer impact", "влияние на клиента"],
+      ["workaround", "обходное решение"],
+      ["status update", "обновление статуса"],
+      ["incident commander", "руководитель инцидента"],
+      ["service restoration", "восстановление сервиса"],
+      ["we would suggest", "мы бы предложили"],
+      ["subject to change", "может измениться"],
+    ],
+    reading:
+      "Our current understanding is that the outage appears to affect booking confirmations in two regions. The issue may be related to a failed message queue, although the investigation is ongoing. Existing reservations remain safe. Service is likely to be restored within ninety minutes, but that estimate is subject to change. We would suggest using the manual confirmation workaround for urgent arrivals. The next status update will be issued at 16:00.",
+    drills: [
+      [
+        "Soften: The queue caused the outage.",
+        "The outage may be related to the queue.",
+      ],
+      ["The issue ___ affect two regions.", "appears to"],
+      ["Restoration is likely ___ take an hour.", "to"],
+      [
+        "Correct: We suggest to use the workaround.",
+        "We suggest using the workaround.",
+      ],
+      ["The estimate is subject ___ change.", "to"],
+      ["Soften: The fix will work.", "The fix is likely to work."],
+      ["This helps ___ some extent.", "to"],
+      ["We would ___ waiting for confirmation.", "suggest"],
+    ],
+    open: [
+      [
+        "Report a possible cause without presenting it as fact.",
+        "Preliminary evidence suggests that the disruption may be related to the message queue.",
+      ],
+      [
+        "Recommend a workaround diplomatically but clearly.",
+        "We would suggest using manual confirmations for urgent arrivals until service is restored.",
+      ],
+    ],
+    writing:
+      "Write a customer outage update covering confirmed impact, uncertain cause, workaround, and next update time.",
+  }),
+  advancedLesson({
+    slug: "advanced-business-email-style",
+    topic: "advanced-business-email-style",
+    title: "Advanced Business Email Style",
+    scenario: "Annual strategic account review",
+    rule: "Продвинутое письмо выносит цель, ключевой вывод, решение и действия в легко сканируемую структуру.",
+    form: "Informative subject; concise context; parallel action points; polite request with owner and deadline.",
+    errors:
+      "Избегайте длинных nominalisations, неопределённых просьб и смешанной формы bullet points.",
+    words: [
+      ["annual account review", "годовой обзор аккаунта"],
+      ["strategic objective", "стратегическая цель"],
+      ["joint success plan", "совместный план успеха"],
+      ["year-in-review", "итоги года"],
+      ["decision required", "требуемое решение"],
+      ["priority outcome", "приоритетный результат"],
+      ["action owner", "ответственный"],
+      ["target date", "целевая дата"],
+      ["subject to approval", "при условии одобрения"],
+      ["with this in mind", "учитывая это"],
+      ["to ensure", "чтобы обеспечить"],
+      ["could you confirm", "не могли бы вы подтвердить"],
+      ["we would appreciate", "будем признательны"],
+      ["for your review", "на рассмотрение"],
+      ["next-year priorities", "приоритеты следующего года"],
+    ],
+    reading:
+      "Subject: Decision required — confirm next-year account priorities. Dear Ms Chen, This year's review shows higher adoption, faster support resolution, and one unresolved integration dependency. With this in mind, we propose three priorities: complete the integration, expand manager training, and establish quarterly value reviews. Could you confirm the executive owner and target dates by Friday? Subject to your approval, we will update the joint success plan next week. The year-in-review summary is attached for your review.",
+    drills: [
+      [
+        "Make concise: We write for the purpose of requesting confirmation.",
+        "We write to request confirmation.",
+      ],
+      ["___ you confirm the owner?", "Could"],
+      ["Subject ___ approval, we will update it.", "to"],
+      ["Replace: conduct a review.", "review"],
+      ["To ___ adoption, train managers.", "ensure"],
+      [
+        "Choose clear subject: Update / Decision required — confirm priorities",
+        "Decision required — confirm priorities",
+      ],
+      ["We would appreciate ___ response by Friday.", "your"],
+      [
+        "Parallelise: completing, training, and we measure.",
+        "completing, training, and measuring",
+      ],
+    ],
+    open: [
+      [
+        "Rewrite a vague request with an owner and deadline.",
+        "Could you confirm the executive owner and target date by Friday?",
+      ],
+      [
+        "Write a concise opening for an annual strategic review.",
+        "Following our annual review, we recommend three priorities for the next joint success plan.",
+      ],
+    ],
+    writing:
+      "Write an annual strategic account review email requesting agreement on next-year priorities, owners, and dates.",
+  }),
+];
+
 export const englishCustomerSuccessLessons: readonly Lesson[] = [
   presentSimpleContinuous,
   pastSimplePresentPerfect,
@@ -1862,6 +2503,7 @@ export const englishCustomerSuccessLessons: readonly Lesson[] = [
   reportedSpeech,
   linkingWords,
   gerundsInfinitives,
+  ...advancedCustomerSuccessLessons,
 ];
 
 // Compatibility export for code that used the original single lesson.

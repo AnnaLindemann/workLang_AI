@@ -32,7 +32,7 @@ import {
   MistakeSeverity,
   SkillArea,
 } from "@/types";
-import type { Lesson } from "@/types";
+import type { ExerciseFormat as ExerciseFormatType, Lesson } from "@/types";
 import { activityId, exerciseId, lessonId } from "@/lib/ids";
 
 // ---------------------------------------------------------------------------
@@ -3626,6 +3626,1788 @@ export const germanAiConsultantKonjunktiv1: Lesson = {
   ],
 };
 
+type AdvancedGermanSpec = {
+  slug: string;
+  topic: string;
+  title: string;
+  scenario: string;
+  theory: ReadonlyArray<readonly [string, string]>;
+  vocabulary: ReadonlyArray<readonly [string, string, string]>;
+  reading: string;
+  drills: ReadonlyArray<readonly [ExerciseFormatType, string, string, string]>;
+  open: ReadonlyArray<readonly [string, string, string]>;
+  writing: string;
+  requirements: string[];
+};
+
+const advancedGermanSources = [
+  "Duden — Die Grammatik (Satzbau und Formenlehre)",
+  "Goethe-Institut — Grammatik-Referenz C1",
+  "Deutsche Welle — Deutsch lernen, Grammatik",
+];
+
+function createAdvancedGermanLesson(spec: AdvancedGermanSpec): Lesson {
+  const prefix = `de-ai-consultant-${spec.slug}`;
+  return {
+    id: lessonId(prefix),
+    topic: spec.topic,
+    language: Language.German,
+    careerTrack: CareerTrack.AiConsultant,
+    title: spec.title,
+    targetLevel: CefrLevel.C1,
+    sources: advancedGermanSources,
+    activities: [
+      {
+        id: activityId(`${prefix}-review`),
+        kind: ActivityKind.Review,
+        title: "Wiederholung",
+      },
+      {
+        id: activityId(`${prefix}-theory`),
+        kind: ActivityKind.GrammarTheory,
+        title: spec.title,
+        sections: spec.theory.map(([heading, body]) => ({ heading, body })),
+      },
+      {
+        id: activityId(`${prefix}-vocabulary`),
+        kind: ActivityKind.Vocabulary,
+        title: `Fachwortschatz: ${spec.scenario}`,
+        items: spec.vocabulary.map(([term, translation, example]) => ({
+          term,
+          translation,
+          example,
+        })),
+      },
+      {
+        id: activityId(`${prefix}-reading`),
+        kind: ActivityKind.Reading,
+        title: spec.scenario,
+        text: spec.reading,
+      },
+      {
+        id: activityId(`${prefix}-practice`),
+        kind: ActivityKind.GrammarPractice,
+        title: `Übung: ${spec.title}`,
+        exercises: [
+          ...spec.drills.map(
+            ([format, prompt, expectedAnswer, explanation], index) => ({
+              id: exerciseId(`${prefix}-ex${index + 1}`),
+              skillArea: SkillArea.Grammar,
+              format,
+              evaluation: ExerciseEvaluation.Graded,
+              topic: spec.topic,
+              category: "grammar",
+              subcategory: spec.slug,
+              severity: MistakeSeverity.Medium,
+              prompt,
+              expectedAnswer,
+              explanation,
+            }),
+          ),
+          ...spec.open.map(([prompt, sampleAnswer, criteria], index) => ({
+            id: exerciseId(`${prefix}-ex${index + 9}`),
+            skillArea: SkillArea.Grammar,
+            format: ExerciseFormat.Rewrite,
+            evaluation: ExerciseEvaluation.Open,
+            prompt,
+            sampleAnswer,
+            explanation: `Критерии оценки: ${criteria} Несколько формулировок возможны.`,
+          })),
+        ],
+      },
+      {
+        id: activityId(`${prefix}-writing`),
+        kind: ActivityKind.Writing,
+        title: "Schreibaufgabe",
+        prompt: spec.writing,
+        wordRange: { min: 140, max: 180 },
+        requirements: spec.requirements,
+      },
+    ],
+  };
+}
+
+const advancedGermanLessons: readonly Lesson[] = [
+  createAdvancedGermanLesson({
+    slug: "partizipien-als-attribute",
+    topic: "partizipien-als-attribute",
+    title: "Partizip I und II als Attribute",
+    scenario: "KI-Projekt-Post-Mortem",
+    theory: [
+      [
+        "Назначение",
+        "Partizip I описывает активный одновременный процесс, Partizip II — завершённое действие или пассивный результат. В отчёте они компактно уточняют причины и меры.",
+      ],
+      [
+        "Форма",
+        "Partizip I образуется Infinitiv + d; Partizip II берётся из формы Perfekt. Оба склоняются как прилагательные перед существительным.",
+      ],
+      [
+        "Примеры",
+        "das lernende System; die falsch zugeordneten Dokumente; mit den dokumentierten Maßnahmen",
+      ],
+      [
+        "Типичные ошибки",
+        "Окончание зависит от артикля, рода, числа и падежа. Не смешивайте активное значение Partizip I с пассивным Partizip II.",
+      ],
+      [
+        "Вывод",
+        "Сначала определите значение, затем согласуйте причастие с существительным.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "der aufgetretene Fehler",
+        "возникшая ошибка",
+        "Der aufgetretene Fehler wurde analysiert.",
+      ],
+      [
+        "die betroffenen Datensätze",
+        "затронутые наборы данных",
+        "Die betroffenen Datensätze wurden gesperrt.",
+      ],
+      [
+        "das auslösende Ereignis",
+        "инициирующее событие",
+        "Wir identifizierten das auslösende Ereignis.",
+      ],
+      [
+        "die fehlende Prüfung",
+        "отсутствующая проверка",
+        "Die fehlende Prüfung war ein Faktor.",
+      ],
+      [
+        "der laufende Betrieb",
+        "текущая эксплуатация",
+        "Der laufende Betrieb blieb stabil.",
+      ],
+      [
+        "die getroffene Maßnahme",
+        "принятая мера",
+        "Die getroffene Maßnahme verhindert Wiederholungen.",
+      ],
+      [
+        "die zugrunde liegende Ursache",
+        "лежащая в основе причина",
+        "Die zugrunde liegende Ursache war eine Mapping-Regel.",
+      ],
+      [
+        "der eskalierende Alarm",
+        "эскалирующий сигнал",
+        "Ein eskalierender Alarm informiert den Bereitschaftsdienst.",
+      ],
+      [
+        "die wiederhergestellte Version",
+        "восстановленная версия",
+        "Die wiederhergestellte Version lief stabil.",
+      ],
+      [
+        "die dokumentierte Erkenntnis",
+        "зафиксированный вывод",
+        "Jede dokumentierte Erkenntnis erhält einen Owner.",
+      ],
+      [
+        "der verursachende Faktor",
+        "причинный фактор",
+        "Wir trennten den verursachenden Faktor von Begleitumständen.",
+      ],
+      [
+        "die eingeleitete Korrektur",
+        "начатое исправление",
+        "Die eingeleitete Korrektur wurde getestet.",
+      ],
+      [
+        "der verbleibende Schaden",
+        "оставшийся ущерб",
+        "Der verbleibende Schaden ist gering.",
+      ],
+      [
+        "die überprüften Kontrollen",
+        "проверенные контроли",
+        "Die überprüften Kontrollen greifen jetzt.",
+      ],
+      [
+        "die daraus abgeleitete Lehre",
+        "выведенный урок",
+        "Die daraus abgeleitete Lehre fließt in Releases ein.",
+      ],
+    ],
+    reading:
+      "Der am Freitag aufgetretene Fehler führte zu falsch zugeordneten Dokumenten. Die sofort eingeleitete Rücksetzung begrenzte den Schaden. Als zugrunde liegende Ursache identifizierte das Team eine in den Testdaten fehlende Mapping-Regel. Die laufende Überwachung erfasste nur die Latenz, nicht aber die sinkende Routing-Qualität. Die im Post-Mortem dokumentierten Maßnahmen umfassen repräsentative Testdaten, einen eskalierenden Qualitätsalarm und klar benannte Verantwortliche. Die daraus abgeleiteten Lehren gelten für alle kommenden Releases.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "das ___ System" (lernen)',
+        "lernende",
+        "Partizip I = Infinitiv + d plus Adjektivendung.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "die ___ Dokumente" (betreffen)',
+        "betroffenen",
+        "Partizip II wird attributiv dekliniert.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        'Bilden Sie ein Attribut: "Die Maßnahme wurde dokumentiert."',
+        "die dokumentierte Maßnahme",
+        "Passives Resultat → Partizip II.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "mit den ___ Kontrollen" (prüfen)',
+        "geprüften",
+        "Dativ Plural nach den verlangt -en.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        'Korrigieren Sie: "ein aufgetretene Fehler".',
+        "ein aufgetretener Fehler",
+        "Starkes Partizip II aufgetreten bleibt erhalten; Endung -er.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "eine ___ Warnung" (eskalieren)',
+        "eskalierende",
+        "Aktiver Vorgang → Partizip I.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "das ___ Modell" (wiederherstellen)',
+        "wiederhergestellte",
+        "Resultat → Partizip II mit -e.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        'Verdichten Sie: "die Ursache, die zugrunde liegt".',
+        "die zugrunde liegende Ursache",
+        "Relativsatz wird zum Partizip-I-Attribut.",
+      ],
+    ],
+    open: [
+      [
+        "Verdichten Sie zwei Post-Mortem-Sätze mit je einem Partizipialattribut.",
+        "Die aufgetretene Störung betraf die am Freitag veröffentlichten Regeln.",
+        "Partizip I und/oder II, korrekte Deklination, sachlicher Ton, gleicher Sinn.",
+      ],
+      [
+        "Formulieren Sie eine Maßnahme mit einem erweiterten Partizipialattribut.",
+        "Der künftig automatisch ausgelöste Alarm verkürzt die Reaktionszeit.",
+        "erweitertes Attribut, korrekte Wortstellung und Endung, professionelle Aussage.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie ein kurzes KI-Post-Mortem mit Ursache, Auswirkung und Korrekturmaßnahmen.",
+    requirements: [
+      "Verwenden Sie mindestens sechs Partizipialattribute.",
+      "Nutzen Sie Partizip I und II.",
+      "Achten Sie auf Kasus und Endungen.",
+      "Trennen Sie Ursache und Begleitfaktoren.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "infinitiv-mit-zu",
+    topic: "infinitiv-mit-zu",
+    title: "Infinitiv mit zu",
+    scenario: "Bewertungsframework für KI-Lösungen",
+    theory: [
+      [
+        "Когда использовать",
+        "Infinitivgruppen с zu выражают цель, план, оценку или требование и помогают связывать критерии без повторения субъекта.",
+      ],
+      [
+        "Форма",
+        "zu + Infinitiv; у отделяемых глаголов zu стоит между приставкой и основой: festzulegen. После um, ohne, statt образуются расширенные группы.",
+      ],
+      [
+        "Запятая",
+        "Запятая обязательна при um/ohne/statt, при зависимом существительном и часто полезна для ясности расширенной группы.",
+      ],
+      [
+        "Ошибки",
+        "После модальных глаголов и lassen zu не ставится. Субъект Infinitivgruppe должен быть логически понятен.",
+      ],
+      [
+        "Вывод",
+        "Используйте zu-группу для компактной цели или требования, но проверяйте связь с главным предложением.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "ein Kriterium festzulegen",
+        "определить критерий",
+        "Wir planen, ein Kriterium festzulegen.",
+      ],
+      [
+        "eine Schwelle zu definieren",
+        "определить порог",
+        "Es ist wichtig, eine Schwelle zu definieren.",
+      ],
+      [
+        "um Qualität zu messen",
+        "чтобы измерить качество",
+        "Wir nutzen Tests, um Qualität zu messen.",
+      ],
+      [
+        "ohne Risiken auszublenden",
+        "не скрывая риски",
+        "Wir bewerten Nutzen, ohne Risiken auszublenden.",
+      ],
+      [
+        "statt Einzelfälle zu wählen",
+        "вместо выбора отдельных случаев",
+        "Wir ziehen Stichproben, statt Einzelfälle zu wählen.",
+      ],
+      [
+        "die Vergleichbarkeit",
+        "сопоставимость",
+        "Die Vergleichbarkeit ist sicherzustellen.",
+      ],
+      [
+        "der Bewertungsmaßstab",
+        "шкала оценки",
+        "Der Bewertungsmaßstab ist zu dokumentieren.",
+      ],
+      [
+        "die Akzeptanzschwelle",
+        "порог приёмки",
+        "Wir beschließen, die Akzeptanzschwelle anzuheben.",
+      ],
+      [
+        "die Testabdeckung",
+        "охват тестами",
+        "Es gilt, die Testabdeckung zu erhöhen.",
+      ],
+      [
+        "die Fehlerrate",
+        "частота ошибок",
+        "Das Ziel ist, die Fehlerrate zu senken.",
+      ],
+      [
+        "nachvollziehbar bewerten",
+        "оценивать прозрачно",
+        "Wir versuchen, Ergebnisse nachvollziehbar zu bewerten.",
+      ],
+      [
+        "repräsentativ auswählen",
+        "репрезентативно выбирать",
+        "Es ist nötig, Fälle repräsentativ auszuwählen.",
+      ],
+      [
+        "Gewichtungen abstimmen",
+        "согласовать веса",
+        "Wir schlagen vor, Gewichtungen abzustimmen.",
+      ],
+      [
+        "eine Entscheidung ermöglichen",
+        "обеспечить решение",
+        "Das Framework dient dazu, eine Entscheidung zu ermöglichen.",
+      ],
+      [
+        "zu dem Schluss kommen",
+        "прийти к выводу",
+        "Das Team scheint zu einem klaren Schluss zu kommen.",
+      ],
+    ],
+    reading:
+      "Das Team plant, ein belastbares Bewertungsframework aufzubauen. Um Modelle vergleichbar zu prüfen, sind Qualitäts-, Sicherheits-, Kosten- und Latenzkriterien getrennt zu definieren. Es reicht nicht, nur Durchschnittswerte zu betrachten. Statt bequeme Beispiele auszuwählen, muss das Team reale Grenzfälle einbeziehen. Ziel ist es, Akzeptanzschwellen festzulegen, ohne geschäftliche Risiken auszublenden. Die dokumentierte Gewichtung dient dazu, dem Lenkungskreis eine nachvollziehbare Entscheidung zu ermöglichen.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "Wir planen, Kriterien ___." (festlegen)',
+        "festzulegen",
+        "Bei trennbaren Verben steht zu zwischen Präfix und Stamm.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "um Qualität ___" (messen)',
+        "zu messen",
+        "Um verlangt zu + Infinitiv.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "ohne Risiken ___" (ausblenden)',
+        "auszublenden",
+        "Trennbares Verb mit eingeschobenem zu.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        'Korrigieren Sie: "Wir müssen die Schwelle zu definieren."',
+        "Wir müssen die Schwelle definieren.",
+        "Nach Modalverb kein zu.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "Es ist wichtig, Grenzfälle ___." (testen)',
+        "zu testen",
+        "Unpersönliche Bewertung mit zu-Gruppe.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "statt nur Kosten ___" (vergleichen)',
+        "zu vergleichen",
+        "Statt leitet Infinitivgruppe mit zu ein.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Verbinden Sie mit um: Wir testen. Wir messen Sicherheit.",
+        "Wir testen, um Sicherheit zu messen.",
+        "Um ... zu drückt Ziel aus.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        'Ergänzen Sie: "Das Framework scheint robust ___." (sein)',
+        "zu sein",
+        "Scheinen wird mit zu-Infinitiv konstruiert.",
+      ],
+    ],
+    open: [
+      [
+        "Formulieren Sie Ziel und Einschränkung mit um ... zu und ohne ... zu.",
+        "Wir erweitern die Stichprobe, um Verzerrungen zu erkennen, ohne die Testdauer unverhältnismäßig zu erhöhen.",
+        "beide Infinitivgruppen, korrekte Kommas, Sinn und formeller Ton.",
+      ],
+      [
+        "Verdichten Sie drei Anforderungen in einem Satz mit zu-Gruppen.",
+        "Es gilt, Schwellen festzulegen, Gewichtungen zu dokumentieren und Grenzfälle einzubeziehen.",
+        "mindestens drei parallele zu-Infinitive, klare Logik, professioneller Stil.",
+      ],
+    ],
+    writing:
+      "Beschreiben Sie den Aufbau eines Bewertungsframeworks für eine KI-Lösung.",
+    requirements: [
+      "Verwenden Sie mindestens sechs Infinitivgruppen.",
+      "Nutzen Sie um, ohne und statt.",
+      "Setzen Sie Kommas korrekt.",
+      "Definieren Sie Kriterien und Schwellen.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "erweiterte-passivformen",
+    topic: "erweiterte-passivformen",
+    title: "Erweiterte Passivformen",
+    scenario: "Anbietervergleich für Enterprise-KI",
+    theory: [
+      [
+        "Система форм",
+        "Vorgangspassiv (werden + Partizip II) описывает процесс, Zustandspassiv (sein + Partizip II) — результат.",
+      ],
+      [
+        "Passiv с модальным глаголом",
+        "Modalverb + Partizip II + werden: Die Lösung muss geprüft werden. В придаточном: weil sie geprüft werden muss.",
+      ],
+      [
+        "Альтернативы",
+        "sich lassen + Infinitiv и sein + zu + Infinitiv выражают возможность или необходимость.",
+      ],
+      [
+        "Ошибки",
+        "Не смешивайте worden и geworden; в Perfekt Passiv используется worden.",
+      ],
+      [
+        "Вывод",
+        "Выбирайте форму по фокусу: процесс, состояние, возможность или обязательство.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "geprüft werden",
+        "быть проверенным",
+        "Jeder Anbieter muss geprüft werden.",
+      ],
+      ["freigegeben sein", "быть одобренным", "Die Shortlist ist freigegeben."],
+      [
+        "bewertet worden sein",
+        "быть оценённым",
+        "Das Angebot dürfte bewertet worden sein.",
+      ],
+      [
+        "sich integrieren lassen",
+        "поддаваться интеграции",
+        "Die API lässt sich integrieren.",
+      ],
+      [
+        "zu berücksichtigen sein",
+        "подлежать учёту",
+        "Folgekosten sind zu berücksichtigen.",
+      ],
+      ["der Anbieter", "поставщик", "Der Anbieter wird eingeladen."],
+      ["die Ausschreibung", "тендер", "Die Ausschreibung ist veröffentlicht."],
+      [
+        "die Muss-Anforderung",
+        "обязательное требование",
+        "Sie muss erfüllt werden.",
+      ],
+      ["die Bewertungsmatrix", "матрица оценки", "Die Matrix wird verwendet."],
+      [
+        "die Referenzprüfung",
+        "проверка рекомендаций",
+        "Sie ist abgeschlossen.",
+      ],
+      ["die Vertragsklausel", "условие договора", "Die Klausel ist zu prüfen."],
+      ["die Skalierbarkeit", "масштабируемость", "Sie lässt sich messen."],
+      [
+        "die Auswahlentscheidung",
+        "решение о выборе",
+        "Sie muss dokumentiert werden.",
+      ],
+      [
+        "nachgewiesen werden",
+        "быть доказанным",
+        "Die Leistung muss nachgewiesen werden.",
+      ],
+      [
+        "bereits abgeschlossen sein",
+        "быть уже завершённым",
+        "Die Prüfung ist bereits abgeschlossen.",
+      ],
+    ],
+    reading:
+      "Drei Anbieter werden anhand derselben Bewertungsmatrix verglichen. Alle Muss-Anforderungen müssen nachgewiesen werden, bevor ein Angebot freigegeben werden kann. Die technischen Tests sind bereits abgeschlossen; die Referenzprüfungen werden derzeit ausgewertet. Zwei Plattformen lassen sich ohne größere Anpassungen integrieren. Beim dritten Angebot sind zusätzliche Betriebskosten zu berücksichtigen. Die Auswahlentscheidung muss nachvollziehbar dokumentiert werden.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        "Die Lösung muss geprüft ___.",
+        "werden",
+        "Modalpassiv endet mit werden.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Die Tests sind abgeschlossen ___.",
+        "worden",
+        "Perfekt Passiv verwendet worden.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Formulieren Sie Zustand: Man hat die Shortlist freigegeben.",
+        "Die Shortlist ist freigegeben.",
+        "Sein + Partizip II beschreibt Ergebnis.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Die API lässt sich leicht ___.",
+        "integrieren",
+        "Sich lassen nimmt Infinitiv.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Die Kosten sind zu ___.",
+        "berücksichtigen",
+        "Sein + zu drückt Notwendigkeit aus.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Korrigieren Sie: weil sie muss geprüft werden.",
+        "weil sie geprüft werden muss",
+        "Modalverb steht im Nebensatz am Ende.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Die Angebote werden morgen ___.",
+        "bewertet",
+        "Vorgangspassiv.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Formulieren Sie Möglichkeit: Man kann die Leistung messen.",
+        "Die Leistung lässt sich messen.",
+        "Sich lassen drückt Möglichkeit aus.",
+      ],
+    ],
+    open: [
+      [
+        "Formulieren Sie Prozess, Zustand und Pflicht in drei Passivsätzen.",
+        "Die Angebote werden geprüft; zwei Tests sind abgeschlossen; die Kosten müssen dokumentiert werden.",
+        "drei passende Passivformen, korrekte Verbposition, gleicher Sinn.",
+      ],
+      [
+        "Ersetzen Sie man durch zwei stilistisch passende Passivalternativen.",
+        "Die API lässt sich anbinden; die Risiken sind vorab zu bewerten.",
+        "sich lassen und sein + zu, formeller Stil, Bedeutung erhalten.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Empfehlung zum Vergleich dreier Enterprise-KI-Anbieter.",
+    requirements: [
+      "Verwenden Sie vier Passivformen.",
+      "Nutzen Sie sich lassen und sein + zu.",
+      "Trennen Sie Prozess und Ergebnis.",
+      "Begründen Sie die Auswahl.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "modalpartikeln",
+    topic: "modalpartikeln-im-berufsalltag",
+    title: "Modalpartikeln im Berufsalltag",
+    scenario: "KI-Governance und Compliance",
+    theory: [
+      [
+        "Функция",
+        "doch, ja, eben, wohl, denn и mal выражают отношение говорящего и регулируют тон, не меняя основного факта.",
+      ],
+      [
+        "Профессиональный регистр",
+        "doch смягчает возражение, wohl маркирует предположение, ja ссылается на известное, denn делает вопрос естественнее.",
+      ],
+      [
+        "Позиция",
+        "Modalpartikeln обычно стоят в Mittelfeld после местоимений и перед акцентируемым дополнением.",
+      ],
+      [
+        "Ограничение",
+        "В формальных документах используйте их экономно; mal может звучать слишком разговорно.",
+      ],
+      [
+        "Вывод",
+        "Выбирайте частицу по коммуникативной цели, а не переводите буквально.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "doch noch prüfen",
+        "всё же проверить",
+        "Wir sollten das doch noch prüfen.",
+      ],
+      ["wohl zutreffen", "вероятно быть верным", "Das dürfte wohl zutreffen."],
+      [
+        "ja bereits bekannt",
+        "ведь уже известно",
+        "Das ist ja bereits bekannt.",
+      ],
+      [
+        "eben erforderlich",
+        "просто необходимо",
+        "Die Kontrolle ist eben erforderlich.",
+      ],
+      [
+        "Was gilt denn?",
+        "Что же действует?",
+        "Was gilt denn für Pilotprojekte?",
+      ],
+      [
+        "Schauen wir doch",
+        "давайте посмотрим",
+        "Schauen wir doch auf die Evidenz.",
+      ],
+      [
+        "die Governance-Vorgabe",
+        "требование управления",
+        "Die Vorgabe gilt konzernweit.",
+      ],
+      [
+        "der Kontrollnachweis",
+        "подтверждение контроля",
+        "Der Nachweis fehlt noch.",
+      ],
+      [
+        "die Risikoklasse",
+        "класс риска",
+        "Die Risikoklasse bestimmt die Prüfung.",
+      ],
+      [
+        "die Ausnahmegenehmigung",
+        "разрешение-исключение",
+        "Sie ist zeitlich begrenzt.",
+      ],
+      [
+        "verbindlich gelten",
+        "быть обязательным",
+        "Die Regel gilt verbindlich.",
+      ],
+      [
+        "nachvollziehbar begründen",
+        "прозрачно обосновать",
+        "Ausnahmen sind zu begründen.",
+      ],
+      ["Das ist doch…", "Ведь это…", "Das ist doch ein lösbares Problem."],
+      ["Das dürfte wohl…", "Вероятно, это…", "Das dürfte wohl genügen."],
+      [
+        "Wie wäre es denn…?",
+        "Как насчёт…?",
+        "Wie wäre es denn mit einer Vorprüfung?",
+      ],
+    ],
+    reading:
+      "Die neue Governance-Vorgabe gilt ja bereits für produktive Systeme. Für Pilotprojekte sollten wir die Risikoklasse doch ebenfalls früh bestimmen. Ohne diese Einordnung lässt sich wohl kaum entscheiden, welche Nachweise erforderlich sind. Wie wäre es denn mit einer kurzen Vorprüfung? Ausnahmen sind eben nur vertretbar, wenn sie befristet und nachvollziehbar begründet werden. Im verbindlichen Beschluss sollten die Modalpartikeln allerdings entfallen.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        "Das ist ___ bereits bekannt.",
+        "ja",
+        "Ja verweist auf gemeinsames Wissen.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Wir sollten das ___ prüfen.",
+        "doch",
+        "Doch mildert den Vorschlag.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Was gilt ___ für Piloten?",
+        "denn",
+        "Denn macht die Frage natürlicher.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Das dürfte ___ genügen.",
+        "wohl",
+        "Wohl markiert Vermutung.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Mildern Sie: Prüfen Sie die Evidenz.",
+        "Prüfen Sie doch die Evidenz.",
+        "Doch macht die Aufforderung kooperativer.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Die Kontrolle ist ___ erforderlich.",
+        "eben",
+        "Eben stellt etwas als gegeben dar.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Entfernen Sie Umgangssprache: Schauen wir mal auf die Zahlen.",
+        "Betrachten wir die Zahlen.",
+        "Mal passt nicht in jeden formellen Kontext.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Formulieren Sie eine natürliche Frage mit denn: Welche Regel gilt?",
+        "Welche Regel gilt denn?",
+        "Denn steht im Mittelfeld.",
+      ],
+    ],
+    open: [
+      [
+        "Reformulieren Sie ein hartes Gegenargument kooperativ mit doch.",
+        "Wir könnten doch zunächst prüfen, ob die vorhandenen Kontrollen ausreichen.",
+        "passende Modalpartikel, diplomatischer Ton, Sinn erhalten.",
+      ],
+      [
+        "Formulieren Sie eine vorsichtige Vermutung mit wohl.",
+        "Die Ausnahme dürfte wohl nur für den Pilotbetrieb gelten.",
+        "wohl in natürlicher Position, klare Unsicherheit, professioneller Kontext.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie einen Dialogauszug zu einer Governance-Ausnahme und anschließend einen formellen Beschluss.",
+    requirements: [
+      "Verwenden Sie fünf verschiedene Modalpartikeln im Dialog.",
+      "Entfernen Sie sie im Beschluss, wo nötig.",
+      "Markieren Sie Vermutung und Widerspruch.",
+      "Bleiben Sie professionell.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "komplexe-satzklammer",
+    topic: "komplexe-satzklammer",
+    title: "Komplexe Satzklammer",
+    scenario: "Sicherheits- und Risikoanalyse",
+    theory: [
+      [
+        "Расширенная рамка",
+        "Несколько глагольных компонентов образуют правую рамку: hätte geprüft werden müssen.",
+      ],
+      [
+        "Ersatzinfinitiv",
+        "С модальными глаголами Perfekt часто использует двойной инфинитив: Das Team hat handeln müssen.",
+      ],
+      [
+        "Придаточное",
+        "В придаточном спрягаемая часть обычно стоит перед двойным инфинитивом: weil das Team hat handeln müssen.",
+      ],
+      [
+        "Ausklammerung",
+        "Длинные сравнительные и уточняющие группы можно вынести после правой рамки для ясности.",
+      ],
+      [
+        "Вывод",
+        "Стройте глагольный комплекс справа и проверяйте особый порядок с Ersatzinfinitiv.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "hätte geprüft werden müssen",
+        "следовало бы проверить",
+        "Der Zugriff hätte geprüft werden müssen.",
+      ],
+      [
+        "hat sperren lassen",
+        "распорядился заблокировать",
+        "Das Team hat den Schlüssel sperren lassen.",
+      ],
+      [
+        "wird überwacht werden müssen",
+        "нужно будет контролировать",
+        "Der Kanal wird überwacht werden müssen.",
+      ],
+      [
+        "dürfte entdeckt worden sein",
+        "вероятно был обнаружен",
+        "Der Angriff dürfte entdeckt worden sein.",
+      ],
+      [
+        "die Angriffsfläche",
+        "поверхность атаки",
+        "Die Angriffsfläche muss reduziert werden.",
+      ],
+      [
+        "das Bedrohungsmodell",
+        "модель угроз",
+        "Es hätte aktualisiert werden müssen.",
+      ],
+      [
+        "der Zugriffsschlüssel",
+        "ключ доступа",
+        "Der Schlüssel wurde gesperrt.",
+      ],
+      [
+        "die Eintrittswahrscheinlichkeit",
+        "вероятность наступления",
+        "Sie muss bewertet werden.",
+      ],
+      ["das Schadensausmaß", "масштаб ущерба", "Es kann begrenzt werden."],
+      ["die Gegenmaßnahme", "контрмера", "Sie wird umgesetzt werden müssen."],
+      [
+        "unter der Annahme",
+        "при допущении",
+        "Wir bewerten unter der Annahme geringer Nutzung.",
+      ],
+      [
+        "in Betracht ziehen",
+        "принимать во внимание",
+        "Wir müssen Missbrauch in Betracht ziehen.",
+      ],
+      [
+        "außerhalb des Systems",
+        "вне системы",
+        "Daten dürfen nicht außerhalb landen.",
+      ],
+      [
+        "unverzüglich handeln",
+        "действовать немедленно",
+        "Das Team hat unverzüglich handeln müssen.",
+      ],
+      [
+        "vollständig protokollieren",
+        "полностью протоколировать",
+        "Zugriffe müssen protokolliert werden.",
+      ],
+    ],
+    reading:
+      "Die Sicherheitsanalyse zeigt, dass der Zugriffsschlüssel früher hätte gesperrt werden müssen. Das Betriebsteam hat unverzüglich handeln müssen, nachdem ungewöhnliche Abfragen erkannt worden waren. Künftig wird jeder privilegierte Zugriff vollständig protokolliert werden müssen. Die Angriffsfläche könnte durch kürzere Schlüsselintervalle reduziert werden. Der Vorfall dürfte durch eine externe Integration ausgelöst worden sein, deren Berechtigungen vor dem Start genauer hätten geprüft werden müssen.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        "Der Zugriff hätte geprüft werden ___.",
+        "müssen",
+        "Konjunktiv II Passiv mit Modalverb.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Das Team hat handeln ___.",
+        "müssen",
+        "Ersatzinfinitiv statt gemusst.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Der Kanal wird überwacht werden ___.",
+        "müssen",
+        "Futur Passiv plus Modalverb.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Ordnen Sie: weil / handeln / das Team / hat / müssen.",
+        "weil das Team hat handeln müssen",
+        "Bei Ersatzinfinitiv steht hat vor der Infinitivgruppe.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Der Angriff dürfte entdeckt worden ___.",
+        "sein",
+        "Vermutung über passives Perfekt.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Korrigieren Sie: Das Team hat handeln gemusst.",
+        "Das Team hat handeln müssen.",
+        "Standardsprachlich Ersatzinfinitiv.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Die Rechte hätten entzogen werden ___.",
+        "sollen",
+        "Komplexe rechte Klammer.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Bilden Sie Futur Passiv: Man muss den Zugriff überwachen.",
+        "Der Zugriff wird überwacht werden müssen.",
+        "Futur + Passiv + Modalverb.",
+      ],
+    ],
+    open: [
+      [
+        "Formulieren Sie eine versäumte Sicherheitsmaßnahme mit hätte ... werden müssen.",
+        "Die externen Berechtigungen hätten vor dem Pilotstart eingeschränkt werden müssen.",
+        "vollständige Satzklammer, korrekter Konjunktiv II, gleicher Sinn.",
+      ],
+      [
+        "Verbinden Sie Ursache und Pflicht in einem Nebensatz mit Ersatzinfinitiv.",
+        "Da das Team sofort hat handeln müssen, wurde der Schlüssel noch am selben Tag gesperrt.",
+        "korrekte Nebensatzstellung, Ersatzinfinitiv, klare Logik.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Sicherheits- und Risikoanalyse mit vergangenen Versäumnissen und künftigen Pflichten.",
+    requirements: [
+      "Verwenden Sie fünf komplexe Satzklammern.",
+      "Nutzen Sie Ersatzinfinitiv und Passiv.",
+      "Formulieren Sie eine Vermutung.",
+      "Nennen Sie konkrete Gegenmaßnahmen.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "genitiv-alternativen",
+    topic: "genitiv-und-genitivalternativen",
+    title: "Genitiv und Genitivalternativen",
+    scenario: "Optimierung der KI-Betriebskosten",
+    theory: [
+      [
+        "Genitiv",
+        "Der Genitiv markiert Zugehörigkeit und folgt formellen Präpositionen wie aufgrund, während, hinsichtlich und innerhalb.",
+      ],
+      [
+        "Альтернативы",
+        "von + Dativ ist mündlicher oder nötig bei artikellosen Namen; Komposita sind oft prägnanter.",
+      ],
+      [
+        "Окончания",
+        "Maskulin/Neutrum Singular erhalten meist -s/-es; Artikel und Adjektive tragen Genitivendungen.",
+      ],
+      [
+        "Стиль",
+        "Zu viele verschachtelte Genitive erschweren das Lesen. Wechseln Sie zu von-Gruppen oder Verben.",
+      ],
+      [
+        "Вывод",
+        "Nutzen Sie Genitiv für Präzision, aber vermeiden Sie Genitivketten.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "aufgrund des Verbrauchs",
+        "из-за расхода",
+        "Aufgrund des Verbrauchs steigen die Kosten.",
+      ],
+      [
+        "hinsichtlich der Latenz",
+        "относительно задержки",
+        "Hinsichtlich der Latenz besteht Potenzial.",
+      ],
+      [
+        "während des Betriebs",
+        "во время эксплуатации",
+        "Während des Betriebs messen wir Tokens.",
+      ],
+      [
+        "innerhalb eines Monats",
+        "в течение месяца",
+        "Die Änderung amortisiert sich innerhalb eines Monats.",
+      ],
+      [
+        "die Kosten des Modells",
+        "затраты модели",
+        "Die Kosten des Modells sinken.",
+      ],
+      [
+        "der Verbrauch der Anwendung",
+        "потребление приложения",
+        "Der Verbrauch der Anwendung ist hoch.",
+      ],
+      [
+        "die Kosten von Modell A",
+        "затраты модели A",
+        "Die Kosten von Modell A sind transparent.",
+      ],
+      ["das Tokenbudget", "бюджет токенов", "Das Tokenbudget wird begrenzt."],
+      ["die Auslastung", "загрузка", "Die Auslastung schwankt."],
+      [
+        "die Abrufhäufigkeit",
+        "частота запросов",
+        "Die Abrufhäufigkeit beeinflusst Kosten.",
+      ],
+      [
+        "der Caching-Effekt",
+        "эффект кэширования",
+        "Der Caching-Effekt ist messbar.",
+      ],
+      ["die Modellwahl", "выбор модели", "Die Modellwahl senkt den Verbrauch."],
+      [
+        "angesichts steigender Preise",
+        "с учётом растущих цен",
+        "Angesichts steigender Preise prüfen wir Alternativen.",
+      ],
+      [
+        "außerhalb der Spitzenzeiten",
+        "вне пиковых часов",
+        "Jobs laufen außerhalb der Spitzenzeiten.",
+      ],
+      [
+        "zwecks Optimierung",
+        "в целях оптимизации",
+        "Zwecks Optimierung kürzen wir Prompts.",
+      ],
+    ],
+    reading:
+      "Aufgrund des gestiegenen Tokenverbrauchs prüft das Team die Betriebskosten der Anwendung. Während des letzten Quartals verursachten lange Prompts einen erheblichen Anteil der Ausgaben. Die Nutzung eines kleineren Modells für einfache Anfragen senkt die Kosten des Systems, ohne die Qualität komplexer Fälle zu gefährden. Hinsichtlich der Latenz bringt zusätzliches Caching Vorteile. Zwecks besserer Steuerung wird innerhalb eines Monats ein Tokenbudget je Fachbereich eingeführt.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        "aufgrund ___ Verbrauchs",
+        "des",
+        "Aufgrund regiert Genitiv.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "hinsichtlich ___ Latenz",
+        "der",
+        "Feminin Genitiv Singular.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "innerhalb ___ Monats",
+        "eines",
+        "Genitiv nach innerhalb.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Bilden Sie Genitiv: die Kosten / das Modell.",
+        "die Kosten des Modells",
+        "Neutrum erhält des + -s.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Ersetzen Sie: Annas Modellkosten (mit von).",
+        "die Modellkosten von Anna",
+        "Von + Dativ als Alternative.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "während ___ Betriebs",
+        "des",
+        "Während regiert standardsprachlich Genitiv.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "angesichts ___ Preise (steigend)",
+        "steigender",
+        "Artikelloser Genitiv Plural.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Verdichten Sie: Budget für Tokens.",
+        "Tokenbudget",
+        "Kompositum ist prägnant.",
+      ],
+    ],
+    open: [
+      [
+        "Lösen Sie eine schwer lesbare Genitivkette stilistisch auf.",
+        "Der Bericht des Teams zur Kostenentwicklung der Plattform → Der Teambericht zur Entwicklung der Plattformkosten.",
+        "sinnvolle Alternative, korrekte Kasusformen, Sinn erhalten.",
+      ],
+      [
+        "Formulieren Sie eine Kostenbegründung mit zwei Genitivpräpositionen.",
+        "Aufgrund des höheren Verbrauchs wird das Budget während des Pilotbetriebs monatlich geprüft.",
+        "zwei passende Präpositionen, Genitivendungen, professioneller Ton.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie eine Empfehlung zur Optimierung der KI-Betriebskosten.",
+    requirements: [
+      "Verwenden Sie fünf Genitivkonstruktionen.",
+      "Nutzen Sie zwei von-Alternativen oder Komposita.",
+      "Vermeiden Sie lange Genitivketten.",
+      "Quantifizieren Sie Maßnahmen und Wirkung.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "adjektivdeklination-advanced",
+    topic: "adjektivdeklination-advanced",
+    title: "Adjektivdeklination (Advanced)",
+    scenario: "Multi-Agenten-Architektur",
+    theory: [
+      [
+        "Принцип",
+        "Окончание прилагательного показывает род, число и падеж там, где артикль не даёт достаточной информации.",
+      ],
+      [
+        "Типы",
+        "После определённого артикля преобладает слабое склонение, после неопределённого — смешанное, без артикля — сильное.",
+      ],
+      [
+        "Несколько прилагательных",
+        "Параллельные прилагательные получают одинаковое окончание: mit klaren, überprüfbaren Regeln.",
+      ],
+      [
+        "Субстантивация",
+        "Субстантивированные прилагательные пишутся с заглавной буквы и сохраняют склонение: ein Verantwortlicher.",
+      ],
+      ["Вывод", "Определите артикль, падеж, род и число до выбора окончания."],
+    ],
+    vocabulary: [
+      [
+        "ein zentraler Orchestrator",
+        "центральный оркестратор",
+        "Ein zentraler Orchestrator verteilt Aufgaben.",
+      ],
+      [
+        "der spezialisierte Agent",
+        "специализированный агент",
+        "Der spezialisierte Agent recherchiert.",
+      ],
+      [
+        "mit klaren Rollen",
+        "с чёткими ролями",
+        "Das System arbeitet mit klaren Rollen.",
+      ],
+      [
+        "für sensible Anfragen",
+        "для чувствительных запросов",
+        "Menschen prüfen sensible Anfragen.",
+      ],
+      [
+        "kontrollierter Zugriff",
+        "контролируемый доступ",
+        "Kontrollierter Zugriff ist Pflicht.",
+      ],
+      [
+        "eine gemeinsame Wissensbasis",
+        "общая база знаний",
+        "Eine gemeinsame Wissensbasis reduziert Widersprüche.",
+      ],
+      [
+        "nachvollziehbare Übergaben",
+        "прозрачные передачи",
+        "Nachvollziehbare Übergaben erleichtern Audits.",
+      ],
+      [
+        "begrenzte Berechtigungen",
+        "ограниченные разрешения",
+        "Begrenzte Berechtigungen senken Risiken.",
+      ],
+      [
+        "ein verantwortlicher Prüfer",
+        "ответственный проверяющий",
+        "Ein verantwortlicher Prüfer gibt frei.",
+      ],
+      [
+        "die menschliche Freigabe",
+        "человеческое одобрение",
+        "Die menschliche Freigabe bleibt nötig.",
+      ],
+      [
+        "robuste Abbruchkriterien",
+        "надёжные критерии остановки",
+        "Robuste Abbruchkriterien verhindern Schleifen.",
+      ],
+      [
+        "unternehmensweite Standards",
+        "корпоративные стандарты",
+        "Unternehmensweite Standards gelten für alle.",
+      ],
+      ["ein Dritter", "третье лицо", "Ein Dritter prüft die Ausgabe."],
+      [
+        "nichts Ungeprüftes",
+        "ничего непроверенного",
+        "Nichts Ungeprüftes geht live.",
+      ],
+      [
+        "für jeden beteiligten Agenten",
+        "для каждого участвующего агента",
+        "Regeln gelten für jeden beteiligten Agenten.",
+      ],
+    ],
+    reading:
+      "Ein zentraler Orchestrator verteilt eingehende Aufgaben an spezialisierte Agenten. Jeder beteiligte Agent erhält eine klar abgegrenzte Rolle und begrenzte technische Berechtigungen. Mit einer gemeinsamen Wissensbasis und nachvollziehbaren Übergaben lassen sich widersprüchliche Ergebnisse reduzieren. Für sensible Anfragen ist eine menschliche Freigabe vorgesehen. Robuste, explizite Abbruchkriterien verhindern unkontrollierte Schleifen. Nichts Ungeprüftes darf in den produktiven Prozess gelangen.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        "ein zentral___ Orchestrator",
+        "zentraler",
+        "Gemischte Deklination Maskulin Nominativ.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "mit klar___ Rollen",
+        "klaren",
+        "Dativ Plural mit -en.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "die spezialisiert___ Agenten",
+        "spezialisierten",
+        "Schwache Deklination Plural.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "für sensibl___ Anfragen",
+        "sensible",
+        "Starke Deklination Akkusativ Plural.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "kontrolliert___ Zugriff ist nötig",
+        "Kontrollierter",
+        "Artikellos Maskulin Nominativ stark.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Korrigieren Sie: mit klare, überprüfbare Regeln.",
+        "mit klaren, überprüfbaren Regeln",
+        "Parallele Adjektive im Dativ Plural.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "ein verantwortlich___ Prüfer",
+        "verantwortlicher",
+        "Gemischte Deklination.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Substantivieren Sie: eine verantwortliche Person.",
+        "eine Verantwortliche",
+        "Substantiviertes Adjektiv groß.",
+      ],
+    ],
+    open: [
+      [
+        "Beschreiben Sie drei Architekturkomponenten mit unterschiedlich deklinierten Adjektiven.",
+        "Ein zentraler Orchestrator koordiniert die spezialisierten Agenten mit klaren Regeln.",
+        "mindestens drei korrekte Endungen, verschiedene Artikelmuster, professioneller Sinn.",
+      ],
+      [
+        "Formulieren Sie eine Kontrollregel mit einem substantivierten Adjektiv.",
+        "Ein Verantwortlicher muss jede sensible Anfrage freigeben.",
+        "korrekte Substantivierung und Deklination, klare Pflicht.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Architekturbeschreibung für ein Multi-Agenten-System.",
+    requirements: [
+      "Verwenden Sie zwölf attributive Adjektive.",
+      "Nutzen Sie starke, schwache und gemischte Deklination.",
+      "Fügen Sie ein substantiviertes Adjektiv ein.",
+      "Beschreiben Sie Rollen und Kontrollen.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "konzessive-konstruktionen",
+    topic: "konzessive-konstruktionen",
+    title: "Konzessive Konstruktionen",
+    scenario: "RAG-Implementierung",
+    theory: [
+      [
+        "Функция",
+        "Konzessive Konstruktionen verbinden einen erwartbaren Einwand mit einem dennoch geltenden Ergebnis.",
+      ],
+      [
+        "Средства",
+        "obwohl/obgleich + Nebensatz; trotz + Genitiv; auch wenn + Nebensatz; zwar ..., aber/jedoch ...",
+      ],
+      [
+        "Nuance",
+        "Selbst wenn markiert einen extremen hypothetischen Einwand; wenngleich wirkt formeller und einschränkender.",
+      ],
+      [
+        "Порядок",
+        "Im Nebensatz steht das finite Verb am Ende; zwar und aber besetzen getrennte Satzteile.",
+      ],
+      [
+        "Вывод",
+        "Wählen Sie die Konstruktion nach Faktizität, Register und Stärke des Einwands.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "obwohl die Quelle aktuell ist",
+        "хотя источник актуален",
+        "Obwohl sie aktuell ist, kann sie falsch sein.",
+      ],
+      [
+        "trotz hoher Trefferquote",
+        "несмотря на высокую точность",
+        "Trotz hoher Trefferquote bleiben Lücken.",
+      ],
+      ["auch wenn", "даже если", "Auch wenn Recall steigt, prüfen wir Zitate."],
+      [
+        "selbst wenn",
+        "даже в случае",
+        "Selbst wenn Tests bestehen, bleibt Kontrolle nötig.",
+      ],
+      [
+        "zwar … jedoch",
+        "хотя … однако",
+        "Das System ist zwar schnell, jedoch ungenau.",
+      ],
+      [
+        "wenngleich",
+        "хотя",
+        "Wenngleich der Ansatz reif ist, bestehen Risiken.",
+      ],
+      [
+        "die Quellenaktualität",
+        "актуальность источников",
+        "Quellenaktualität ist kritisch.",
+      ],
+      [
+        "die Trefferquote",
+        "доля релевантных результатов",
+        "Die Trefferquote steigt.",
+      ],
+      [
+        "die Zitiergenauigkeit",
+        "точность цитирования",
+        "Sie wird separat gemessen.",
+      ],
+      [
+        "der Wissensbestand",
+        "массив знаний",
+        "Der Wissensbestand wird bereinigt.",
+      ],
+      [
+        "die Zugriffsfilterung",
+        "фильтрация доступа",
+        "Sie bleibt obligatorisch.",
+      ],
+      ["der Grenzfall", "пограничный случай", "Grenzfälle werden getestet."],
+      ["dennoch", "тем не менее", "Dennoch starten wir nicht sofort."],
+      [
+        "ungeachtet",
+        "невзирая на",
+        "Ungeachtet guter Werte prüfen wir Risiken.",
+      ],
+      [
+        "einerseits … andererseits",
+        "с одной стороны…с другой",
+        "Einerseits steigt Qualität, andererseits Kosten.",
+      ],
+    ],
+    reading:
+      "Obwohl der erste RAG-Prototyp eine hohe Trefferquote erreicht, liefert er nicht durchgehend korrekte Zitate. Zwar findet das System relevante Abschnitte, jedoch verwechselt es bei ähnlichen Richtlinien gelegentlich die Versionen. Trotz aktueller Quellen bleibt deshalb eine Metadatenprüfung erforderlich. Auch wenn ein leistungsfähigeres Modell die Antwortqualität erhöht, löst es keine fehlerhafte Zugriffsfilterung. Das Team empfiehlt daher einen Pilotbetrieb, wenngleich vor dem Start noch Grenzfälle zu testen sind.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        "___ die Quote hoch ist, bleiben Fehler.",
+        "Obwohl",
+        "Obwohl leitet faktischen Einwand ein.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "___ hoher Quote bleiben Fehler.",
+        "Trotz",
+        "Trotz steht mit Genitiv.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Das System ist zwar schnell, ___ ungenau.",
+        "aber",
+        "Zwar korreliert mit aber/jedoch.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Verbinden Sie mit obwohl: Quellen sind aktuell. Fehler bleiben.",
+        "Obwohl die Quellen aktuell sind, bleiben Fehler.",
+        "Verb am Nebensatzende.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "___ wenn alle Tests bestehen, bleibt Monitoring nötig.",
+        "Selbst",
+        "Selbst wenn verstärkt den hypothetischen Einwand.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Ersetzen Sie obwohl nominal: Obwohl die Qualität hoch ist.",
+        "Trotz der hohen Qualität",
+        "Trotz + Genitivgruppe.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Der Ansatz ist reif, ___ bestehen Risiken.",
+        "dennoch",
+        "Dennoch markiert unerwartetes Ergebnis.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Formell umformulieren: Obwohl der Ansatz gut ist.",
+        "Wenngleich der Ansatz gut ist",
+        "Wenngleich ist formeller.",
+      ],
+    ],
+    open: [
+      [
+        "Formulieren Sie eine ausgewogene Pilotempfehlung mit zwar ... jedoch.",
+        "Der Prototyp erzielt zwar gute Trefferquoten, jedoch sollte er wegen ungenauer Zitate nur kontrolliert pilotiert werden.",
+        "korrelierende Struktur, korrekte Wortstellung, Einwand und Empfehlung.",
+      ],
+      [
+        "Verbinden Sie einen extremen Einwand mit selbst wenn.",
+        "Selbst wenn die Qualitätsziele erreicht werden, muss die Zugriffsfilterung separat geprüft werden.",
+        "selbst wenn, Verbendstellung, Sinn und formeller Ton.",
+      ],
+    ],
+    writing: "Schreiben Sie eine abwägende Empfehlung zur RAG-Implementierung.",
+    requirements: [
+      "Verwenden Sie fünf konzessive Konstruktionen.",
+      "Nutzen Sie obwohl, trotz, zwar und selbst wenn.",
+      "Unterscheiden Sie Retrieval und Zugriffsschutz.",
+      "Geben Sie eine klare Empfehlung.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "partizipialkonstruktionen",
+    topic: "partizipialkonstruktionen",
+    title: "Partizipialkonstruktionen",
+    scenario: "Business Value einer KI-Lösung",
+    theory: [
+      [
+        "Функция",
+        "Freie Partizipialkonstruktionen verdichten Nebeninformationen zu Ursache, Zeit, Bedingung oder Art und Weise.",
+      ],
+      [
+        "Partizip I",
+        "Aktive Gleichzeitigkeit: Von realistischen Annahmen ausgehend, berechnen wir den Nutzen.",
+      ],
+      [
+        "Partizip II",
+        "Passiver oder abgeschlossener Bezug: Konservativ gerechnet, amortisiert sich die Lösung später.",
+      ],
+      [
+        "Связь субъекта",
+        "Der logische Bezug muss eindeutig sein; sonst entsteht ein dangling participle.",
+      ],
+      [
+        "Вывод",
+        "Nutzen Sie die Verdichtung gezielt und lösen Sie unklare Konstruktionen in Nebensätze auf.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "konservativ gerechnet",
+        "при консервативном расчёте",
+        "Konservativ gerechnet liegt ROI bei 18 %.",
+      ],
+      [
+        "vom Pilotwert ausgehend",
+        "исходя из пилота",
+        "Vom Pilotwert ausgehend rechnen wir hoch.",
+      ],
+      [
+        "auf drei Jahre betrachtet",
+        "при рассмотрении трёх лет",
+        "Auf drei Jahre betrachtet entsteht Nutzen.",
+      ],
+      [
+        "unter Einbeziehung der Kosten",
+        "с учётом затрат",
+        "Unter Einbeziehung der Kosten bleibt der Wert positiv.",
+      ],
+      [
+        "bereinigt um Sondereffekte",
+        "скорректированный на разовые эффекты",
+        "Bereinigt um Sondereffekte sinkt der Nutzen.",
+      ],
+      [
+        "die Nutzenhypothese",
+        "гипотеза ценности",
+        "Die Nutzenhypothese wird getestet.",
+      ],
+      [
+        "der Produktivitätsgewinn",
+        "рост производительности",
+        "Er ist messbar.",
+      ],
+      ["die Amortisationsdauer", "срок окупаемости", "Sie beträgt 16 Monate."],
+      ["der Barwert", "приведённая стоимость", "Der Barwert ist positiv."],
+      ["die Sensitivität", "чувствительность", "Wir prüfen die Sensitivität."],
+      [
+        "hochgerechnet",
+        "экстраполированный",
+        "Hochgerechnet entstehen Einsparungen.",
+      ],
+      [
+        "zugrunde gelegt",
+        "положенный в основу",
+        "Diese Annahme wurde zugrunde gelegt.",
+      ],
+      [
+        "verglichen mit",
+        "по сравнению с",
+        "Verglichen mit heute sinkt Aufwand.",
+      ],
+      [
+        "zusammenfassend betrachtet",
+        "в целом",
+        "Zusammenfassend betrachtet lohnt sich der Pilot.",
+      ],
+      [
+        "vorsichtig bewertet",
+        "при осторожной оценке",
+        "Vorsichtig bewertet bleibt Potenzial.",
+      ],
+    ],
+    reading:
+      "Vom achtwöchigen Pilotwert ausgehend, schätzt das Team den jährlichen Produktivitätsgewinn auf 9 bis 13 Prozent. Auf drei Jahre betrachtet, ergibt sich ein positiver Barwert. Konservativ gerechnet, beträgt die Amortisationsdauer sechzehn Monate. Unter Einbeziehung zusätzlicher Schulungs- und Supportkosten verschiebt sie sich um zwei Monate. Bereinigt um einmalige Prozesseffekte, bleibt der erwartete Nutzen dennoch robust. Die Sensitivität gegenüber der tatsächlichen Adoption sollte im nächsten Quartal erneut geprüft werden.",
+    drills: [
+      [
+        ExerciseFormat.FillBlank,
+        "___ gerechnet, dauert es 16 Monate.",
+        "Konservativ",
+        "Partizipialkonstruktion mit Partizip II.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Vom Pilotwert ___, rechnen wir hoch.",
+        "ausgehend",
+        "Partizip I zeigt Ausgangspunkt.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Auf drei Jahre ___, ist der Barwert positiv.",
+        "betrachtet",
+        "Partizip II verdichtet Perspektive.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Verdichten Sie: Wenn man Kosten einbezieht, sinkt ROI.",
+        "Kosten einbezogen, sinkt der ROI.",
+        "Partizip II ersetzt Bedingung.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Um Sondereffekte ___, bleibt Nutzen.",
+        "bereinigt",
+        "Feste Konstruktion bereinigt um.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Korrigieren Sie den Bezug: Ausgehend vom Pilotwert, stieg die Prognose.",
+        "Vom Pilotwert ausgehend, erhöhte das Team die Prognose.",
+        "Handelnder Bezug muss klar sein.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Mit heute ___, sinkt Aufwand.",
+        "verglichen",
+        "Partizip II mit mit.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Lösen Sie auf: Vorsichtig bewertet, bleibt Potenzial.",
+        "Wenn man die Ergebnisse vorsichtig bewertet, bleibt Potenzial.",
+        "Expliziter Bedingungssatz.",
+      ],
+    ],
+    open: [
+      [
+        "Verdichten Sie eine ROI-Annahme und eine Einschränkung mit Partizipialkonstruktionen.",
+        "Vom Pilotwert ausgehend und um Sondereffekte bereinigt, erwarten wir einen moderaten Nutzen.",
+        "mindestens zwei passende Konstruktionen, klarer Bezug, Aussage erhalten.",
+      ],
+      [
+        "Überarbeiten Sie eine unklare Partizipialkonstruktion.",
+        "Nachdem das Team die Supportkosten einbezogen hatte, verlängerte es die Amortisationsdauer.",
+        "eindeutiger Bezug, korrekte Zeitlogik, professioneller Stil.",
+      ],
+    ],
+    writing:
+      "Verfassen Sie eine Executive-Zusammenfassung zum Business Value einer KI-Lösung.",
+    requirements: [
+      "Verwenden Sie sechs Partizipialkonstruktionen.",
+      "Nutzen Sie Partizip I und II.",
+      "Vermeiden Sie unklare Bezüge.",
+      "Nennen Sie Annahmen und Sensitivität.",
+    ],
+  }),
+  createAdvancedGermanLesson({
+    slug: "stilverbesserung-buerodeutsch",
+    topic: "stilverbesserung-und-buerodeutsch",
+    title: "Stilverbesserung und Bürodeutsch",
+    scenario: "Roadmap für die unternehmensweite KI-Einführung",
+    theory: [
+      [
+        "Цель",
+        "Guter Bürostil ist klar, konkret und adressatengerecht. Er ersetzt Floskeln und überlange Nominalketten durch präzise Verben.",
+      ],
+      [
+        "Активность",
+        "Benennen Sie Verantwortliche, sofern Neutralität nicht wichtiger ist: IT integriert statt Die Integration erfolgt.",
+      ],
+      [
+        "Kраткость",
+        "Streichen Sie Füllwörter, Doppelungen und unnötige Vorfeldkonstruktionen. Ein Satz trägt möglichst eine Hauptaussage.",
+      ],
+      [
+        "Вежливость",
+        "Klare Bitten mit Termin sind höflicher als vage Andeutungen; vermeiden Sie Amtsdeutsch und unnötigen Druck.",
+      ],
+      [
+        "Вывод",
+        "Schreiben Sie Zweck, Entscheidung, Owner und Termin sichtbar; prüfen Sie jeden Satz auf Informationswert.",
+      ],
+    ],
+    vocabulary: [
+      [
+        "die Einführungsroadmap",
+        "дорожная карта внедрения",
+        "Die Einführungsroadmap umfasst drei Phasen.",
+      ],
+      [
+        "die Entscheidungsgrundlage",
+        "основа решения",
+        "Der Pilot liefert die Entscheidungsgrundlage.",
+      ],
+      [
+        "die Verantwortlichkeit",
+        "ответственность",
+        "Wir klären jede Verantwortlichkeit.",
+      ],
+      [
+        "die Freigabe erteilen",
+        "дать одобрение",
+        "Der Vorstand erteilt die Freigabe.",
+      ],
+      [
+        "eine Maßnahme umsetzen",
+        "реализовать меру",
+        "IT setzt die Maßnahme um.",
+      ],
+      [
+        "bis zum Stichtag",
+        "к контрольной дате",
+        "Bitte bestätigen Sie bis zum Stichtag.",
+      ],
+      [
+        "vorbehaltlich der Zustimmung",
+        "при условии согласия",
+        "Vorbehaltlich der Zustimmung starten wir.",
+      ],
+      [
+        "mit Blick auf",
+        "с учётом",
+        "Mit Blick auf Risiken staffeln wir den Rollout.",
+      ],
+      [
+        "kurz gesagt",
+        "кратко говоря",
+        "Kurz gesagt: Wir benötigen eine Entscheidung.",
+      ],
+      [
+        "konkret bedeutet das",
+        "конкретно это означает",
+        "Konkret bedeutet das drei Arbeitspakete.",
+      ],
+      ["zuständig sein für", "отвечать за", "HR ist für Schulungen zuständig."],
+      [
+        "eine Rückmeldung geben",
+        "дать обратную связь",
+        "Bitte geben Sie uns Rückmeldung.",
+      ],
+      [
+        "etwas zur Kenntnis nehmen",
+        "принять к сведению",
+        "Der Ausschuss nimmt den Bericht zur Kenntnis.",
+      ],
+      [
+        "auf den Weg bringen",
+        "запустить",
+        "Wir bringen Phase eins auf den Weg.",
+      ],
+      [
+        "ohne unnötige Verzögerung",
+        "без лишней задержки",
+        "Wir entscheiden ohne unnötige Verzögerung.",
+      ],
+    ],
+    reading:
+      "Betreff: Entscheidung zur ersten Phase der KI-Einführung. Der Pilot bestätigt den fachlichen Nutzen. Wir empfehlen daher eine Einführung in drei klar abgegrenzten Phasen. Zunächst etabliert Risk die Governance und IT integriert die Zugriffskontrollen. Anschließend schult HR die priorisierten Nutzergruppen. In der dritten Phase erweitert das Programmteam nur nachweislich erfolgreiche Anwendungsfälle. Bitte genehmigen Sie das Budget und benennen Sie bis Freitag einen Executive Sponsor. Vorbehaltlich Ihrer Zustimmung startet Phase eins am 1. Oktober.",
+    drills: [
+      [
+        ExerciseFormat.ShortAnswer,
+        "Kürzen Sie: Wir möchten hiermit die Bitte an Sie richten, zuzustimmen.",
+        "Bitte stimmen Sie zu.",
+        "Direkte Bitte ersetzt Floskel.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Verbalisieren Sie: Die Durchführung der Integration erfolgt durch IT.",
+        "IT integriert das System.",
+        "Aktiv und Verb sind kürzer.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "HR ist ___ die Schulung zuständig.",
+        "für",
+        "Feste Rektion zuständig für.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Machen Sie konkret: Eine Rückmeldung wäre zeitnah hilfreich.",
+        "Bitte geben Sie uns bis Freitag Rückmeldung.",
+        "Klare Handlung und Frist.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Entfernen Sie Doppelung: bereits schon abgeschlossen.",
+        "bereits abgeschlossen",
+        "Bereits und schon sind redundant.",
+      ],
+      [
+        ExerciseFormat.FillBlank,
+        "Vorbehaltlich ___ Zustimmung starten wir.",
+        "Ihrer",
+        "Vorbehaltlich regiert Genitiv.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Aktivieren Sie: Die Freigabe wird durch den Vorstand erteilt.",
+        "Der Vorstand erteilt die Freigabe.",
+        "Aktiv nennt Verantwortlichen.",
+      ],
+      [
+        ExerciseFormat.ShortAnswer,
+        "Teilen Sie den Satz: Nach Prüfung starten wir und schulen Nutzer und messen Adoption.",
+        "Nach der Prüfung starten wir. Anschließend schulen wir die Nutzer und messen die Adoption.",
+        "Zwei klare Aussagen verbessern Lesbarkeit.",
+      ],
+    ],
+    open: [
+      [
+        "Überarbeiten Sie eine vage Roadmap-Mail mit klarem Zweck, Owner und Termin.",
+        "Bitte genehmigen Sie Phase eins bis Freitag. IT verantwortet die Integration; HR beginnt die Schulung am 1. Oktober.",
+        "klare Verben, Verantwortliche, Frist, höflicher professioneller Ton.",
+      ],
+      [
+        "Ersetzen Sie Amtsdeutsch durch adressatengerechte Sprache.",
+        "Wir prüfen die Ergebnisse und entscheiden anschließend über die nächste Phase.",
+        "prägnante aktive Formulierung, Sinn erhalten, keine leeren Floskeln.",
+      ],
+    ],
+    writing:
+      "Schreiben Sie eine Entscheidungsvorlage zur unternehmensweiten KI-Einführung.",
+    requirements: [
+      "Gliedern Sie Zweck, drei Phasen und Entscheidung.",
+      "Nennen Sie Owner und Termine.",
+      "Verwenden Sie aktive präzise Verben.",
+      "Vermeiden Sie Floskeln und Nominalketten.",
+    ],
+  }),
+];
+
 export const germanAiConsultantLessons: readonly Lesson[] = [
   germanAiConsultantVerbklammer,
   germanAiConsultantPerfektPraeteritum,
@@ -3637,4 +5419,5 @@ export const germanAiConsultantLessons: readonly Lesson[] = [
   germanAiConsultantKonnektoren,
   germanAiConsultantNominalisierung,
   germanAiConsultantKonjunktiv1,
+  ...advancedGermanLessons,
 ];
