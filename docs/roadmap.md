@@ -220,15 +220,15 @@ remain fully deterministic and are never sent to the LLM.
 Every LLM request records a request log and a cost record in PostgreSQL, making
 LLM spend transparent and auditable.
 
-## Phase 9 — Progress Dashboard
-
-A learner-facing view of progress, mistakes, mastery, and LLM cost, read from
-PostgreSQL.
-
-## Phase 10 — Content Expansion
+## Phase 9 — Content Expansion
 
 Broaden lessons, grammar, vocabulary, and reading across both career tracks and
-toward the German C1 / English B2 targets.
+toward the German C1 / English B2 targets. All future lesson creation must
+follow [`content-guidelines.md`](content-guidelines.md) and
+[`content-catalog.md`](content-catalog.md). Before authoring, read both files,
+inspect the existing lesson files, avoid duplicate grammar and professional
+topics within the same language and career track, and append each new lesson to
+the catalog in the same change.
 
 ## Content Creation Principles
 
@@ -248,9 +248,10 @@ Professional reading texts:
 
 Practice exercises:
 
-- Deterministic.
-- Must include exact answer keys.
-- Must be locally verifiable.
+- Follow the deterministic/open-answer balance and the exact exercise count in
+  [`content-guidelines.md`](content-guidelines.md).
+- Deterministic tasks must include exact answer keys and be locally verifiable.
+- Open grammar tasks must include explicit evaluation criteria.
 
 Writing tasks:
 
@@ -258,9 +259,11 @@ Writing tasks:
 - Relevant to the lesson grammar and vocabulary.
 
 Metadata:
-Each lesson should reference the grammar sources used for validation (if applicable), but must not reproduce copyrighted text.
+Each lesson should reference the grammar sources used for validation (if
+applicable), but must not reproduce copyrighted text. Its catalog metadata must
+be recorded in [`content-catalog.md`](content-catalog.md).
 
-## Phase 11 — Portfolio Release
+## Phase 10 — Portfolio Release
 
 Polish, documentation, and release as a portfolio-ready MVP.
 
