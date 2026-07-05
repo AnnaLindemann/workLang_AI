@@ -41,11 +41,11 @@ block remains runtime-generated and may precede these blocks.
 
 1. **Theory block** — an original, clearly sectioned grammar explanation with
    use cases, form, professional examples, common errors, and a concise
-   takeaway. Explanations may be informed by reputable references, but must be
+   takeaway, on russian. Explanations may be informed by reputable references, but must be
    written in original wording. Record the references in `Lesson.sources`.
 2. **Vocabulary block** — approximately 15–25 mixed vocabulary items tied
    directly to both the grammar topic and the professional topic. See
-   [Vocabulary requirements](#vocabulary-requirements).
+   [Vocabulary requirements](#vocabulary-requirements). Translaton on russian
 3. **Grammar/practice block** — exactly 10 exercises following the theory.
    These exercises are separate from all reading and writing tasks. See
    [Practice requirements](#practice-requirements).
