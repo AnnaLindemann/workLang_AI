@@ -18,8 +18,7 @@ const tracks = [
 export default function Home() {
   return (
     <main className={styles.main}>
-      <section className={styles.hero}>
-        <p className={styles.status}>Phase 3 — Main Lesson UI</p>
+      <section className={styles.hero}>     
         <h1 className={styles.title}>WorkLang AI</h1>
         <p className={styles.subtitle}>Professional Language Coach</p>
         <p className={styles.levels}>German C1 · English B2</p>
@@ -48,9 +47,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <span className={styles.badge}>Status: Phase 3 Main Lesson UI</span>
-      </footer>
+     
     </main>
   );
 }
