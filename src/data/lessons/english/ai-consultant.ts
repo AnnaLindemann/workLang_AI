@@ -3242,7 +3242,69 @@ type FinalLessonConfig = {
   writing: string;
   requirements: string[];
 };
+
+type DrillMetadata = readonly [format: ExerciseFormatType, subcategory: string];
+
+const finalLessonDrillMetadata: Readonly<
+  Record<string, readonly DrillMetadata[]>
+> = {
+  "advanced-prepositions": [
+    [ExerciseFormat.FillBlank, "noun-preposition-collocation"],
+    [ExerciseFormat.FillBlank, "verb-preposition-collocation"],
+    [ExerciseFormat.FillBlank, "adjective-preposition-collocation"],
+    [ExerciseFormat.Transformation, "change-amount-result"],
+    [ExerciseFormat.FillBlank, "concession-preposition"],
+    [ExerciseFormat.FillBlank, "cause-preposition"],
+    [ExerciseFormat.FillBlank, "method-preposition"],
+    [ExerciseFormat.FillBlank, "range-endpoint-preposition"],
+  ],
+  "participle-clauses": [
+    [ExerciseFormat.Transformation, "present-participle-reduction"],
+    [ExerciseFormat.FillBlank, "passive-condition-participle"],
+    [ExerciseFormat.FillBlank, "perfect-participle-marker"],
+    [ExerciseFormat.Transformation, "dangling-participle"],
+    [ExerciseFormat.FillBlank, "active-role-participle"],
+    [ExerciseFormat.FillBlank, "passive-participle-clause"],
+    [ExerciseFormat.FillBlank, "perfect-participle-form"],
+    [ExerciseFormat.Transformation, "past-participle-reduction"],
+  ],
+  "emphasis-inversion": [
+    [ExerciseFormat.Transformation, "fronted-only-inversion"],
+    [ExerciseFormat.FillBlank, "not-only-inversion"],
+    [ExerciseFormat.FillBlank, "negative-adverbial-modal-inversion"],
+    [ExerciseFormat.Transformation, "inversion-base-verb"],
+    [ExerciseFormat.Transformation, "cleft-focus"],
+    [ExerciseFormat.FillBlank, "not-until-inversion"],
+    [ExerciseFormat.FillBlank, "only-when-future-inversion"],
+    [ExerciseFormat.Transformation, "never-perfect-inversion"],
+  ],
+  "hedging-diplomatic-language": [
+    [ExerciseFormat.Transformation, "evidence-claim-hedging"],
+    [ExerciseFormat.FillBlank, "appearance-hedge"],
+    [ExerciseFormat.FillBlank, "worth-gerund-pattern"],
+    [ExerciseFormat.Transformation, "suggest-gerund-pattern"],
+    [ExerciseFormat.FillBlank, "likely-infinitive-pattern"],
+    [ExerciseFormat.Transformation, "diplomatic-disagreement"],
+    [ExerciseFormat.FillBlank, "degree-limitation-phrase"],
+    [ExerciseFormat.FillBlank, "diplomatic-recommendation"],
+  ],
+  "advanced-business-email-style": [
+    [ExerciseFormat.Transformation, "concise-purpose-clause"],
+    [ExerciseFormat.FillBlank, "polite-request-modal"],
+    [ExerciseFormat.FillBlank, "conditional-approval-phrase"],
+    [ExerciseFormat.ShortAnswer, "direct-verb-style"],
+    [ExerciseFormat.FillBlank, "purpose-infinitive"],
+    [ExerciseFormat.ShortAnswer, "action-oriented-subject-line"],
+    [ExerciseFormat.FillBlank, "appreciate-noun-phrase"],
+    [ExerciseFormat.Transformation, "parallel-list-structure"],
+  ],
+};
+
 function finalLesson(c: FinalLessonConfig): Lesson {
+  const drillMetadata = finalLessonDrillMetadata[c.slug];
+  if (!drillMetadata || drillMetadata.length !== c.drills.length) {
+    throw new Error(`Invalid drill metadata for ${c.slug}`);
+  }
   return compactLesson({
     slug: c.slug,
     topic: c.topic,
@@ -3253,12 +3315,11 @@ function finalLesson(c: FinalLessonConfig): Lesson {
     readingTitle: c.scenario,
     reading: c.reading,
     graded: c.drills.map(([prompt, answer, explanation], i) => ({
-      format:
-        i % 3 === 0 ? ExerciseFormat.ShortAnswer : ExerciseFormat.FillBlank,
+      format: drillMetadata[i][0],
       prompt,
       answer,
       explanation,
-      subcategory: c.slug,
+      subcategory: drillMetadata[i][1],
     })),
     open: c.opens.map(([prompt, sample, criteria]) => ({
       format: ExerciseFormat.Rewrite,
@@ -3279,73 +3340,109 @@ const advancedPrepositions = finalLesson({
   theory: [
     {
       heading: "Устойчивые сочетания",
-      body: "В деловом английском выбор предлога часто закреплён за существительным, глаголом или прилагательным: impact on, comply with, responsible for.",
+      body: "В деловом английском предлог часто является частью устойчивого сочетания и не выбирается по буквальному переводу. Учите всю модель: impact on costs, comply with a limit, responsible for spend. В рекомендации такая точность показывает, какое отношение связывает показатель, действие и объект.",
     },
     {
       heading: "Причина и средство",
       items: [
-        "because of/due to + noun",
-        "by + method; through + process",
-        "Costs fell by 12% to €8,000.",
+        "because of/due to + noun: Costs rose due to longer prompts.",
+        "by + method; through + process: We saved money by caching repeated requests.",
+        "by + amount; to + result; from + start: Costs fell from €48,000 by €9,000 to €39,000.",
       ],
     },
     {
       heading: "Контраст",
-      body: "Despite/in spite of принимают noun или -ing; although вводит целое предложение.",
+      body: "Despite и in spite of принимают существительное или -ing-форму, тогда как although вводит полное предложение. Эта разница позволяет кратко сопоставить экономию и ограничение: Despite higher traffic, spend fell; Although traffic increased, spend fell.",
     },
     {
       heading: "Типичные ошибки",
       items: [
         "Не смешивайте due to и because + clause.",
         "Различайте by (величина изменения) и to (итог).",
-        "Учите предлог как часть collocation.",
+        "Не заменяйте устойчивый предлог близким по переводу: impact on, не impact to.",
       ],
     },
     {
       heading: "Запомните",
-      body: "Проверяйте структуру после предлога и точное отношение: причина, метод, изменение или контраст.",
+      body: "Перед выбором предлога определите функцию: collocation, причина, метод, величина изменения, конечное значение или контраст. Затем проверьте, идёт ли после него noun phrase, -ing-форма или целое предложение.",
     },
   ],
   words: [
-    ["cost per request", "стоимость запроса", "Cost per request fell by 10%."],
+    [
+      "cost per request",
+      "стоимость запроса",
+      "Cost per request fell by 10% after we routed simple queries to a smaller model.",
+    ],
     [
       "compute spend",
       "расходы на вычисления",
-      "Compute spend is under review.",
+      "Finance reviews compute spend against the quality targets every month.",
     ],
     [
       "token usage",
       "использование токенов",
-      "We reduced cost through lower token usage.",
+      "We reduced inference cost through lower token usage without changing answer quality.",
     ],
     [
       "rate limit",
       "лимит запросов",
-      "The service operates within the rate limit.",
+      "The caching layer keeps peak traffic within the provider's rate limit.",
     ],
     [
       "reserved capacity",
       "зарезервированная мощность",
-      "Savings depend on reserved capacity.",
+      "Projected savings depend on reserved capacity being used throughout the contract term.",
     ],
-    ["under budget", "в рамках бюджета", "The pilot stayed under budget."],
-    ["at scale", "в масштабе", "Caching matters at scale."],
-    ["in line with", "в соответствии с", "Spend is in line with forecasts."],
+    [
+      "under budget",
+      "в рамках бюджета",
+      "The evaluation pilot stayed under budget despite a 20% increase in test volume.",
+    ],
+    [
+      "at scale",
+      "в масштабе",
+      "At scale, prompt caching can reduce both latency and cost per request.",
+    ],
+    [
+      "in line with",
+      "в соответствии с",
+      "Monthly spend remains in line with the approved forecast after the routing change.",
+    ],
     [
       "with regard to",
       "в отношении",
-      "We raised a concern with regard to latency.",
+      "With regard to latency, the team recommends retaining the current model for complex cases.",
     ],
     [
       "on behalf of",
       "от имени",
-      "Procurement negotiated on behalf of the group.",
+      "Procurement negotiated reserved capacity on behalf of all three business units.",
     ],
-    ["due to", "из-за", "Costs rose due to longer prompts."],
-    ["by means of", "посредством", "We reduced calls by means of caching."],
-    ["despite", "несмотря на", "Despite higher traffic, spend fell."],
-    ["from…to…", "с…до…", "Latency fell from 900 to 600 ms."],
-    ["by 15%", "на 15%", "Usage decreased by 15%."],
+    [
+      "due to",
+      "из-за",
+      "Inference costs rose due to longer prompts in the document-analysis workflow.",
+    ],
+    [
+      "by means of",
+      "посредством",
+      "We reduced repeated model calls by means of semantic caching.",
+    ],
+    [
+      "despite",
+      "несмотря на",
+      "Despite higher production traffic, monthly inference spend fell below forecast.",
+    ],
+    [
+      "from…to…",
+      "с…до…",
+      "Average latency fell from 900 to 600 milliseconds after the routing update.",
+    ],
+    [
+      "by 15%",
+      "на 15%",
+      "Token usage decreased by 15% after the team removed redundant context.",
+    ],
   ],
   reading:
     "The client reduced monthly inference spend from €48,000 to €39,000 by means of prompt compression and caching. Despite a 20% increase in traffic, cost per request fell by 31%. The largest saving came from routing simple requests to a smaller model. With regard to quality, evaluation scores remained in line with the baseline. The team stayed within rate limits and negotiated reserved capacity on behalf of three business units. Due to uncertain seasonal demand, it recommends reviewing capacity quarterly rather than committing to a longer term.",
@@ -3409,30 +3506,31 @@ const participleClauses = finalLesson({
   theory: [
     {
       heading: "-ing clauses",
-      body: "Present participle сокращает активную придаточную часть при одном субъекте: Using a router, the system selects an agent.",
+      body: "Present participle сокращает активную придаточную часть, когда действие выполняет субъект главного предложения. Конструкция может передавать одновременное действие, способ или причину: Using routing logic, the orchestrator selects a specialist agent.",
     },
     {
       heading: "-ed clauses",
-      body: "Past participle выражает пассивное значение: Given a clear role, each agent behaves predictably.",
+      body: "Past participle выражает пассивное или результативное значение: Given a clear role, each agent behaves predictably; Flagged as sensitive, the request goes to a human. Исполнитель обычно не называется, потому что важнее состояние объекта.",
     },
     {
       heading: "Perfect participle",
       items: [
-        "Having + V3 подчёркивает предшествование.",
-        "Having validated the output, the reviewer approved it.",
+        "Having + V3 подчёркивает, что первое действие завершилось раньше второго.",
+        "Having validated the permissions, the team launched the workflow.",
+        "Отрицание ставится перед having: Not having received approval, the team postponed launch.",
       ],
     },
     {
       heading: "Типичные ошибки",
       items: [
         "Субъект participle clause должен совпадать с субъектом main clause.",
-        "Не теряйте причинную или временную связь.",
-        "Избегайте dangling participles.",
+        "Не сокращайте предложение, если временная или причинная связь становится неоднозначной.",
+        "Проверяйте dangling participles: Using a router, the system assigned the request, а не the request was assigned.",
       ],
     },
     {
       heading: "Запомните",
-      body: "-ing = активность, V3 = пассивность, having + V3 = более раннее завершённое действие.",
+      body: "Выберите -ing для активного действия, V3 для пассивного состояния и having + V3 для предшествования. После сокращения обязательно проверьте общий субъект и сохранённую логическую связь.",
     },
   ],
   words: [
@@ -3444,7 +3542,7 @@ const participleClauses = finalLesson({
     [
       "specialist agent",
       "агент-специалист",
-      "Each specialist agent has a narrow role.",
+      "Each specialist agent receives a narrow role, limited context, and explicit tool permissions.",
     ],
     [
       "routing logic",
@@ -3454,7 +3552,7 @@ const participleClauses = finalLesson({
     [
       "shared memory",
       "общая память",
-      "Shared memory requires access controls.",
+      "Shared memory requires access controls that prevent one agent from exposing restricted context.",
     ],
     [
       "handoff protocol",
@@ -3464,36 +3562,52 @@ const participleClauses = finalLesson({
     [
       "tool permission",
       "разрешение инструмента",
-      "Tool permissions follow least privilege.",
+      "Tool permissions follow least privilege so that a research agent cannot approve its own output.",
     ],
     [
       "termination condition",
       "условие завершения",
-      "A termination condition stops loops.",
+      "An explicit termination condition stops the workflow when agents repeat the same handoff.",
     ],
     [
       "human-in-the-loop",
       "участие человека",
       "Flagged as sensitive, requests become human-in-the-loop.",
     ],
-    ["observability", "наблюдаемость", "Observability supports debugging."],
-    ["trace", "трассировка", "Each trace records agent actions."],
-    ["using", "используя", "Using a router, we reduce duplication."],
-    ["given", "при наличии", "Given clear context, the agent performs well."],
+    [
+      "observability",
+      "наблюдаемость",
+      "End-to-end observability lets operations identify which agent introduced an incorrect claim.",
+    ],
+    [
+      "trace",
+      "трассировка",
+      "Each trace records the prompt, tool call, handoff, and final decision for audit purposes.",
+    ],
+    [
+      "using",
+      "используя",
+      "Using a central router, the architecture avoids sending one request to several agents.",
+    ],
+    [
+      "given",
+      "при наличии",
+      "Given clear context and a narrow role, the specialist agent produces more consistent outputs.",
+    ],
     [
       "having validated",
       "проверив",
-      "Having validated the plan, we deployed it.",
+      "Having validated every tool permission, the security team approved the workflow for launch.",
     ],
     [
       "designed to",
       "спроектированный для",
-      "Designed to classify, the agent stays focused.",
+      "Designed to classify support requests, the agent stays within a testable operational boundary.",
     ],
     [
       "acting as",
       "выступая в роли",
-      "Acting as judge, one agent scores outputs.",
+      "Acting as judge, one agent scores the combined answer against completeness and citation criteria.",
     ],
   ],
   reading:
@@ -3570,69 +3684,105 @@ const emphasisInversion = finalLesson({
   theory: [
     {
       heading: "Форма",
-      body: "После ограничительных выражений в начале предложения вспомогательный глагол ставится перед субъектом: Only then did we identify the gap.",
+      body: "После отрицательного или ограничительного выражения в начале предложения вспомогательный или модальный глагол ставится перед субъектом: Only then did we identify the gap; Under no circumstances should access be bypassed. Если вспомогательного глагола нет, добавляется do/does/did.",
     },
     {
       heading: "Модели",
       items: [
-        "Not only did…, but … also…",
-        "Under no circumstances should…",
-        "It is/was X that…",
+        "Not only did precision improve, but citation accuracy also increased.",
+        "Not until the access audit was complete did we approve production use.",
+        "It is metadata that enables filtering; What we need is a fresher knowledge base.",
       ],
     },
     {
       heading: "Ошибки",
-      body: "После did нужен base verb; only вызывает инверсию, когда ограничивающая фраза вынесена вперёд.",
+      body: "После did используется base verb: did we identify, не did we identified. Only вызывает инверсию лишь тогда, когда ограничивающая фраза вынесена в начало; в обычном порядке We deployed only after testing инверсии нет.",
     },
     {
       heading: "Эффект",
-      body: "Инверсия подчёркивает ограничение, а cleft sentence выделяет решающий компонент.",
+      body: "Инверсия подчёркивает исключительность условия, момента или запрета и подходит для выводов и controls. Cleft sentence It is/was ... that выделяет решающий компонент без изменения фактов — например источник ошибки или обязательный контроль.",
     },
     {
       heading: "Запомните",
-      body: "Limiting expression + auxiliary + subject + verb.",
+      body: "Сначала выберите ограничивающее выражение, затем вспомогательный глагол, субъект и base verb. Используйте акцент избирательно: один сильный вывод эффективнее ряда искусственных инверсий.",
     },
   ],
   words: [
     [
       "retrieval pipeline",
       "конвейер поиска",
-      "It is the pipeline that needs testing.",
+      "It is the retrieval pipeline that needs end-to-end testing before the RAG pilot can launch.",
     ],
     [
       "knowledge base",
       "база знаний",
-      "The knowledge base contains approved files.",
+      "The knowledge base contains only approved policies with named owners and review dates.",
     ],
-    ["chunking strategy", "стратегия разбиения", "Only then did we revise it."],
+    [
+      "chunking strategy",
+      "стратегия разбиения",
+      "Only after testing long policy documents did we revise the chunking strategy.",
+    ],
     [
       "embedding model",
       "модель эмбеддингов",
-      "The embedding model affects recall.",
+      "The embedding model affects retrieval recall for multilingual product documentation.",
     ],
     [
       "reranker",
       "переранжировщик",
-      "Not only did it improve precision, but it also reduced noise.",
+      "Not only did the reranker improve precision, but it also removed outdated results from the top five.",
     ],
     [
       "grounded answer",
       "обоснованный ответ",
-      "A grounded answer cites sources.",
+      "A grounded answer cites the approved policy passage that supports each material claim.",
     ],
-    ["citation accuracy", "точность ссылок", "Citation accuracy is mandatory."],
-    ["retrieval recall", "полнота поиска", "Recall improved."],
-    ["access filtering", "фильтрация доступа", "Access filtering must work."],
-    ["source freshness", "актуальность источника", "Freshness affects trust."],
-    ["only after", "только после", "Only after testing did we deploy."],
-    ["not until", "только когда", "Not until the audit did we see it."],
-    ["not only…but also", "не только…но и", "It improved both outcomes."],
+    [
+      "citation accuracy",
+      "точность ссылок",
+      "Citation accuracy must meet the agreed threshold before the assistant is shown to users.",
+    ],
+    [
+      "retrieval recall",
+      "полнота поиска",
+      "Retrieval recall improved after the team added product synonyms to the evaluation set.",
+    ],
+    [
+      "access filtering",
+      "фильтрация доступа",
+      "Under no circumstances may access filtering return documents outside a user's permissions.",
+    ],
+    [
+      "source freshness",
+      "актуальность источника",
+      "It was source freshness that caused the assistant to cite an obsolete retention policy.",
+    ],
+    [
+      "only after",
+      "только после",
+      "Only after the retrieval tests passed did the steering group approve the pilot.",
+    ],
+    [
+      "not until",
+      "только когда",
+      "Not until the access audit was complete did the team enable production data.",
+    ],
+    [
+      "not only…but also",
+      "не только…но и",
+      "Not only did the reranker improve precision, but it also increased citation accuracy.",
+    ],
     [
       "under no circumstances",
       "ни при каких обстоятельствах",
-      "Under no circumstances may data leak.",
+      "Under no circumstances may restricted client data enter the shared retrieval index.",
     ],
-    ["it is…that", "именно…", "It is metadata that enables filtering."],
+    [
+      "it is…that",
+      "именно…",
+      "It is document metadata that enables reliable access filtering across business units.",
+    ],
   ],
   reading:
     "Only after testing the retrieval pipeline did the team discover that outdated policies dominated results. It was source freshness, not model size, that caused most incorrect answers. Not only did a reranker improve precision, but it also increased citation accuracy. Under no circumstances should the system retrieve documents outside a user's permissions. Only when access filtering passes testing will the team approve production use.",
@@ -3704,56 +3854,104 @@ const hedging = finalLesson({
   theory: [
     {
       heading: "Назначение",
-      body: "Hedging отделяет факт от оценки и делает несогласие конструктивным.",
+      body: "Hedging отделяет наблюдаемые результаты от интерпретаций и прогнозов. В ROI-презентации он помогает честно обозначить ограниченную выборку, зависимость от допущений и диапазон уверенности, не ослабляя подтверждённые цифры.",
     },
     {
       heading: "Средства",
       items: [
-        "may/might/could",
-        "appears/seems/tends to",
-        "It may be worth… / I would suggest…",
+        "may/might/could + infinitive для возможности: The result may indicate a trend.",
+        "appears/seems/tends to + infinitive для осторожной интерпретации данных.",
+        "It may be worth + -ing / I would suggest + -ing для дипломатичной рекомендации.",
       ],
     },
     {
       heading: "Точность",
-      body: "Смягчайте уверенность, а не данные; критические риски называйте прямо.",
+      body: "Смягчайте степень уверенности, а не сами данные: Handling time fell by 11% — факт; this may indicate a productivity gain — интерпретация. Критические риски, известные ограничения и обязательные controls называйте прямо.",
     },
     {
       heading: "Ошибки",
-      body: "Не складывайте много hedges и не представляйте прогноз как факт.",
+      body: "Не складывайте несколько hedges в одной фразе и не представляйте прогноз как доказанный результат. После suggest используется gerund или that-clause, после likely — to-infinitive, после worth — -ing.",
     },
     {
       heading: "Запомните",
-      body: "Укажите вывод, основание, степень уверенности и ограничение.",
+      body: "Стройте вывод в четыре шага: подтверждённый результат, осторожная интерпретация, ограничение данных и конкретная рекомендация. Так executive-аудитория видит и потенциал, и риск решения.",
     },
   ],
   words: [
-    ["return on investment", "окупаемость", "ROI appears positive."],
-    ["payback period", "срок окупаемости", "It may be 14 months."],
-    ["benefit estimate", "оценка выгоды", "The estimate is conservative."],
-    ["confidence range", "диапазон уверенности", "Present a range."],
-    ["assumption", "допущение", "This may change."],
+    [
+      "return on investment",
+      "окупаемость",
+      "The pilot appears to support a positive return on investment, although the sample is limited.",
+    ],
+    [
+      "payback period",
+      "срок окупаемости",
+      "The payback period is likely to be between twelve and sixteen months, depending on adoption.",
+    ],
+    [
+      "benefit estimate",
+      "оценка выгоды",
+      "The benefit estimate may be conservative because it excludes avoided compliance costs.",
+    ],
+    [
+      "confidence range",
+      "диапазон уверенности",
+      "We would suggest presenting a confidence range rather than one headline ROI figure.",
+    ],
+    [
+      "assumption",
+      "допущение",
+      "The adoption assumption may change after the solution expands beyond the pilot team.",
+    ],
     [
       "sensitivity analysis",
       "анализ чувствительности",
-      "It shows downside risk.",
+      "The sensitivity analysis shows how lower adoption would affect the projected payback period.",
     ],
     [
       "productivity gain",
       "рост производительности",
-      "The pilot suggests a gain.",
+      "The fall in handling time may indicate a productivity gain, but the evidence is not yet conclusive.",
     ],
-    ["cost avoidance", "предотвращённые расходы", "It is hard to verify."],
-    ["appears to", "по-видимому", "Adoption appears to improve."],
-    ["is likely to", "вероятно", "Demand is likely to grow."],
-    ["may indicate", "может указывать", "This may indicate a trend."],
-    ["to some extent", "до некоторой степени", "It helps to some extent."],
-    ["it may be worth", "возможно, стоит", "It may be worth extending."],
-    ["I would suggest", "я бы предложил", "I would suggest validating it."],
+    [
+      "cost avoidance",
+      "предотвращённые расходы",
+      "Cost avoidance is difficult to verify, so the business case reports it separately from cash savings.",
+    ],
+    [
+      "appears to",
+      "по-видимому",
+      "Adoption appears to improve when managers review AI-assisted workflows every week.",
+    ],
+    [
+      "is likely to",
+      "вероятно",
+      "Support demand is likely to grow during the first month of enterprise rollout.",
+    ],
+    [
+      "may indicate",
+      "может указывать",
+      "The reduction in handling time may indicate a productivity trend worth measuring further.",
+    ],
+    [
+      "to some extent",
+      "до некоторой степени",
+      "The pilot validates the workflow to some extent, but it does not yet prove enterprise scalability.",
+    ],
+    [
+      "it may be worth",
+      "возможно, стоит",
+      "It may be worth extending measurement before committing to the full investment.",
+    ],
+    [
+      "I would suggest",
+      "я бы предложил",
+      "I would suggest validating the savings across a second business unit.",
+    ],
     [
       "cautious interpretation",
       "осторожная интерпретация",
-      "A cautious interpretation is appropriate.",
+      "A cautious interpretation is appropriate because the pilot covers only one unit and eight weeks.",
     ],
   ],
   reading:
@@ -3814,57 +4012,109 @@ const emailStyle = finalLesson({
   theory: [
     {
       heading: "Структура",
-      body: "Письмо быстро сообщает цель, контекст, решение и действие.",
+      body: "Executive email быстро сообщает цель, минимально необходимый контекст, рекомендацию и требуемое решение. Тема письма и первый абзац должны позволять адресату понять ask, даже если он не читает детали roadmap.",
     },
     {
       heading: "Краткость",
       items: [
-        "Используйте прямые глаголы.",
-        "Делайте bullets параллельными.",
-        "Одна основная цель на письмо.",
+        "Заменяйте nominal style прямыми глаголами: conduct an evaluation → evaluate.",
+        "Стройте bullets параллельно: integrate controls, train users, measure adoption.",
+        "Оставляйте одну основную цель письма и выносите детали в приложение.",
       ],
     },
     {
       heading: "Запрос",
-      body: "Could you confirm…? задаёт действие и срок без резкости.",
+      body: "Could you confirm/approve ... by Friday? объединяет действие, объект и срок без резкости. Если решений несколько, перечислите их отдельно и назначьте owner, чтобы ответ можно было дать однозначно.",
     },
     {
       heading: "Связность",
       items: [
-        "With this in mind — вывод.",
-        "To ensure — цель.",
-        "Subject to approval — условие.",
+        "With this in mind вводит рекомендацию, основанную на предыдущем контексте.",
+        "To ensure + noun/verb выражает цель следующего действия.",
+        "Subject to approval обозначает условие и не должно маскировать ответственного за решение.",
       ],
     },
     {
       heading: "Запомните",
-      body: "Каждый action item имеет owner, результат и deadline.",
+      body: "Проверьте четыре элемента: informative subject, clear ask, параллельные next steps и deadline. Каждый action item должен иметь owner и наблюдаемый результат; вежливость не должна делать просьбу расплывчатой.",
     },
   ],
   words: [
-    ["subject line", "тема письма", "The subject states the decision."],
-    ["executive summary", "резюме", "Lead with value."],
-    ["phased rollout", "поэтапное внедрение", "We recommend it."],
-    ["adoption roadmap", "дорожная карта", "It covers a year."],
-    ["decision required", "требуемое решение", "Approve phase one."],
-    ["action owner", "ответственный", "Each has a deadline."],
-    ["dependency", "зависимость", "Identity is a dependency."],
-    ["milestone", "контрольная точка", "Training is a milestone."],
-    ["subject to approval", "при условии одобрения", "Work starts Monday."],
-    ["with this in mind", "учитывая это", "We propose phases."],
-    ["to ensure", "чтобы обеспечить", "Train managers."],
+    [
+      "subject line",
+      "тема письма",
+      "The subject line states the decision required and the relevant rollout phase.",
+    ],
+    [
+      "executive summary",
+      "резюме",
+      "The executive summary leads with pilot value, investment need, and the requested decision.",
+    ],
+    [
+      "phased rollout",
+      "поэтапное внедрение",
+      "We recommend a phased rollout that validates governance before expanding use cases.",
+    ],
+    [
+      "adoption roadmap",
+      "дорожная карта",
+      "The adoption roadmap links each quarter to owners, controls, and measurable outcomes.",
+    ],
+    [
+      "decision required",
+      "требуемое решение",
+      "Decision required: approve the phase-one budget and confirm an executive sponsor.",
+    ],
+    [
+      "action owner",
+      "ответственный",
+      "Each action owner confirms the deliverable and deadline before the steering meeting.",
+    ],
+    [
+      "dependency",
+      "зависимость",
+      "Identity integration is a critical dependency for secure enterprise access.",
+    ],
+    [
+      "milestone",
+      "контрольная точка",
+      "Completion of manager training is the final milestone before regional launch.",
+    ],
+    [
+      "subject to approval",
+      "при условии одобрения",
+      "Subject to budget approval by Friday, implementation can begin on 1 October.",
+    ],
+    [
+      "with this in mind",
+      "учитывая это",
+      "With this in mind, we recommend funding governance and identity work first.",
+    ],
+    [
+      "to ensure",
+      "чтобы обеспечить",
+      "To ensure consistent adoption, each region will nominate a trained local champion.",
+    ],
     [
       "could you confirm",
       "подтвердите, пожалуйста",
-      "Could you confirm the sponsor?",
+      "Could you confirm the executive sponsor and budget owner by Friday?",
     ],
     [
       "we would appreciate",
       "будем признательны",
-      "We would appreciate approval.",
+      "We would appreciate your approval of the phase-one budget by Friday.",
     ],
-    ["for your review", "на рассмотрение", "It is attached."],
-    ["next steps", "следующие шаги", "Owners are clear."],
+    [
+      "for your review",
+      "на рассмотрение",
+      "The detailed adoption roadmap and risk register are attached for your review.",
+    ],
+    [
+      "next steps",
+      "следующие шаги",
+      "The next steps identify the owner, deliverable, and deadline for each rollout phase.",
+    ],
   ],
   reading:
     "Subject: Decision required — approve phase one\n\nDear Committee,\n\nFollowing the successful pilot, we recommend a phased enterprise rollout. Phase one will establish governance, integrate identity controls, and train priority users. Phase two will expand proven use cases; phase three will optimise operations using adoption data. With this in mind, we request funding approval and confirmation of a sponsor. Subject to approval by 15 September, work can begin on 1 October. Could you confirm both decisions by Friday? The roadmap is attached for your review.\n\nKind regards,\nProject Team",
