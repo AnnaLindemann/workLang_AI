@@ -8,14 +8,14 @@
 
 import type { Lesson } from "@/types";
 
-import { germanAiConsultantPassive } from "./german/ai-consultant";
+import { germanAiConsultantLessons } from "./german/ai-consultant";
 import { germanCustomerSuccessKonjunktiv } from "./german/customer-success";
 import { englishAiConsultantConditionals } from "./english/ai-consultant";
 import { englishCustomerSuccessTenses } from "./english/customer-success";
 
 /** Every authored lesson, in a stable order. */
 export const lessons: readonly Lesson[] = [
-  germanAiConsultantPassive,
+  ...germanAiConsultantLessons,
   germanCustomerSuccessKonjunktiv,
   englishAiConsultantConditionals,
   englishCustomerSuccessTenses,

@@ -19,9 +19,14 @@ export default function LearnLayout({
         <Link href="/" className={styles.brand}>
           WorkLang AI
         </Link>
-        <Link href="/vocabulary" className={styles.headerLink}>
-          Vocabulary Trainer
-        </Link>
+        <nav className={styles.headerNav}>
+          <Link href="/vocabulary" className={styles.headerLink}>
+            Vocabulary Trainer
+          </Link>
+          <Link href="/cost" className={styles.headerLink}>
+            LLM Cost
+          </Link>
+        </nav>
       </header>
       <main className={styles.container}>{children}</main>
     </div>

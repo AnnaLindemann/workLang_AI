@@ -1,0 +1,357 @@
+.shell {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.brand {
+  font-weight: 700;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #0f766e;
+  font-size: 0.95rem;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: clamp(1.5rem, 5vw, 1.9rem);
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0.4rem 0 0;
+  line-height: 1.5;
+}
+
+.sectionLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  font-weight: 600;
+  margin: 0.25rem 0 0.6rem;
+}
+
+/* Headline row for the latest-request and writing-attempt scope cards. */
+.scopeHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.scopeCost {
+  font-size: clamp(1.6rem, 7vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.scopeMeta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Totals: two columns on phones, expands with room. */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+}
+
+.tileValue {
+  font-size: clamp(1.25rem, 5vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+.tileLabel {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.statusSuccess {
+  background: #ecfdf5;
+  color: #047857;
+  border-color: #a7f3d0;
+}
+
+.statusError {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.statusPending {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.cardHint {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0 0 0.75rem;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid #f0f1f3;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.logItem {
+  border: 1px solid #eef0f2;
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.logHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.logType {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border: 1px solid transparent;
+}
+
+.logMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: 0.85rem;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+}
+
+.logCost {
+  font-weight: 600;
+  color: #111827;
+}
+
+.logTime {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: #9ca3af;
+  font-variant-numeric: tabular-nums;
+}
+
+.logError {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  color: #b91c1c;
+  word-break: break-word;
+}
+
+.footnote {
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0.5rem 0 0;
+}
+
+.empty {
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem;
+}
+
+.emptyText {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.55;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .navLink {
+    color: #2dd4bf;
+  }
+  .subtitle,
+  .tileLabel,
+  .cardHint,
+  .footnote,
+  .emptyText,
+  .sectionLabel,
+  .scopeMeta {
+    color: #9ca3af;
+  }
+  .tile,
+  .card {
+    border-color: #374151;
+  }
+  .logItem {
+    border-color: #2b3440;
+  }
+  .table th,
+  .table td {
+    border-color: #2b3440;
+  }
+  .table th {
+    color: #9ca3af;
+  }
+  .logMeta {
+    color: #cbd5e1;
+  }
+  .logCost {
+    color: #f9fafb;
+  }
+  .logTime {
+    color: #6b7280;
+  }
+  .empty {
+    border-color: #4b5563;
+  }
+  .statusSuccess {
+    background: #052e2b;
+    color: #6ee7b7;
+    border-color: #115e59;
+  }
+  .statusError {
+    background: #3f1d1d;
+    color: #fca5a5;
+    border-color: #7f1d1d;
+  }
+  .statusPending {
+    background: #3b2f0b;
+    color: #fcd34d;
+    border-color: #78560c;
+  }
+  .logError {
+    color: #fca5a5;
+  }
+}
+
+/* Roomier layout once there's width for it. */
+@media (min-width: 520px) {
+  .tiles {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

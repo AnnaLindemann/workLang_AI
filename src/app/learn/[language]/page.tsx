@@ -8,7 +8,10 @@ import { notFound } from "next/navigation";
 import { getLessonsByLanguageAndTrack } from "@/domain/lessons";
 import { languageBySlug, trackCatalog } from "@/lib/selection";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { SelectionGrid, type SelectionItem } from "@/components/selection-grid";
+import {
+  TrackLessonPicker,
+  type TrackCard,
+} from "@/components/track-lesson-picker";
 
 import styles from "../learn.module.css";
 
@@ -23,18 +26,23 @@ export default async function TrackSelectionPage({
     notFound();
   }
 
-  const items: SelectionItem[] = trackCatalog
-    .map((track) => ({
-      track,
-      count: getLessonsByLanguageAndTrack(language.value, track.value).length,
-    }))
-    .filter((entry) => entry.count > 0)
-    .map(({ track, count }) => ({
-      href: `/learn/${language.slug}/${track.slug}`,
-      title: track.label,
-      description: track.description,
-      badge: `${count} lesson${count === 1 ? "" : "s"}`,
-    }));
+  // One card per track, each carrying its full lesson list so the learner picks
+  // a specific lesson rather than always opening the first one. Labels are
+  // numbered by the repository's stable authored order.
+  const tracks: TrackCard[] = trackCatalog.map((track) => ({
+    slug: track.slug,
+    title: track.label,
+    description: track.description,
+    basePath: `/learn/${language.slug}/${track.slug}`,
+    lessons: getLessonsByLanguageAndTrack(language.value, track.value).map(
+      (lesson, index) => ({
+        id: lesson.id,
+        label: `${index + 1}. ${lesson.title}`,
+      }),
+    ),
+  }));
+
+  const hasAnyLessons = tracks.some((track) => track.lessons.length > 0);
 
   return (
     <>
@@ -49,8 +57,8 @@ export default async function TrackSelectionPage({
           stays relevant.
         </p>
       </div>
-      {items.length > 0 ? (
-        <SelectionGrid items={items} />
+      {hasAnyLessons ? (
+        <TrackLessonPicker tracks={tracks} />
       ) : (
         <p className={styles.empty}>
           No {language.label} lessons are available yet.

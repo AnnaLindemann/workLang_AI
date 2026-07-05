@@ -25,3 +25,4 @@ export {
   type OpenGrammarMistakeView,
 } from "./open-grammar-repository";
 export { loadVocabularyProgress } from "./vocabulary-repository";
+export { loadCostSummary } from "./cost-repository";

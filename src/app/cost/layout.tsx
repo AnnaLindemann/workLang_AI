@@ -1,12 +1,14 @@
-// Shell for the standalone Vocabulary Trainer (a separate learning mode, not
-// part of the lesson flow). Mobile-first container with a slim header linking
-// back to the homepage and across to the lessons.
+// Shell for the standalone Cost Tracking & Observability page (Phase 8).
+//
+// Mobile-first container with a slim header linking back to the homepage and
+// across to the lessons and vocabulary trainer, matching the other top-level
+// modes. Read-only: this surface only reports persisted LLM cost data.
 
 import Link from "next/link";
 
-import styles from "./vocabulary.module.css";
+import styles from "./cost.module.css";
 
-export default function VocabularyLayout({
+export default function CostLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,8 +23,8 @@ export default function VocabularyLayout({
           <Link href="/learn" className={styles.navLink}>
             Lessons
           </Link>
-          <Link href="/cost" className={styles.navLink}>
-            LLM Cost
+          <Link href="/vocabulary" className={styles.navLink}>
+            Vocabulary
           </Link>
         </nav>
       </header>

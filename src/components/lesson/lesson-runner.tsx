@@ -47,6 +47,12 @@ export function LessonRunner({
   // `step` runs 0..total-1 over the activities, then `total` for the
   // completion screen.
   const [step, setStep] = useState(0);
+  const [practicePageComplete, setPracticePageComplete] = useState(false);
+
+  function goToStep(nextStep: number) {
+    setPracticePageComplete(false);
+    setStep(nextStep);
+  }
 
   const backHref = `/learn/${language.slug}/${track.slug}`;
   const breadcrumbs = (
@@ -76,7 +82,7 @@ export function LessonRunner({
             <button
               type="button"
               className={styles.secondaryButton}
-              onClick={() => setStep(0)}
+              onClick={() => goToStep(0)}
             >
               Start over
             </button>
@@ -93,6 +99,10 @@ export function LessonRunner({
   const heading = activity.title ?? kindLabels[activity.kind];
   const isFirst = step === 0;
   const isLast = step === total - 1;
+  const canAdvanceFromPractice =
+    activity.kind !== ActivityKind.GrammarPractice ||
+    activity.exercises.length <= 5 ||
+    practicePageComplete;
 
   return (
     <>
@@ -132,6 +142,7 @@ export function LessonRunner({
           lessonId={lesson.id}
           language={lesson.language}
           reviewTasks={reviewTasks}
+          onPracticePageChange={setPracticePageComplete}
         />
       </section>
 
@@ -139,18 +150,20 @@ export function LessonRunner({
         <button
           type="button"
           className={styles.secondaryButton}
-          onClick={() => setStep((current) => Math.max(0, current - 1))}
+          onClick={() => goToStep(Math.max(0, step - 1))}
           disabled={isFirst}
         >
           Previous
         </button>
-        <button
-          type="button"
-          className={styles.primaryButton}
-          onClick={() => setStep((current) => current + 1)}
-        >
-          {isLast ? "Finish" : "Next"}
-        </button>
+        {canAdvanceFromPractice && (
+          <button
+            type="button"
+            className={styles.primaryButton}
+            onClick={() => goToStep(step + 1)}
+          >
+            {isLast ? "Finish" : "Next"}
+          </button>
+        )}
       </div>
     </>
   );

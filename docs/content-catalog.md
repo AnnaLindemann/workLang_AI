@@ -15,9 +15,18 @@ merely repeating the career-track name.
 
 #### AI Consultant
 
-| Lesson | Lesson ID                         | Grammar topic           | Professional topic                              | Target CEFR |
-| ------ | --------------------------------- | ----------------------- | ----------------------------------------------- | ----------- |
-| 1      | `de-ai-consultant-vorgangspassiv` | Passiv (Vorgangspassiv) | Describing an AI project implementation process | C1          |
+| Lesson | Lesson ID                               | Grammar topic                         | Professional topic                              | Target CEFR |
+| ------ | --------------------------------------- | ------------------------------------- | ----------------------------------------------- | ----------- |
+| 1      | `de-ai-consultant-verbklammer`          | Hauptsatz + Verbklammer               | Kicking off a consulting project                | C1          |
+| 2      | `de-ai-consultant-perfekt-praeteritum`  | Perfekt vs Präteritum                 | Writing a project retrospective report          | C1          |
+| 3      | `de-ai-consultant-praepositionen-kasus` | Präpositionen + Kasus + Artikel       | Clarifying roles and data flow                  | C1          |
+| 4      | `de-ai-consultant-nebensaetze`          | Nebensätze                            | Justifying a schedule change to a client        | C1          |
+| 5      | `de-ai-consultant-relativsaetze`        | Relativsätze                          | Describing a recommended tool/solution          | C1          |
+| 6      | `de-ai-consultant-vorgangspassiv`       | Passiv (Vorgangspassiv)               | Describing an AI project implementation process | C1          |
+| 7      | `de-ai-consultant-konjunktiv-ii`        | Konjunktiv II                         | Diplomatically advising against a costly plan   | C1          |
+| 8      | `de-ai-consultant-konnektoren`          | Konnektoren                           | Weighing costs and benefits in a recommendation | C1          |
+| 9      | `de-ai-consultant-nominalisierung`      | Nominalisierung / Funktionsverbgefüge | Formal project status / closing report          | C1          |
+| 10     | `de-ai-consultant-konjunktiv-i`         | Konjunktiv I / Indirekte Rede         | Writing meeting minutes in reported speech      | C1          |
 
 #### Customer Success / Hospitality
 
@@ -49,18 +58,18 @@ Professional topics must also remain unique within that track.
 
 ### German C1
 
-| Curriculum position | Grammar topic                         | Existing coverage                       |
-| ------------------- | ------------------------------------- | --------------------------------------- |
-| 1                   | Hauptsatz + Verbklammer               | Planned                                 |
-| 2                   | Perfekt vs Präteritum                 | Planned                                 |
-| 3                   | Präpositionen + Kasus + Artikel       | Planned                                 |
-| 4                   | Nebensätze                            | Planned                                 |
-| 5                   | Relativsätze                          | Planned                                 |
-| 6                   | Passiv                                | AI Consultant lesson 1                  |
-| 7                   | Konjunktiv II                         | Customer Success / Hospitality lesson 1 |
-| 8                   | Konnektoren                           | Planned                                 |
-| 9                   | Nominalisierung / Funktionsverbgefüge | Planned                                 |
-| 10                  | Konjunktiv I / Indirekte Rede         | Planned                                 |
+| Curriculum position | Grammar topic                         | Existing coverage                                               |
+| ------------------- | ------------------------------------- | --------------------------------------------------------------- |
+| 1                   | Hauptsatz + Verbklammer               | AI Consultant lesson 1                                          |
+| 2                   | Perfekt vs Präteritum                 | AI Consultant lesson 2                                          |
+| 3                   | Präpositionen + Kasus + Artikel       | AI Consultant lesson 3                                          |
+| 4                   | Nebensätze                            | AI Consultant lesson 4                                          |
+| 5                   | Relativsätze                          | AI Consultant lesson 5                                          |
+| 6                   | Passiv                                | AI Consultant lesson 6                                          |
+| 7                   | Konjunktiv II                         | AI Consultant lesson 7; Customer Success / Hospitality lesson 1 |
+| 8                   | Konnektoren                           | AI Consultant lesson 8                                          |
+| 9                   | Nominalisierung / Funktionsverbgefüge | AI Consultant lesson 9                                          |
+| 10                  | Konjunktiv I / Indirekte Rede         | AI Consultant lesson 10                                         |
 
 ### English B2
 

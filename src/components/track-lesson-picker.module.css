@@ -1,0 +1,109 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  background: transparent;
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.description {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #4b5563;
+  margin: 0;
+}
+
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+.label {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.select {
+  width: 100%;
+  font: inherit;
+  font-size: 0.92rem;
+  color: inherit;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.openButton {
+  align-self: flex-start;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #111827;
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 8px;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.openButton:hover {
+  opacity: 0.88;
+}
+
+.empty {
+  font-size: 0.88rem;
+  color: #6b7280;
+  margin: auto 0 0;
+  padding-top: 0.4rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    border-color: #374151;
+  }
+  .description {
+    color: #9ca3af;
+  }
+  .label,
+  .empty {
+    color: #9ca3af;
+  }
+  .select {
+    border-color: #4b5563;
+  }
+  .select:focus {
+    border-color: #f9fafb;
+  }
+  .openButton {
+    border-color: #f9fafb;
+    background: #f9fafb;
+    color: #111827;
+  }
+}

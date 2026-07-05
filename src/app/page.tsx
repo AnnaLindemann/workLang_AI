@@ -30,6 +30,9 @@ export default function Home() {
           <Link href="/vocabulary" className={styles.ctaSecondary}>
             Vocabulary Trainer
           </Link>
+          <Link href="/cost" className={styles.ctaSecondary}>
+            LLM Cost
+          </Link>
         </div>
       </section>
 

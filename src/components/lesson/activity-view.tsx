@@ -31,6 +31,7 @@ import type {
   Language,
   LessonId,
   OpenExercise,
+  PracticeTask,
   VocabularyBlock,
   WritingTask,
 } from "@/types";
@@ -59,11 +60,13 @@ export function ActivityView({
   lessonId,
   language,
   reviewTasks,
+  onPracticePageChange,
 }: {
   activity: Activity;
   lessonId: LessonId;
   language: Language;
   reviewTasks: SelectedReviewTask[];
+  onPracticePageChange?: (isLastPage: boolean) => void;
 }) {
   switch (activity.kind) {
     case ActivityKind.Review:
@@ -98,25 +101,11 @@ export function ActivityView({
 
     case ActivityKind.GrammarPractice:
       return (
-        <div className={styles.exerciseList}>
-          {activity.exercises.map((exercise, index) =>
-            exercise.evaluation === ExerciseEvaluation.Graded ? (
-              <GradedExerciseItem
-                key={exercise.id}
-                exercise={exercise}
-                index={index}
-                lessonId={lessonId}
-              />
-            ) : (
-              <OpenExerciseItem
-                key={exercise.id}
-                exercise={exercise}
-                index={index}
-                lessonId={lessonId}
-              />
-            ),
-          )}
-        </div>
+        <PracticeView
+          activity={activity}
+          lessonId={lessonId}
+          onPageChange={onPracticePageChange}
+        />
       );
 
     case ActivityKind.Writing:
@@ -128,6 +117,97 @@ export function ActivityView({
       return _exhaustive;
     }
   }
+}
+
+// The number of exercises shown per practice page. Ten exercises are split into
+// two pages (1–5, then 6–10) so the learner is never faced with all ten at once:
+// the first five appear, then a "Weiter" button reveals the rest before the
+// lesson advances to the Writing task. This is presentation only — each exercise
+// still checks and persists exactly as before, regardless of which page it is on.
+const PRACTICE_PAGE_SIZE = 5;
+
+// Paginated grammar-practice view. Renders one page of exercises at a time and
+// keeps a stable global index so numbering (and the LLM/graded split) is
+// unaffected by paging. The page cursor is transient UI state only.
+function PracticeView({
+  activity,
+  lessonId,
+  onPageChange,
+}: {
+  activity: PracticeTask;
+  lessonId: LessonId;
+  onPageChange?: (isLastPage: boolean) => void;
+}) {
+  const [page, setPage] = useState(0);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(activity.exercises.length / PRACTICE_PAGE_SIZE),
+  );
+  const clampedPage = Math.min(page, totalPages - 1);
+  const start = clampedPage * PRACTICE_PAGE_SIZE;
+  const visible = activity.exercises.slice(start, start + PRACTICE_PAGE_SIZE);
+  const isFirstPage = clampedPage === 0;
+  const isLastPage = clampedPage === totalPages - 1;
+
+  return (
+    <div className={styles.exerciseList}>
+      {totalPages > 1 && (
+        <p className={styles.reviewIntro}>
+          Aufgaben {start + 1}–{start + visible.length} von{" "}
+          {activity.exercises.length}
+        </p>
+      )}
+
+      {visible.map((exercise, offset) => {
+        const index = start + offset;
+        return exercise.evaluation === ExerciseEvaluation.Graded ? (
+          <GradedExerciseItem
+            key={exercise.id}
+            exercise={exercise}
+            index={index}
+            lessonId={lessonId}
+          />
+        ) : (
+          <OpenExerciseItem
+            key={exercise.id}
+            exercise={exercise}
+            index={index}
+            lessonId={lessonId}
+          />
+        );
+      })}
+
+      {totalPages > 1 && (
+        <div className={styles.controls}>
+          <button
+            type="button"
+            className={styles.secondaryButton}
+            onClick={() => {
+              const nextPage = clampedPage - 1;
+              setPage(nextPage);
+              onPageChange?.(nextPage === totalPages - 1);
+            }}
+            disabled={isFirstPage}
+          >
+            Vorherige Aufgaben
+          </button>
+          {!isLastPage && (
+            <button
+              type="button"
+              className={styles.primaryButton}
+              onClick={() => {
+                const nextPage = clampedPage + 1;
+                setPage(nextPage);
+                onPageChange?.(nextPage === totalPages - 1);
+              }}
+            >
+              Weiter
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
 
 // The status of persisting one attempt to PostgreSQL. Feedback never waits on
@@ -283,10 +363,11 @@ function ReviewView({
 }
 
 // A vocabulary recall card shown in the review block: pick the meaning of the
-// term. Deterministic and LLM-free — the client checks optimistically against
-// the task's correct meaning while the server re-derives it and persists the
-// attempt (as a REVIEW-sourced vocabulary match) through the same pipeline as
-// the in-lesson matching exercise.
+// term. Deterministic and LLM-free — the learner selects an option, can change
+// the selection freely, then presses "Check answer". The client checks
+// optimistically against the task's correct meaning while the server re-derives
+// it and persists the attempt (as a REVIEW-sourced vocabulary match) through the
+// same pipeline as the in-lesson matching exercise.
 function VocabularyReviewCard({
   task,
   index,
@@ -297,23 +378,32 @@ function VocabularyReviewCard({
   const [options] = useState(() =>
     shuffle(task.options, `${task.term}:review`),
   );
-  const [picked, setPicked] = useState<string | null>(null);
-  const [solved, setSolved] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [checked, setChecked] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [, startTransition] = useTransition();
 
-  function choose(option: string) {
-    if (solved) return;
-    setPicked(option);
-    const isCorrect = option === task.correctMeaning;
-    if (isCorrect) setSolved(true);
+  const isCorrect = checked && selected === task.correctMeaning;
+  const feedbackId = `${task.sourceLessonId}-${task.term}-feedback`;
+
+  function select(option: string) {
+    if (checked) return;
+    setSelected(option);
+  }
+
+  function handleCheck() {
+    if (selected === null || checked) return;
+    // Deterministic local check → immediate feedback. The server re-derives the
+    // correct meaning authoritatively before persisting this single attempt.
+    setChecked(true);
     setSaveError(false);
+    const given = selected;
     startTransition(async () => {
       try {
         await recordVocabularyMatch({
           lessonId: task.sourceLessonId,
           term: task.term,
-          given: option,
+          given,
           isReview: true,
         });
       } catch {
@@ -330,30 +420,57 @@ function VocabularyReviewCard({
       </p>
       <div className={styles.matchOptions}>
         {options.map((option) => {
-          const isPicked = picked === option;
-          const className =
-            solved && option === task.correctMeaning
-              ? `${styles.matchOption} ${styles.matchCellMatched}`
-              : isPicked && option !== task.correctMeaning
-                ? `${styles.matchOption} ${styles.matchCellWrong}`
-                : styles.matchOption;
+          let className = styles.matchOption;
+          if (checked && option === task.correctMeaning) {
+            className = `${styles.matchOption} ${styles.matchCellMatched}`;
+          } else if (checked && option === selected) {
+            className = `${styles.matchOption} ${styles.matchCellWrong}`;
+          } else if (!checked && option === selected) {
+            className = `${styles.matchOption} ${styles.matchCellSelected}`;
+          }
           return (
             <button
               key={option}
               type="button"
               className={className}
-              onClick={() => choose(option)}
-              disabled={solved}
+              aria-pressed={!checked && option === selected}
+              onClick={() => select(option)}
+              disabled={checked}
             >
               {option}
             </button>
           );
         })}
       </div>
-      {picked !== null && picked !== task.correctMeaning && !solved && (
-        <p className={styles.feedbackSave}>
-          Не то значение — попробуйте ещё раз.
-        </p>
+
+      {!checked && (
+        <button
+          type="button"
+          className={styles.checkButton}
+          onClick={handleCheck}
+          disabled={selected === null}
+        >
+          Проверить
+        </button>
+      )}
+
+      {checked && (
+        <div
+          id={feedbackId}
+          className={
+            isCorrect ? styles.feedbackCorrect : styles.feedbackIncorrect
+          }
+          aria-live="polite"
+        >
+          <p className={styles.feedbackHead}>
+            {isCorrect ? "Верно" : "Не то значение"}
+          </p>
+          {!isCorrect && (
+            <p className={styles.feedbackAnswer}>
+              Правильный ответ: <strong>{task.correctMeaning}</strong>
+            </p>
+          )}
+        </div>
       )}
       {saveError && (
         <p className={styles.feedbackSave}>
